@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+    <div id="user-1">
+        <div id="user-login">
+            <form action="/login" method="post">
+                <label for="login-email">邮箱</label>
+                <input id="login-email" name="email" type="email">
+                <label for="login-pwd">密码</label>
+                <input id="login-pwd" name="password" type="password">
+                <input name="csrf_token" type="hidden" value="{{ csrf_token() }}">
+
+                <button type="submit">登录</button>
+            </form>
+        </div>
+        <div id="user-register">
+            <form action="/register" method="post">
+                <label for="register-name">昵称</label>
+                <input id="register-name" name="name" type="text">
+                <label for="register-email">邮箱</label>
+                <input id="register-email" name="email" type="email">
+                <label for="register-pwd">密码</label>
+                <input id="register-pwd" name="password" type="password">
+                <label for="register-confirm">确认密码</label>
+                <input id="register-confirm" name="confirm" type="password">
+                <input name="csrf_token" type="hidden" value="{{ csrf_token() }}">
+                <button type="submit">注册</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

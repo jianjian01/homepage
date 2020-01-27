@@ -1,0 +1,18 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.douban.com/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+flask = "1.1.1"
+flask_wtf = "*"
+celery = "*"
+pony = "*"
+pymysql = "*"
+bcrypt = "*"
+flask-redis = "*"
+
+[requires]
+python_version = "3.7"

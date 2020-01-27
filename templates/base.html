@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="吃点心,chidianxin,网站导航,吃点心网址导航,自定义网址导航,上网导航,RSS 订阅">
+    <meta name="description" content="自定义网址收藏，同时支持订阅 RSS 文章">
+    <meta content="origin" name="referrer">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
+    <title>{% block title %}{% endblock %}吃点心 - 自定义网址收藏</title>
+</head>
+<body>
+{% block content %}{% endblock %}
+{% block script %}{% endblock %}
+<script>
+    
+</script>
+</body>
+</html>
