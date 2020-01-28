@@ -12,12 +12,20 @@
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 
     <title>{% block title %}{% endblock %}吃点心 - 自定义网址收藏</title>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+    {% block css %}{% endblock %}
+
 </head>
 <body>
 {% block content %}{% endblock %}
 {% block script %}{% endblock %}
 <script>
-    
+
 </script>
 </body>
 </html>

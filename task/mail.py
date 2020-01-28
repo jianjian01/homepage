@@ -1,10 +1,8 @@
 from celery import current_app as celery_app
+from celery.utils.log import get_task_logger
 from flask import current_app as current_flask
-from pony.orm import select, db_session, set_sql_debug, commit
 
 from util.mail import send_mail
-
-set_sql_debug(True)
 
 template = """<html lang="zh">
 <body>
@@ -17,14 +15,21 @@ template = """<html lang="zh">
 </body>
 </html>"""
 
+logger = get_task_logger(__name__)
 
-@celery_app.task(name="send_email_verify_url")
-@db_session
+
+@celery_app.task(name="mail.send_email_verify_url")
 def send_email_verify_url(name, email, url):
     """发送验证邮箱的链接"""
+    logger.info('mail.send_email_verify_url')
     conf = current_flask.config
     subject = '吃点心 - 账户激活'
     content = template.format(name, url)
     send_mail(host=conf['SMTP_HOST'], port=conf['SMTP_PORT'],
               email_address=conf['SMTP_EMAIL'], password=conf['SMTP_PASSWORD'],
               to_address=email, subject=subject, content=content)
+
+
+@celery_app.task
+def test():
+    print('abc')

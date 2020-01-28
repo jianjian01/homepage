@@ -1,3 +1,4 @@
+import logging
 import os
 
 
@@ -14,9 +15,10 @@ class Dev:
         'passwd': '8W5Qqv9IfgdvHk',
         'db': 'chidianxin',
     }
-    REDIS_URL = 'redis://@47.96.177.79:29899/0'
-    CELERY_BROKER_URL = 'redis://@47.96.177.79:29899/1'
-    CELERY_RESULT_BACKEND = 'redis://@47.96.177.79:29899/1'
+    REDIS_URL = 'redis://47.96.177.79:29899/0'
+    REDIS_VERIFY_EMAIL_CHANNEL = "VERIFY_EMAIL"
+    RANDOM_KEY = os.urandom(16)
+
     SMTP_HOST = 'smtpdm.aliyun.com'
     SMTP_PORT = 465
     SMTP_EMAIL = 'verify@chidian.xin'
@@ -38,8 +40,8 @@ class Prod:
         'db': 'chidianxin',
     }
     REDIS_URL = 'redis://@redis_5:6379/1'
-    CELERY_BROKER_URL = 'redis://@redis_5:6379/1'
-    CELERY_RESULT_BACKEND = 'redis://@redis_5:6379/1'
+    REDIS_VERIFY_EMAIL_CHANNEL = "VERIFY_EMAIL"
+
     SMTP_HOST = 'smtpdm.aliyun.com'
     SMTP_PORT = 465
     SMTP_EMAIL = 'verify@chidian.xin'
@@ -52,5 +54,14 @@ if os.getenv("ENV", '').lower() == 'production':
     Config = Prod
 else:
     Config = Dev
+
+
+def set_log():
+    fmt = "[%(asctime)-15s %(levelname)s %(filename)s:%(lineno)d] %(message)s"
+    logging.basicConfig(format=fmt, level=logging.INFO)
+    logging.info("running")
+
+
+set_log()
 
 __all__ = ['Config']

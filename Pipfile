@@ -8,10 +8,10 @@ verify_ssl = true
 [packages]
 flask = "1.1.1"
 flask_wtf = "*"
-celery = "*"
 pony = "*"
 pymysql = "*"
 bcrypt = "*"
+flask-mail = "*"
 flask-redis = "*"
 
 [requires]

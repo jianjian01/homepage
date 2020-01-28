@@ -1,32 +1,256 @@
 {% extends "base.html" %}
 
+{% block css %}
+    <style>
+        main {
+            display: flex;
+            background-color: rgba(0, 191, 255, 0.44);
+        }
+
+        .container {
+            max-width: 1012px;
+            position: absolute;
+            display: flex !important;
+            align-items: center !important;
+            margin: auto;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+
+
+        @media (min-width: 700px) {
+            #intro {
+                width: 53%;
+                text-align: left !important;
+            }
+
+            #user-1 {
+                width: 50%;
+                min-height: 100%;
+            }
+        }
+
+        @media (max-width: 700px) {
+            #intro {
+                display: none;
+            }
+
+            #user-1 {
+                width: 100%;
+                min-height: 100%;
+            }
+        }
+
+        a {
+            text-decoration: none;
+            color: #0366d6;
+        }
+
+        .label-link {
+            float: right;
+            font-size: 16px;
+        }
+
+        .change-action {
+            float: right;
+            font-size: 16px;
+            padding-top: 26px;
+            display: inline
+        }
+
+        .rounded-1 {
+            border-radius: 3px !important;
+            padding: 24px 24px !important;
+        }
+
+        .user-box {
+            padding: 50px 24px;
+            background-color: #fafbfc !important;
+            border-radius: 3px !important;
+            border: black;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 18px;
+            text-align: left;
+            font-weight: 400 !important;
+        }
+
+        dd {
+            margin-left: 0;
+        }
+
+        .form-group {
+            margin: 15px 0;
+        }
+
+        .form-control {
+            padding: 10px 5px;
+            font-size: 16px;
+            max-width: 100%;
+            margin-right: 5px;
+            border: 1px solid #d1d5da;
+            border-radius: 3px;
+            outline: none;
+            box-shadow: inset 0 1px 2px rgba(27, 31, 35, .075);
+            overflow: visible;
+        }
+
+        .form-control:focus {
+            border-color: #2188ff;
+            outline: none;
+            box-shadow: inset 0 1px 2px rgba(27, 31, 35, .075), 0 0 0 .2em rgba(3, 102, 214, .3);
+        }
+
+        .input-block {
+            display: block;
+            width: 100% !important;
+            -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+            -moz-box-sizing: border-box; /* Firefox, other Gecko */
+            box-sizing: border-box; /* Opera/IE 8+ */
+        }
+
+        .button {
+            width: 80px;
+            display: inline-block;
+            border: 1px solid #2ebc4f;
+            border-radius: 3px;
+            text-align: center;
+            transition: .2s;
+            font-size: 16px;
+            padding: 10px 16px;
+            margin: 16px 20px;
+            box-sizing: border-box;
+            background-color: #2ebc4f;
+            vertical-align: middle;
+        }
+    </style>
+{% endblock %}
+
 
 {% block content %}
-    <div id="user-1">
-        <div id="user-login">
-            <form action="/login" method="post">
-                <label for="login-email">邮箱</label>
-                <input id="login-email" name="email" type="email">
-                <label for="login-pwd">密码</label>
-                <input id="login-pwd" name="password" type="password">
-                <input name="csrf_token" type="hidden" value="{{ csrf_token() }}">
+    <main>
+        <div class="container">
 
-                <button type="submit">登录</button>
-            </form>
+
+            <div id="intro">
+                <p>hello</p>
+            </div>
+
+            <div id="user-1">
+                <div class="rounded-1">
+                    {% if page=='login' %}
+                        <div id="user-login" class="user-box">
+                            <form action="/login" method="post">
+                                <div class="form-item">
+                                    <dl class="form-group">
+                                        <dt>
+                                            <label class="form-label" for="login-email">邮箱</label>
+                                        </dt>
+                                        <dd>
+                                            <input id="login-email" class="form-control input-block"
+                                                   name="email" type="email">
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="form-item">
+                                    <dl class="form-group">
+                                        <dt>
+
+                                            <label class="form-label" for="login-pwd">
+                                                密码
+                                                <a class="label-link" href="/password_reset">忘记密码？</a>
+                                            </label>
+                                        </dt>
+                                        <dd>
+                                            <input id="login-pwd" class="form-control input-block"
+                                                   name="password" type="password">
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <input name="csrf_token" type="hidden" value="{{ csrf_token() }}">
+
+                                <dl class="form-group">
+                                    <dd>
+                                        <button class="button" type="submit">登录</button>
+                                        <a class="change-action" href="/register">新用户？请先注册</a>
+                                    </dd>
+                                </dl>
+                            </form>
+                        </div>
+                    {% else %}
+                        <div id="user-register" class="user-box">
+                            <form accept-charset="UTF-8" action="/register" method="post">
+                                <div class="form-item">
+                                    <dl class="form-group">
+                                        <dt>
+                                            <label class="form-label" for="register-name">昵称</label>
+                                        </dt>
+                                        <dd>
+                                            <input class="form-control input-block" id="register-name"
+                                                   name="name" type="text">
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="form-item">
+                                    <dl class="form-group">
+                                        <dt>
+                                            <label class="form-label" for="register-email">邮箱</label>
+                                        </dt>
+                                        <dd>
+                                            <input class="form-control input-block" id="register-email"
+                                                   name="email" type="email">
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="form-item">
+                                    <dl class="form-group">
+                                        <dt>
+                                            <label class="form-label" for="register-pwd">密码</label>
+                                        </dt>
+                                        <dd>
+                                            <input class="form-control input-block" id="register-pwd"
+                                                   name="password" type="password">
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="form-item">
+                                    <dl class="form-group">
+                                        <dt>
+                                            <label class="form-label" for="register-confirm">确认密码</label>
+                                        </dt>
+                                        <dd>
+                                            <input class="form-control input-block" id="register-confirm"
+                                                   name="confirm" type="password">
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <input type="hidden" name="timestamp" value="{{ timestamp.timestamp }}">
+                                <input type="hidden" name="timestamp_secret" value="{{ timestamp.secret }}">
+                                <input name="csrf_token" type="hidden" value="{{ csrf_token() }}">
+                                <dl class="form-group">
+                                    <dd>
+                                        <td>
+                                            <button class="button" type="submit">注册</button>
+                                        </td>
+                                        <td><a class="change-action" href="/login">已有账号？直接登录</a></td>
+                                    </dd>
+                                </dl>
+                            </form>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
         </div>
-        <div id="user-register">
-            <form action="/register" method="post">
-                <label for="register-name">昵称</label>
-                <input id="register-name" name="name" type="text">
-                <label for="register-email">邮箱</label>
-                <input id="register-email" name="email" type="email">
-                <label for="register-pwd">密码</label>
-                <input id="register-pwd" name="password" type="password">
-                <label for="register-confirm">确认密码</label>
-                <input id="register-confirm" name="confirm" type="password">
-                <input name="csrf_token" type="hidden" value="{{ csrf_token() }}">
-                <button type="submit">注册</button>
-            </form>
-        </div>
-    </div>
+    </main>
+{% endblock %}
+
+{% block script %}
+    <script>
+
+    </script>
 {% endblock %}

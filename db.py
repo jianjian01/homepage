@@ -5,7 +5,7 @@ from pony.orm import Database, Required, set_sql_debug, PrimaryKey, Optional, Se
 
 db = Database()
 
-set_sql_debug(True)
+# set_sql_debug(True)
 
 
 class UserStatus:
@@ -26,6 +26,7 @@ class User(db.Entity):
 
     sites = Set(lambda: UserSite)
     categories = Set(lambda: Category)
+    mails = Set(lambda: UserMailHistory)
 
     status = Required(int, default=UserStatus.register)
     create_time = Required(datetime, default=datetime.utcnow)
@@ -85,6 +86,21 @@ class UserSite(db.Entity):
     create_time = Required(datetime, default=datetime.utcnow)
     status = Required(int, default=UserSiteStatus.normal)
     delete_time = Optional(datetime)
+
+
+class UserMailCategory:
+    """发送给用户的邮件种类"""
+    verify_email = 1
+
+
+class UserMailHistory(db.Entity):
+    id = PrimaryKey(int, auto=True)
+    user = Required(User)
+    address = Required(str)
+    content = Required(str)
+    category = Required(int)
+    create_time = Required(datetime, default=datetime.utcnow)
+    status = Required(int, default=UserSiteStatus.normal)
 
 
 if __name__ == '__main__':
