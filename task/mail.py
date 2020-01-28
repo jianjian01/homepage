@@ -1,8 +1,14 @@
-from celery import current_app as celery_app
-from celery.utils.log import get_task_logger
-from flask import current_app as current_flask
+import logging
+import time
+
+from pony.orm import db_session, set_sql_debug
+
+from db import UserMailHistory, User, UserMailCategory
+from flask_app import redis, flask_app
 
 from util.mail import send_mail
+
+set_sql_debug(True)
 
 template = """<html lang="zh">
 <body>
@@ -15,21 +21,44 @@ template = """<html lang="zh">
 </body>
 </html>"""
 
-logger = get_task_logger(__name__)
 
-
-@celery_app.task(name="mail.send_email_verify_url")
-def send_email_verify_url(name, email, url):
+@db_session
+def send_email_verify_url(user_id, name, email, url):
     """发送验证邮箱的链接"""
-    logger.info('mail.send_email_verify_url')
-    conf = current_flask.config
+    logging.info('mail.send_email_verify_url')
+    conf = flask_app.config
+    if user_id.isdigit():
+        user_id = int(user_id)
+    else:
+        logging.warning("数据错误， {}".format(user_id))
+        return
+
     subject = '吃点心 - 账户激活'
     content = template.format(name, url)
+    user = User.select(lambda x: x.u_id == user_id)
+    if not user:
+        time.sleep(5)
+        user = User.select(lambda x: x.u_id == user_id)
+        if not user:
+            logging.warning("用户创建失败， {}".format(user_id))
+            return
+    UserMailHistory(user=user.first(), address=email, content=content,
+                    category=UserMailCategory.verify_email)
     send_mail(host=conf['SMTP_HOST'], port=conf['SMTP_PORT'],
               email_address=conf['SMTP_EMAIL'], password=conf['SMTP_PASSWORD'],
               to_address=email, subject=subject, content=content)
 
 
-@celery_app.task
-def test():
-    print('abc')
+def main():
+    conf = flask_app.config
+    while 1:
+        item = redis.xread({conf['REDIS_VERIFY_EMAIL_CHANNEL']: '$'}, 1, 0)
+        logging.info(item)
+        data = item[0][1][0][1]
+        time.sleep(10)
+        send_email_verify_url(data[b'user_id'].decode(), data[b'name'].decode(),
+                              data[b'email'].decode(), data[b'url'].decode())
+
+
+if __name__ == '__main__':
+    main()

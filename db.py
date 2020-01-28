@@ -1,9 +1,10 @@
 import random
 from datetime import datetime
 
-from pony.orm import Database, Required, set_sql_debug, PrimaryKey, Optional, Set, select
+from pony.orm import Database, Required, set_sql_debug, PrimaryKey, Optional, Set, select, LongStr
 
 db = Database()
+
 
 # set_sql_debug(True)
 
@@ -97,7 +98,7 @@ class UserMailHistory(db.Entity):
     id = PrimaryKey(int, auto=True)
     user = Required(User)
     address = Required(str)
-    content = Required(str)
+    content = Required(LongStr, sql_type='text')
     category = Required(int)
     create_time = Required(datetime, default=datetime.utcnow)
     status = Required(int, default=UserSiteStatus.normal)

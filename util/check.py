@@ -27,12 +27,12 @@ def register_check(name, email, password, confirm, timestamp, secret):
         return jsonify({'status': -1, "message": "邮箱已经注册"})
     # 检查时间戳
     if not isinstance(timestamp, str) or not timestamp.isdigit():
-        return jsonify({'status': -1, "message": "请求错误"})
+        return jsonify({'status': -1, "message": "请求错误，请刷新重试"})
     ts = int(timestamp)
     new_time = int(time.time())
     s = new_time - ts
-    if s < 0 or s > 60 or not SecretTimestamp.verify(timestamp, secret):
-        return jsonify({'status': -1, "message": "请求错误"})
+    if s < 0 or s > 120 or not SecretTimestamp.verify(timestamp, secret):
+        return jsonify({'status': -1, "message": "请求错误，请刷新重试"})
     return None
 
 

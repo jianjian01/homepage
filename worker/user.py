@@ -51,11 +51,12 @@ def user_register():
     res = redis.setex('user:verify:{}'.format(user.u_id), 24 * 60 * 60, v_code)
     logging.info("send v_code to redis success, {}".format(res))
     v_url = "https://chidian.xin/verify?id={}&code={}".format(user.u_id, v_code)
-    res = redis.publish(current_app.config['REDIS_VERIFY_EMAIL_CHANNEL'], json.dumps({
+    res = redis.xadd(current_app.config['REDIS_VERIFY_EMAIL_CHANNEL'], {
+        'user_id': user.u_id,
         'name': name,
         'email': email,
         'url': v_url,
         'code': v_code
-    }))
+    })
     logging.info("publish send email job success, {}".format(res))
     return jsonify({'status': 1, "message": "注册成功，请查收验证邮件。"})
