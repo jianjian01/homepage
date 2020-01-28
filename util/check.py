@@ -10,6 +10,15 @@ from flask import jsonify, current_app
 from db import User, UserStatus
 
 
+def login_check(email, password, timestamp, secret):
+    """注册检查"""
+    if not email or not password:
+        return jsonify({'status': -1, "message": "请求错误，请刷新重试"})
+    # 检查时间戳
+    if not SecretTimestamp.verify(timestamp, secret):
+        return jsonify({'status': -1, "message": "请求错误，请刷新重试"})
+
+
 def register_check(name, email, password, confirm, timestamp, secret):
     """注册检查"""
     if not 4 <= len(name) <= 32:
@@ -26,12 +35,7 @@ def register_check(name, email, password, confirm, timestamp, secret):
     if User.email_status(email) != UserStatus.not_exist:
         return jsonify({'status': -1, "message": "邮箱已经注册"})
     # 检查时间戳
-    if not isinstance(timestamp, str) or not timestamp.isdigit():
-        return jsonify({'status': -1, "message": "请求错误，请刷新重试"})
-    ts = int(timestamp)
-    new_time = int(time.time())
-    s = new_time - ts
-    if s < 0 or s > 120 or not SecretTimestamp.verify(timestamp, secret):
+    if not SecretTimestamp.verify(timestamp, secret):
         return jsonify({'status': -1, "message": "请求错误，请刷新重试"})
     return None
 
@@ -67,7 +71,7 @@ def bcrypt_hash(email, password):
 
 def bcrypt_check(email, password, hashed):
     """
-    :param name:
+    :param email:
     :param password:
     :return:
     """
@@ -90,4 +94,11 @@ class SecretTimestamp:
     @staticmethod
     def verify(timestamp, secret):
         """检查是否有效"""
+        if not isinstance(timestamp, str) or not timestamp.isdigit():
+            return False
+        ts = int(timestamp)
+        new_time = int(time.time())
+        s = new_time - ts
+        if s < 0 or s > 120:
+            return False
         return SecretTimestamp.secret(timestamp) == secret

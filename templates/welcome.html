@@ -160,7 +160,6 @@
                                 <div class="form-item">
                                     <dl class="form-group">
                                         <dt>
-
                                             <label class="form-label" for="login-pwd">
                                                 密码
                                                 <a class="label-link" href="/password_reset">忘记密码？</a>
@@ -172,8 +171,9 @@
                                         </dd>
                                     </dl>
                                 </div>
+                                <input type="hidden" name="timestamp" value="{{ timestamp.timestamp }}">
+                                <input type="hidden" name="timestamp_secret" value="{{ timestamp.secret }}">
                                 <input name="csrf_token" type="hidden" value="{{ csrf_token() }}">
-
                                 <dl class="form-group">
                                     <dd>
                                         <button class="button" type="submit">登录</button>
