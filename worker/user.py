@@ -3,7 +3,7 @@ import logging
 import random
 import string
 
-from flask import request, render_template, current_app, jsonify, session
+from flask import request, render_template, current_app, jsonify, session, redirect
 
 from db import User, UserStatus
 from flask_app import flask_app as app, redis
@@ -71,8 +71,6 @@ def user_register():
                 password=bcrypt_hash(email, password))
     v_code = ''.join([random.choice(string.ascii_lowercase + string.digits) for _ in range(32)])
     logging.info("email: {} u_id:{} v_code: {}".format(user.email, user.u_id, v_code))
-    res = redis.setex('user:verify:{}'.format(user.u_id), 24 * 60 * 60, v_code)
-    logging.info("send v_code to redis success, {}".format(res))
     v_url = "https://chidian.xin/verify?id={}&code={}".format(user.u_id, v_code)
     res = redis.xadd(current_app.config['REDIS_VERIFY_EMAIL_CHANNEL'], {
         'user_id': user.u_id,
@@ -82,4 +80,25 @@ def user_register():
         'code': v_code
     })
     logging.info("publish send email job success, {}".format(res))
+    res = redis.setex('user:verify:{}'.format(user.u_id), 24 * 60 * 60, v_code)
+    logging.info("send v_code to redis success, {}".format(res))
     return jsonify({'status': 1, "message": "注册成功，请查收验证邮件。"})
+
+
+@app.route('/verify', methods=['GET'])
+def verify_email():
+    """验证邮箱"""
+    args = request.args
+    u_id = args.get('id', '')
+    v_code = args.get('code', '')
+    user = User.select(lambda x: x.u_id == int(u_id))
+    if not user:
+        return jsonify({'status': 1, "message": "链接错误或者已经失效"})
+    resp = redis.get('user:verify:{}'.format(u_id))
+    if not resp:
+        return jsonify({'status': 1, "message": "链接错误或者已经失效"})
+    code = resp.decode()
+    if code != v_code:
+        return jsonify({'status': 1, "message": "链接错误或者已经失效"})
+    user.status = UserStatus.normal
+    return jsonify({'status': 1, "message": "成功"})
