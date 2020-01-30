@@ -2,7 +2,7 @@ import logging
 import random
 import string
 from datetime import datetime
-
+from functools import wraps
 import requests
 from flask import Blueprint, request, redirect, current_app, session
 from pony.orm import commit, db_session
@@ -16,6 +16,7 @@ def callback_auth(source):
     """检查回调时候 state 是否一致"""
 
     def wrapper(func):
+        @wraps(func)
         def wrapper_inner():
             url_state = request.args.get('state', '')
             cookie_state = request.cookies.get(source, '')
@@ -53,6 +54,13 @@ def save_or_update_user(source, user_id, name, email, content):
     return user.u_id
 
 
+def set_session(conf, u_id, source):
+    session[conf['SESSION_USER']] = u_id
+    session[conf['SESSION_SOURCE']] = source
+    session.same
+    session.permanent = True
+
+
 @auth_bp.route('/')
 def login_redirect():
     """
@@ -69,6 +77,15 @@ def login_redirect():
             'client_id': conf['GITHUB_CLIENT_ID'],
             'redirect_uri': conf['GITHUB_REDIRECT_URI'],
             'scope': 'read:user',
+            'state': state
+        }
+    elif source == 'weibo':
+        url = 'https://api.weibo.com/oauth2/authorize'
+        params = {
+            'client_id': conf['WEIBO_APP_KEY'],
+            'response_type': 'code',
+            'redirect_uri': conf['WEIBO_REDIRECT_URI'],
+            'scope': 'email',
             'state': state
         }
     else:
@@ -95,9 +112,9 @@ def callback_github():
         'code': code,
         'state': state
     }
-    logging.info("request code {}".format(code))
+    logging.info("github request code {}".format(code))
     resp = requests.post(url=url, params=params, headers={'Accept': 'application/json'})
-    logging.info("get response: {}".format(resp.text))
+    logging.info("github get response: {}".format(resp.text))
     data = resp.json()
     url = 'https://api.github.com/user'
     token = data.get('access_token', '')
@@ -105,12 +122,52 @@ def callback_github():
         'Authorization': 'token {}'.format(token),
         'Accept': 'application/json'
     }
-    logging.info("request token: {}".format(token))
+    logging.info("github request token: {}".format(token))
     resp = requests.get(url=url, headers=headers)
-    logging.info("get response: {}".format(resp.text))
+    logging.info("github get response: {}".format(resp.text))
     data = resp.json()
     u_id = save_or_update_user(UserSource.github, data.get('id', ''),
                                data.get('name', ''), data.get('email', ''), resp.text)
-    session[conf['SESSION_USER']] = u_id
-    session.permanent = True
+    set_session(conf, u_id, UserSource.github)
+    return redirect('/')
+
+
+@auth_bp.route('/callback/weibo')
+@callback_auth('weibo')
+@db_session
+def callback_weibo():
+    """处理weibo回调请求"""
+    code = request.args.get('code', '')
+    state = request.args.get('state', '')
+    conf = current_app.config
+    url = 'https://api.weibo.com/oauth2/access_token'
+    params = {
+        'client_id': conf['WEIBO_APP_KEY'],
+        'client_secret': conf['WEIBO_APP_SECRET'],
+        'grant_type': 'authorization_code',
+        'redirect_uri': conf['WEIBO_REDIRECT_URI'],
+        'code': code
+    }
+    logging.info("weibo request code {}".format(code))
+    resp = requests.post(url=url, params=params, headers={'Accept': 'application/json'})
+    logging.info("weibo get response: {}".format(resp.text))
+    data = resp.json()
+    if not data.get('access_token', ''):
+        logging.warning('weibo get error response')
+        return redirect('/')
+    access_token = data.get('access_token', '')
+    uid = data.get('uid', '')
+
+    url = 'https://api.weibo.com/2/users/show.json'
+    params = {
+        'access_token': access_token,
+        'uid': uid
+    }
+    logging.info("weibo request access_token: {}, uid: {}".format(access_token, uid))
+    resp = requests.get(url=url, params=params, headers={'Accept': 'application/json'})
+    logging.info("weibo get response: {}".format(resp.text))
+    data = resp.json()
+    u_id = save_or_update_user(UserSource.weibo, data.get('id', ''),
+                               data.get('name', ''), data.get('email', ''), resp.text)
+    set_session(conf, u_id, UserSource.weibo)
     return redirect('/')

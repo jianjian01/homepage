@@ -6,6 +6,7 @@ class Base:
     """公共配置"""
     REDIS_VERIFY_EMAIL_CHANNEL = "VERIFY_EMAIL"
     SESSION_USER = '_u'
+    SESSION_SOURCE = '_o'
 
     AUTH_SITES = ['weibo', 'github']
 
@@ -36,6 +37,8 @@ class Dev(Base):
     GITHUB_REDIRECT_URI = 'http://127.0.0.1:5000/auth/callback/github'
     WEIBO_APP_KEY = '1108861131'
     WEIBO_APP_SECRET = 'b82a3cc00f20ab137e3d572000ad0f08'
+    WEIBO_REDIRECT_URI = 'http://127.0.0.1:5000/auth/callback/weibo'
+    WEIBO_CANCEL_URI = 'http://127.0.0.1:5000/auth/callback/weibo/cancel'
 
 
 class Prod(Base):
@@ -46,6 +49,8 @@ class Prod(Base):
     SESSION_COOKIE_HTTPONLY = True
     SESSION_COOKIE_SECURE = True
     SESSION_REFRESH_EACH_REQUEST = True
+    SESSION_COOKIE_SAMESITE = "Lax"
+
     PONY = {
         'provider': 'mysql',
         'host': 'mysql_8',
@@ -66,6 +71,8 @@ class Prod(Base):
     GITHUB_REDIRECT_URI = 'https://chidian.xin/auth/callback/github'
     WEIBO_APP_KEY = '1108861131'
     WEIBO_APP_SECRET = 'b82a3cc00f20ab137e3d572000ad0f08'
+    WEIBO_REDIRECT_URI = 'https://chidian.xin/auth/callback/weibo'
+    WEIBO_CANCEL_URI = 'https://chidian.xin/auth/callback/weibo/cancel'
 
 
 Config = None

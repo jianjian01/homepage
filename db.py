@@ -17,6 +17,7 @@ class UserStatus:
 
 class UserSource:
     github = 1
+    weibo = 2
 
 
 class User(db.Entity):

@@ -1,4 +1,6 @@
+import logging
 import time
+from datetime import datetime
 
 from flask import render_template, request, Blueprint, current_app, session
 
@@ -20,7 +22,11 @@ def check_user():
         return
     user = User.select(lambda x: x.u_id == u_id and x.status == UserStatus.normal).first()
     if user:
+        user.last_login_time = datetime.utcnow()
+        logging.info("user u_id: {}".format(user.u_id))
         request.user = user
+    else:
+        logging.info("user not login")
 
 
 @page_bp.route('/', methods=['GET'])
