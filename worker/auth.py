@@ -1,6 +1,4 @@
 import logging
-import random
-import string
 from datetime import datetime
 from functools import wraps
 import requests
@@ -8,6 +6,8 @@ from flask import Blueprint, request, redirect, current_app, session
 from pony.orm import commit, db_session
 
 from db import UserSource, User, UserStatus
+from flask_app import redis
+from util.tool import random_str
 
 auth_bp = Blueprint('auth', __name__, template_folder='templates')
 
@@ -57,7 +57,10 @@ def save_or_update_user(source, user_id, name, email, content):
 def set_session(conf, u_id, source):
     session[conf['SESSION_USER']] = u_id
     session[conf['SESSION_SOURCE']] = source
-    session.same
+    u_id = str(u_id)
+    ran_str = random_str(8)
+    session[u_id] = ran_str
+    redis.setex(u_id, 24 * 60 * 60 * 7, ran_str)
     session.permanent = True
 
 
@@ -70,7 +73,7 @@ def login_redirect():
     conf = current_app.config
     source = request.args.get('source', '').lower()
 
-    state = ''.join([random.choice(string.digits + string.ascii_lowercase) for _ in range(16)])
+    state = random_str(16)
     if source == 'github':
         url = 'https://github.com/login/oauth/authorize'
         params = {
@@ -171,3 +174,9 @@ def callback_weibo():
                                data.get('name', ''), data.get('email', ''), resp.text)
     set_session(conf, u_id, UserSource.weibo)
     return redirect('/')
+
+
+@auth_bp.route('/callback/weibo/cancel')
+@db_session
+def callback_weibo_cancel():
+    """用户取消授权"""
