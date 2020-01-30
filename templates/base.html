@@ -9,7 +9,11 @@
     <meta content="origin" name="referrer">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <!-- icon from https://www.iconfont.cn/collections/detail?spm=a313x.7781069.0.da5a778a4&cid=4878 -->
+    <link sizes="16x16" rel="shortcut icon" href="{{ url_for('static', filename='icon/16x16.png') }}">
+    <link sizes="32x32" rel="icon" href="{{ url_for('static', filename='icon/32x32.png') }}">
+    <link sizes="80x80" rel="icon" href="{{ url_for('static', filename='icon/80x80.png') }}">
+    <link sizes="120x120" rel="icon" href="{{ url_for('static', filename='icon/120x120.png') }}">
 
     <title>{% block title %}{% endblock %}吃点心 - 自定义网址收藏</title>
     <style>
@@ -17,13 +21,35 @@
             padding: 0;
             margin: 0;
         }
+
+        footer {
+            margin-bottom: 0;
+            background-color: #fafbfc;
+        }
+
+        .footer-container {
+            padding: 24px 24px;
+        }
+
+        a {
+            text-decoration: none;
+        }
     </style>
     {% block css %}{% endblock %}
 
 </head>
 <body>
+
 {% block content %}{% endblock %}
+
+<footer>
+    <div class="footer-container">
+        © Copyright 2020 chidian.xin.
+
+    </div>
+</footer>
 {% block script %}{% endblock %}
+
 <script>
 
 </script>

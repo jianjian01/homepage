@@ -1,4 +1,5 @@
-from .index import index
-from .user import user_login
+from .index import page_bp
+from .user import user_bp
+from .auth import auth_bp
 
-__all__ = ['index', 'user_login']
+__all__ = ['page_bp', 'user_bp', 'auth_bp']

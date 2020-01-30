@@ -2,7 +2,15 @@ import logging
 import os
 
 
-class Dev:
+class Base:
+    """公共配置"""
+    REDIS_VERIFY_EMAIL_CHANNEL = "VERIFY_EMAIL"
+    SESSION_USER = '_u'
+
+    AUTH_SITES = ['weibo', 'github']
+
+
+class Dev(Base):
     """开发环境"""
     DEBUG = True
     SECRET_KEY = 'testing'  # os.urandom(16)
@@ -16,7 +24,6 @@ class Dev:
         'db': 'chidianxin',
     }
     REDIS_URL = 'redis://47.96.177.79:29899/0'
-    REDIS_VERIFY_EMAIL_CHANNEL = "VERIFY_EMAIL"
     RANDOM_KEY = os.urandom(16)
 
     SMTP_HOST = 'smtpdm.aliyun.com'
@@ -24,13 +31,21 @@ class Dev:
     SMTP_EMAIL = 'verify@chidian.xin'
     SMTP_PASSWORD = 'G3iu3hrbwmDz1vcuaHHK'
 
+    GITHUB_CLIENT_ID = '655c0721a03d26aac38c'
+    GITHUB_CLIENT_SECRET = 'a31f81f1ca84b7a9ccc12e4ae3d5ed69338f8128'
+    GITHUB_REDIRECT_URI = 'http://127.0.0.1:5000/auth/callback/github'
+    WEIBO_APP_KEY = '1108861131'
+    WEIBO_APP_SECRET = 'b82a3cc00f20ab137e3d572000ad0f08'
 
-class Prod:
+
+class Prod(Base):
     """正式环境"""
     DEBUG = False
 
     SESSION_COOKIE_DOMAIN = 'chidian.xin'
     SESSION_COOKIE_HTTPONLY = True
+    SESSION_COOKIE_SECURE = True
+    SESSION_REFRESH_EACH_REQUEST = True
     PONY = {
         'provider': 'mysql',
         'host': 'mysql_8',
@@ -40,12 +55,17 @@ class Prod:
         'db': 'chidianxin',
     }
     REDIS_URL = 'redis://@redis_5:6379/1'
-    REDIS_VERIFY_EMAIL_CHANNEL = "VERIFY_EMAIL"
 
     SMTP_HOST = 'smtpdm.aliyun.com'
     SMTP_PORT = 465
     SMTP_EMAIL = 'verify@chidian.xin'
     SMTP_PASSWORD = 'G3iu3hrbwmDz1vcuaHHK'
+
+    GITHUB_CLIENT_ID = '655c0721a03d26aac38c'
+    GITHUB_CLIENT_SECRET = 'a31f81f1ca84b7a9ccc12e4ae3d5ed69338f8128'
+    GITHUB_REDIRECT_URI = 'https://chidian.xin/auth/callback/github'
+    WEIBO_APP_KEY = '1108861131'
+    WEIBO_APP_SECRET = 'b82a3cc00f20ab137e3d572000ad0f08'
 
 
 Config = None

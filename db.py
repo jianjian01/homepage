@@ -12,9 +12,11 @@ db = Database()
 class UserStatus:
     delete = -1
     not_exist = 0
-    register = 1
-    normal = 2
-    anomaly = 3  # 异常
+    normal = 1
+
+
+class UserSource:
+    github = 1
 
 
 class User(db.Entity):
@@ -22,14 +24,16 @@ class User(db.Entity):
     id = PrimaryKey(int, auto=True)
     u_id = Required(int, unique=True, py_check=lambda x: User.id_min < x < User.id_max)
     name = Required(str)
-    email = Required(str)
-    password = Required(str)
+    email = Optional(str)
+    source = Required(int)
+    source_id = Required(str)
+    source_data = Optional(LongStr)
 
     sites = Set(lambda: UserSite)
     categories = Set(lambda: Category)
     mails = Set(lambda: UserMailHistory)
 
-    status = Required(int, default=UserStatus.register)
+    status = Required(int, default=UserStatus.normal)
     create_time = Required(datetime, default=datetime.utcnow)
     last_login_time = Required(datetime, default=datetime.utcnow)
 
