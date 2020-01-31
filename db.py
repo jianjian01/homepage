@@ -25,7 +25,7 @@ class User(db.Entity):
     id = PrimaryKey(int, auto=True)
     u_id = Required(int, unique=True, py_check=lambda x: User.id_min < x < User.id_max)
     name = Required(str)
-    email = Optional(str)
+    avatar_url = Optional(str)
     source = Required(int)
     source_id = Required(str)
     source_data = Optional(LongStr)

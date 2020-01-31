@@ -29,25 +29,25 @@ def callback_auth(source):
     return wrapper
 
 
-def save_or_update_user(source, user_id, name, email, content):
+def save_or_update_user(source, user_id, name, avatar_url, content):
     """
 
     :return:
     """
     if not isinstance(user_id, str):
         user_id = str(user_id)
-    if not email:
-        email = ''
+    if not avatar_url:
+        avatar_url = ''
     user = User.select(lambda x: x.source == source and x.source_id == user_id
                                  and x.status == UserStatus.normal).first()
     if not user:
         user = User(u_id=User.new_uid(), name=name, source=source, source_id=user_id,
-                    email=email, source_data=content)
+                    avatar_url=avatar_url, source_data=content)
         logging.info("create new user: {}".format(user.u_id))
     else:
         user.name = name
         user.source_data = content
-        user.email = email
+        user.avatar_url = avatar_url
         user.last_login_time = datetime.utcnow()
         logging.info("user {} login from {}".format(user.u_id, source))
     commit()
@@ -130,7 +130,7 @@ def callback_github():
     logging.info("github get response: {}".format(resp.text))
     data = resp.json()
     u_id = save_or_update_user(UserSource.github, data.get('id', ''),
-                               data.get('name', ''), data.get('email', ''), resp.text)
+                               data.get('name', ''), data.get('avatar_url', ''), resp.text)
     set_session(conf, u_id, UserSource.github)
     return redirect('/')
 
@@ -170,8 +170,8 @@ def callback_weibo():
     resp = requests.get(url=url, params=params, headers={'Accept': 'application/json'})
     logging.info("weibo get response: {}".format(resp.text))
     data = resp.json()
-    u_id = save_or_update_user(UserSource.weibo, data.get('id', ''),
-                               data.get('name', ''), data.get('email', ''), resp.text)
+    u_id = save_or_update_user(UserSource.weibo, data.get('id', ''), data.get('name', ''),
+                               data.get('profile_image_url', ''), resp.text)
     set_session(conf, u_id, UserSource.weibo)
     return redirect('/')
 
