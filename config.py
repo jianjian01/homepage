@@ -7,6 +7,7 @@ class Base:
     REDIS_VERIFY_EMAIL_CHANNEL = "VERIFY_EMAIL"
     SESSION_USER = '_u'
     SESSION_SOURCE = '_o'
+    SESSION_CREATE_TIME = '_t'
 
     AUTH_SITES = ['weibo', 'github']
 

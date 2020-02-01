@@ -1,4 +1,5 @@
 import logging
+import time
 from datetime import datetime
 from functools import wraps
 import requests
@@ -55,12 +56,16 @@ def save_or_update_user(source, user_id, name, avatar_url, content):
 
 
 def set_session(conf, u_id, source):
+    ct = int(time.time())
     session[conf['SESSION_USER']] = u_id
     session[conf['SESSION_SOURCE']] = source
+    session[conf['SESSION_CREATE_TIME']] = ct
     u_id = str(u_id)
+    key = "{}:{}".format(u_id, ct)
+
     ran_str = random_str(8)
     session[u_id] = ran_str
-    redis.setex(u_id, 24 * 60 * 60 * 7, ran_str)
+    redis.setex(key, 24 * 60 * 60 * 7, ran_str)
     session.permanent = True
 
 
