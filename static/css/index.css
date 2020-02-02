@@ -1,3 +1,22 @@
+body {
+    padding: 0;
+    margin: 0;
+}
+
+footer {
+    margin-bottom: 0;
+    clear: both;
+    background-color: #fafbfc;
+}
+
+.footer-container {
+    padding: 24px 24px;
+}
+
+a {
+    text-decoration: none;
+}
+
 .header {
     padding: 6px 24px;
     display: block;
@@ -6,8 +25,7 @@
     border-bottom: 1px solid lightgray;
 }
 
-.header-date {
-    font-size: 12px;
+.header-logo {
     float: left;
 }
 
@@ -16,11 +34,15 @@
     float: right;
 }
 
+.header-user .avatar {
+    padding-top: 6px;
+}
+
 .header-login {
     text-align: right;
     float: right;
     border: 1px solid lightgray;
-    padding: 5px 8px;
+    padding: 8px;
     border-radius: 5px;
     cursor: pointer;
 }
@@ -35,7 +57,7 @@
 
 .header-lang {
     float: right;
-    padding: 7px 8px;
+    padding: 9px;
     cursor: pointer;
 }
 
@@ -52,7 +74,6 @@
 
 .header-user-link {
     color: #007bff !important;
-
 }
 
 .dropdown {
@@ -146,7 +167,8 @@
     margin: auto;
     padding: 0;
     border: 1px solid #888;
-    max-width: 500px;
+    max-width: 300px;
+    border-radius: 6px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     -webkit-animation-name: animatetop;
     -webkit-animation-duration: 0.4s;
@@ -203,6 +225,6 @@
 }
 
 .modal-content .modal-site {
-    padding: 0 10px;
+    padding: 10px;
     box-sizing: border-box;
 }

@@ -71,6 +71,7 @@ class Category(db.Entity):
     id = PrimaryKey(int, auto=True)
     name = Required(str, index=True)
     user = Required(User)
+    order = Required(int, default=20)
     hide = Required(bool, default=False)
     delete = Required(bool, default=False)
     sites = Set(lambda: UserSite)

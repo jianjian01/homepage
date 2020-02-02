@@ -1,10 +1,123 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/user.css') }}">
+{% endblock %}
+
+
+{% block content %}
+    <div class="main-container">
+        <div class="content-body">
+            <nav class="nav">
+                <div class="sidebar">
+                    <ul class="sidebar-ul">
+                        <li class="{% if page=='info' %}active{% endif %}">
+                            <a href="/user/{{ request.user.u_id }}">个人信息</a>
+                        </li>
+                        <li class="{% if page=='category' %}active{% endif %}">
+                            <a href="/user/{{ request.user.u_id }}/category">类别</a>
+                        </li>
+                        <li class="{% if page=='website' %}active{% endif %}">
+                            <a href="/user/{{ request.user.u_id }}/website">网址</a>
+                        </li>
+                        <li class="{% if page=='rss' %}active{% endif %}">
+                            <a href="/user/{{ request.user.u_id }}/rss">RSS</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <main role="main">
+                {% if page == 'info' %}
+                    {% set user = request.user %}
+                    <div class="form-container" id="main-user">
+                        <form action="#">
+                            <div class="form-row">
+                                <label for="avatar_url">头像</label>
+                                <img width="80px" alt="{{ user.name }}"
+                                     src="{{ user.avatar_url }}"/>
+                            </div>
+                            <div class="form-row">
+                                <label for="u_id">ID</label>
+                                <input readonly id="u_id" class="main-input-display"
+                                       value="{{ user.u_id }}" name="u_id">
+                            </div>
+                            <div class="form-row">
+                                <label for="name">昵称</label>
+                                <input readonly id="name" class="main-input-display"
+                                       value="{{ user.name }}" name="name">
+                            </div>
+                            <div class="form-row">
+                                <label for="source">注册方式</label>
+                                <input readonly id="source" class="main-input-display"
+                                       value="{{ [0, 'GitHub', '微博'][user.source] }}" name="source">
+                            </div>
+                            <div class="form-row">
+                                <label for="register-date">注册日期</label>
+                                <input readonly id="register-date" class="main-input-display"
+                                       value="{{ user.create_time| string |truncate(10, False, end='') }}"
+                                       name="register-date">
+                            </div>
+                        </form>
+                    </div>
+                    <a href="/">
+                        <button type="button" role="button" class="btn btn-success btn-one">返回主页</button>
+                    </a>
+
+                {% elif page == 'category' %}
+                    <div class="form-container" id="main-category">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col" class="cate-num">#</th>
+                                <th scope="col">类别</th>
+                                <th scope="col">序号</th>
+                                <th scope="col" class="cate-action">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for c in categories %}
+                                <tr data-id="{{ c.id }}">
+                                    <th scope="row">{{ loop.index }}</th>
+                                    <td>{{ c.name }}</td>
+                                    <td>{{ c.order }}</td>
+                                    <td>
+                                        <button type="button" class="delete-cate action-cate">删除</button>
+                                        /
+                                        <button type="button" class="update-cate action-cate">更新</button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        <small class="small">
+                            1. 序号 1 ～ 1000 之间，按照从小到大排列；
+                        </small>
+                        <small class="small">
+                            2. 一次只能添加一条数据；
+                        </small>
+                        <small class="small">
+                            3. 删除分类，则分类下的网址都会被隐藏。
+                        </small>
+                    </div>
+                    <div class="btn-group">
+                        <a href="/">
+                            <button type="button" class="btn btn-success">返回主页</button>
+                        </a>
+                        <button type="button" class="btn btn-light" id="btn-add-cate">添加</button>
+
+                    </div>
+                {% elif page == 'website' %}
+                    website
+                {% elif page == 'rss' %}
+                    rss
+                {% endif %}
+            </main>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    {% if page == 'category' %}
+        <script src="{{ url_for('static', filename='js/user_category.js') }}"></script>
+    {% endif %}
+{% endblock %}
