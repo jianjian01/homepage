@@ -32,7 +32,6 @@ class User(db.Entity):
 
     sites = Set(lambda: UserSite)
     categories = Set(lambda: Category)
-    mails = Set(lambda: UserMailHistory)
 
     status = Required(int, default=UserStatus.normal)
     create_time = Required(datetime, default=datetime.utcnow)
@@ -85,29 +84,15 @@ class UserSiteStatus:
 class UserSite(db.Entity):
     """用户保存网站信息"""
     id = PrimaryKey(int, auto=True)
+    name = Required(str)
     url = Required(str)
+    icon = Optional(str)
     user = Required(User)
     cate = Optional(Category)
-    header = Required(bool, default=False)
-
+    order = Required(int, default=20)
     create_time = Required(datetime, default=datetime.utcnow)
     status = Required(int, default=UserSiteStatus.normal)
     delete_time = Optional(datetime)
-
-
-class UserMailCategory:
-    """发送给用户的邮件种类"""
-    verify_email = 1
-
-
-class UserMailHistory(db.Entity):
-    id = PrimaryKey(int, auto=True)
-    user = Required(User)
-    address = Required(str)
-    content = Required(LongStr, sql_type='text')
-    category = Required(int)
-    create_time = Required(datetime, default=datetime.utcnow)
-    status = Required(int, default=UserSiteStatus.normal)
 
 
 if __name__ == '__main__':

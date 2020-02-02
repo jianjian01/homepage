@@ -2,8 +2,9 @@ import logging
 import random
 import string
 from datetime import datetime
+from functools import wraps
 
-from flask import current_app, session, request
+from flask import current_app, session, request, redirect
 
 from db import User, UserStatus
 from flask_app import redis
@@ -38,3 +39,13 @@ def check_user():
     else:
         logging.info("user not login")
         request.user = None
+
+
+def login_require(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        if not hasattr(request, 'user') or not request.user:
+            return redirect('/')
+        return func(*args, **kwargs)
+
+    return wrapper

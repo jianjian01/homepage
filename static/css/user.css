@@ -192,3 +192,67 @@ main th {
     font-size: 80%;
     cursor: pointer;
 }
+
+#main-website {
+    padding: 50px;
+}
+
+#main-website .site-category-name {
+    font-size: 20px;
+    margin: 10px 20px;
+}
+
+#main-website .site-name {
+    width: 100px;
+}
+
+#main-website .site-url {
+    width: 400px;
+}
+
+#main-website .site-order {
+    width: 50px;
+}
+
+#main-website .site-action {
+    width: 50px;
+}
+
+#main-website .new-site-td {
+    padding: 5px;
+}
+
+#main-website .new-site-name-input {
+    width: 100px;
+}
+
+#main-website .url-input-dom {
+    width: 350px;
+}
+
+#main-website .order-input-dom {
+    width: 50px;
+}
+
+#main-website .site-category-header {
+    display: inline;
+}
+
+#main-website .add-new-website {
+    float: right;
+    padding: 3px 5px;
+    border-radius: 3px;
+    border: 1px solid lightskyblue;
+    background: white;
+    cursor: pointer;
+}
+
+#main-website .new-website-input-dom {
+    font-size: 16px;
+    padding: 3px 5px;
+    border: none;
+}
+
+#main-website .delete-site {
+    cursor: pointer;
+}

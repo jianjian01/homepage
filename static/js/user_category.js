@@ -23,23 +23,10 @@ function new_order_input_dom() {
     return order
 }
 
-function http_request_json(action, url, data, callback) {
-    let request = new XMLHttpRequest();
-    request.open(action, url, true);
-    request.addEventListener("load", callback);
-    data.set('csrf_token', document.head.querySelector("[name~=csrf-token][content]").content);
-    request.send(data);
-}
-
-function refresh(event) {
-    window.location = window.location.href;
-}
-
-
 // add new category
 let btn_add = document.getElementById('btn-add-cate');
 let cate = document.getElementById('main-category');
-btn_add.onclick = function (e) {
+btn_add.onpointerdown = function (e) {
     let tbody = cate.getElementsByTagName('tbody')[0];
     let row = tbody.insertRow();
     let num_cel = document.createElement("td");

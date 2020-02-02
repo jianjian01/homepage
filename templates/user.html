@@ -75,7 +75,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            {% for c in categories %}
+                            {% for c in categories | sort(attribute="order") %}
                                 <tr data-id="{{ c.id }}">
                                     <th scope="row">{{ loop.index }}</th>
                                     <td>{{ c.name }}</td>
@@ -107,7 +107,57 @@
 
                     </div>
                 {% elif page == 'website' %}
-                    website
+                    <div class="form-container" id="main-website">
+                        {% if categories %}
+                            {% for c in categories | sort(attribute="order") %}
+                                <div class="site-list" data-id="{{ c.id }}">
+                                    <div class="site-category-header">
+                                        {% if c.name %}
+                                            <span class="site-category-name">{{ c.name }}</span>
+                                        {% endif %}
+                                        <button type="button" class="add-new-website">添加</button>
+                                    </div>
+                                    {% set ss = sites.get(c.id) %}
+                                    <table class="site-table table">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col" class="site-name">名称</th>
+                                            <th scope="col" class="site-url">网址</th>
+                                            <th scope="col" class="site-order">排序</th>
+                                            <th scope="col" class="site-action">操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% if ss %}
+                                            {% for s in ss | sort(attribute="order") %}
+                                                <tr data-id="{{ s.id }}" class="site-site">
+                                                    <th scope="row">
+                                                        {{ loop.index }}
+                                                    </th>
+                                                    <td class="site-name">
+                                                        {{ s.name }}
+                                                    </td>
+                                                    <td class="site-url">
+                                                        {{ s.url |truncate(50) }}
+                                                    </td>
+                                                    <td class="site-order">{{ s.order }}</td>
+                                                    <td class="site-action">
+                                                        <span class="delete-site">删除</span></td>
+                                                </tr>
+                                            {% endfor %}
+                                        {% endif %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="btn-group">
+                        <a href="/">
+                            <button type="button" role="button" class="btn btn-success btn-one">返回主页</button>
+                        </a>
+                    </div>
                 {% elif page == 'rss' %}
                     rss
                 {% endif %}
@@ -119,5 +169,7 @@
 {% block script %}
     {% if page == 'category' %}
         <script src="{{ url_for('static', filename='js/user_category.js') }}"></script>
+    {% elif page == 'website' %}
+        <script src="{{ url_for('static', filename='js/user_website.js') }}"></script>
     {% endif %}
 {% endblock %}
