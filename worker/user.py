@@ -1,11 +1,12 @@
 import logging
 from collections import defaultdict
+from urllib.parse import urlparse
 
 from flask import session, redirect, Blueprint, request, render_template, jsonify
 from pony.orm import commit, select
 
 from db import Category, UserSite, UserSiteStatus
-from util.tool import check_user, login_require
+from util.tool import check_user, login_require, select_website, query_icon
 
 user_bp = Blueprint('user', __name__, template_folder='templates')
 
@@ -83,15 +84,8 @@ def user_category_put(u_id: int):
 @user_bp.route('/<int:u_id>/website', methods=['GET'])
 @login_require
 def user_website(u_id: int):
-    sites = UserSite.select(lambda x: x.user == request.user and x.status == UserSiteStatus.normal)[:]
-    categories = Category.select(lambda c: c.user == request.user and not c.delete).order_by(Category.order)[:]
-    ss = defaultdict(list)
-    for s in sites:
-        key = s.cate.id if s.cate else ""
-        ss[key].append(s)
-    categories = list(categories)
-    categories.insert(0, {"id": '', 'name': '常用网址', 'order': 0})
-    return render_template('user.html', page='website', sites=ss, categories=categories)
+    sites, categories = select_website()
+    return render_template('user.html', page='website', sites=sites, categories=categories)
 
 
 @user_bp.route('/<int:u_id>/website', methods=['POST'])
@@ -115,7 +109,11 @@ def user_website_post(u_id: int):
         cate = Category.select(lambda x: x.user == request.user and x.id == cate_id and not x.delete).first()
         if not cate:
             return jsonify({'status': -1})
-    site = UserSite(name=name, url=url, user=request.user, cate=cate, order=order)
+    try:
+        icon = query_icon(urlparse(url).netloc)
+    except Exception:
+        icon = ''
+    site = UserSite(name=name, url=url, user=request.user, icon=icon, cate=cate, order=order)
     commit()
     return jsonify({'status': 1, 'id': site.id})
 

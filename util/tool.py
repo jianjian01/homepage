@@ -1,12 +1,14 @@
 import logging
 import random
 import string
+from collections import defaultdict
 from datetime import datetime
 from functools import wraps
 
 from flask import current_app, session, request, redirect
+from pony.orm import commit
 
-from db import User, UserStatus
+from db import User, UserStatus, UserSite, Category, UserSiteStatus, Site
 from flask_app import redis
 
 
@@ -49,3 +51,26 @@ def login_require(func):
         return func(*args, **kwargs)
 
     return wrapper
+
+
+def select_website():
+    """查询当前用户的网址"""
+    sites = UserSite.select(lambda x: x.user == request.user and x.status == UserSiteStatus.normal)[:]
+    categories = Category.select(lambda c: c.user == request.user and not c.delete).order_by(Category.order)[:]
+    ss = defaultdict(list)
+    for s in sites:
+        key = s.cate.id if s.cate else ""
+        ss[key].append(s)
+    categories = list(categories)
+    categories.insert(0, {"id": '', 'name': '', 'order': 0})
+    return ss, categories
+
+
+def query_icon(host):
+    """查询host 对应的 icon"""
+    site = Site.select(lambda x: x.host == host).first()
+    if not site:
+        _ = Site(host=host, icon='')
+        commit()
+        return ''
+    return site.icon

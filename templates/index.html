@@ -1,10 +1,111 @@
 {% extends "base.html" %}
 
+{% block css %}
+    <style>
 
+        @media (max-width: 600px) {
+            main {
+                width: calc(100% - 20px);
+                margin: 20px 10px;
+            }
+
+            .site-item {
+                flex: 0 0 33.333333%;
+                max-width: 33.333333%;
+                padding-right: 5px;
+                padding-left: 5px;
+            }
+        }
+
+        @media (min-width: 600px) {
+            main {
+                max-width: 1020px;
+                margin: 100px auto;
+            }
+
+            .site-item {
+                flex: 0 0 16.666667%;
+                max-width: 16.666667%;
+                padding-right: 15px;
+                padding-left: 15px;
+            }
+        }
+
+        .site-category {
+            margin-top: 25px;
+            margin-bottom: -8px;
+            color: #69c0ff;
+            font-weight: 400;
+            font-size: 2.25rem;
+        }
+
+        .site-hr {
+            margin-top: 15px !important;
+            margin-bottom: 5px !important;
+            display: block;
+            height: 1px;
+            color: #d6e4ff;
+            background-color: #d6e4ff;
+            border: 0;
+        }
+
+        .site-list {
+            box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
+            border-radius: .25rem !important;
+            background-color: #fff !important;
+            box-sizing: border-box;
+            padding: 1rem !important;
+            margin-bottom: 3rem !important;
+            display: flex;
+            flex-wrap: wrap;
+
+        }
+
+        .site-name {
+            padding-left: 25px;
+            margin-top: 15px;
+            background-size: 18px 18px;
+            background-repeat: no-repeat;
+            background-position-y: center;
+            font-size: large;
+        }
+
+        .site-item {
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
+        main A {
+            color: black;
+        }
+    </style>
+{% endblock %}
 {% block content %}
-
     <main>
-
+        {% if categories %}
+            {% for c in categories | sort(attribute="order") %}
+                {% set ss = sites.get(c.id) %}
+                {% if ss %}
+                    <div data-id="{{ c.id }}">
+                        {% if c.name %}
+                            <h5 class="site-category ">{{ c.name }}</h5>
+                            <hr class="site-hr">
+                        {% endif %}
+                        <div class="site-list">
+                            {% for s in ss | sort(attribute="order,create_time") %}
+                                <div class="site-item">
+                                    <a href="{{ s.url }}" class="site-name" target="_blank"
+                                            {% if s.icon %}
+                                       style="background-image: url(/static/site/{{ s.icon }}.png)"
+                                            {% endif %}
+                                    >{{ s.name }}</a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
     </main>
 {% endblock %}
 
@@ -12,17 +113,7 @@
 {% block script %}
     <script>
         window.onload = function () {
-            function setDate() {
-                let today = new Date();
-                let dd = String(today.getDate()).padStart(2, '0');
-                let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-                let yyyy = today.getFullYear();
-                return yyyy + ' 年 ' + mm + ' 月 ' + dd + ' 日';
-            }
-
-            {#document.getElementsByClassName('header-date')[0].innerHTML = setDate();#}
-            {% if request.user %}
-            {% else %}
+            {% if not request.user %}
                 // 弹出登录层
                 let btn = document.getElementById('header-login-button');
                 let modal = document.getElementById("login-modal");

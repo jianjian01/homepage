@@ -24,9 +24,8 @@ function new_order_input_dom() {
 }
 
 // add new category
-let btn_add = document.getElementById('btn-add-cate');
-let cate = document.getElementById('main-category');
-btn_add.onpointerdown = function (e) {
+function add_new_category(e) {
+    let cate = document.getElementById('main-category');
     let tbody = cate.getElementsByTagName('tbody')[0];
     let row = tbody.insertRow();
     let num_cel = document.createElement("td");
@@ -49,7 +48,7 @@ btn_add.onpointerdown = function (e) {
     row.appendChild(name_cel);
     row.appendChild(order_cel);
     row.appendChild(action_cel);
-};
+}
 
 // save new category
 function save_new_cate(e) {
@@ -93,12 +92,6 @@ function delete_cate(e) {
     let data = new FormData();
     data.set('id', cate_id);
     http_request_json('DELETE', document.URL, data, refresh);
-}
-
-let delete_btn = document.getElementsByClassName('delete-cate');
-for (let i = 0; i < delete_btn.length; i++) {
-    let btn = delete_btn.item(i);
-    btn.onpointerdown = delete_cate;
 }
 
 
@@ -146,9 +139,20 @@ function save_update_cate(e) {
 
 }
 
-let update_btn = document.getElementsByClassName('update-cate');
-for (let i = 0; i < update_btn.length; i++) {
-    let btn = update_btn.item(i);
-    btn.onpointerdown = update_cate;
+function run() {
+    let update_btn = document.getElementsByClassName('update-cate');
+    let delete_btn = document.getElementsByClassName('delete-cate');
+    let btn_add = document.getElementById('btn-add-cate');
+
+    for (let btn of update_btn) {
+        btn.onpointerdown = update_cate;
+    }
+
+    for (let btn of delete_btn) {
+        btn.onpointerdown = delete_cate;
+    }
+    btn_add.onpointerdown = add_new_category;
 }
+
+window.onload = run;
 

@@ -133,5 +133,4 @@ function run() {
 
 }
 
-run();
-
+window.onload = run;

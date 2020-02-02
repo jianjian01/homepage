@@ -112,9 +112,7 @@
                             {% for c in categories | sort(attribute="order") %}
                                 <div class="site-list" data-id="{{ c.id }}">
                                     <div class="site-category-header">
-                                        {% if c.name %}
-                                            <span class="site-category-name">{{ c.name }}</span>
-                                        {% endif %}
+                                        <span class="site-category-name">{{ c.name }}</span>
                                         <button type="button" class="add-new-website">添加</button>
                                     </div>
                                     {% set ss = sites.get(c.id) %}
