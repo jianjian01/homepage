@@ -15,7 +15,7 @@
     <link sizes="80x80" rel="icon" href="{{ url_for('static', filename='icon/80x80.png') }}">
     <link sizes="120x120" rel="icon" href="{{ url_for('static', filename='icon/120x120.png') }}">
 
-    <title>{% block title %}{% endblock %}吃点心 - 自定义网址收藏</title>
+    <title>{% block title %}{% endblock %} MyWeb100 - 自定义网址收藏</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/base.css') }}">
 
     {% block css %}{% endblock %}
@@ -88,7 +88,7 @@
                 <div class="modal-body">
                     <div class="modal-icon">
                         <div class="modal-site">
-                            <a href="/auth?source=github">
+                            <a href="/auth/?source=github">
                                 <div class="modal-site-icon">
                                     <!-- icon from https://octicons.github.com/icon/mark-github/ -->
                                     <svg class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1"
@@ -116,7 +116,7 @@
                             </div>
                         </div>
                         <div class="modal-site">
-                            <a href="/auth?source=weibo">
+                            <a href="/auth/?source=weibo">
                                 <div class="modal-site-icon">
                                     <!-- icon from https://www.iconfont.cn/collections/detail?spm=a313x.7781069.0.da5a778a4&cid=17055 -->
                                     <svg t="1580302438860" class="icon" viewBox="0 0 1024 1024" version="1.1"
@@ -179,7 +179,7 @@
 
 <footer>
     <div class="footer-container">
-        © Copyright 2020 chidian.xin.
+        © Copyright 2020 myweb100.com.
     </div>
 </footer>
 <script src="{{ url_for('static', filename='js/base.js') }}"></script>

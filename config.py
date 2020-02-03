@@ -42,12 +42,14 @@ class Prod(Base):
     """正式环境"""
     DEBUG = False
 
-    SESSION_COOKIE_DOMAIN = 'chidian.xin'
+    SESSION_COOKIE_DOMAIN = 'myweb100.com'
     SESSION_COOKIE_HTTPONLY = True
     SESSION_COOKIE_SECURE = True
     SESSION_REFRESH_EACH_REQUEST = True
     SESSION_COOKIE_SAMESITE = "Lax"
     SECRET_KEY = 'wSt0QSG9fnfPGmiB'
+    PREFERRED_URL_SCHEME = "https"
+    SERVER_NAME = 'myweb100.com'
 
     PONY = {
         'provider': 'mysql',
@@ -99,6 +101,7 @@ def set_log():
     else:
         logging.basicConfig(format=fmt, level=logging.INFO)
         logging.info("running dev")
+
 
 set_log()
 
