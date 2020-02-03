@@ -81,7 +81,8 @@ else:
 def set_log():
     fmt = "[%(asctime)-15s %(levelname)s %(filename)s:%(lineno)d] %(message)s"
     if mode == 'production':
-        filename = '.log'
+        os.makedirs('logs', exist_ok=True)
+        filename = './logs/.log'
         handler = TimedRotatingFileHandler(filename, when='D', interval=1, backupCount=180,
                                            encoding=None, delay=False, utc=True)
         formatter = logging.Formatter(fmt)
