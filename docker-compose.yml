@@ -10,7 +10,10 @@ services:
     working_dir: /app
     links:
       - redis
-      - db
+      - mysql
+    depends_on:
+      - mysql
+      - redis
   mysql:
     image: mysql:8
     command: --default-authentication-plugin=mysql_native_password
@@ -23,4 +26,4 @@ services:
       MYSQL_USER: myweb
       MYSQL_PASSWORD: T3KfkTjGmXE1ar5p
   redis:
-    image: redis:6
+    image: redis
