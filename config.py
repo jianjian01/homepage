@@ -87,12 +87,18 @@ def set_log():
                                            encoding=None, delay=False, utc=True)
         formatter = logging.Formatter(fmt)
         handler.setFormatter(formatter)
+        handler.setLevel(logging.INFO)
         logger = logging.getLogger()
-        logger.addHandler(handler)
+        # while running gunicron, flask.logger not work
+        gunicorn_logger = logging.getLogger('gunicorn.error')
+        gunicorn_logger.addHandler(handler)
+        logger.handlers = gunicorn_logger.handlers
+        logger.setLevel(gunicorn_logger.level)
+        logging.handlers = gunicorn_logger.handlers
+        logging.info("running gunicorn_logger")
     else:
         logging.basicConfig(format=fmt, level=logging.INFO)
-    logging.info("running")
-
+        logging.info("running dev")
 
 set_log()
 

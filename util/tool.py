@@ -73,3 +73,13 @@ def query_icon(host):
         _ = Site(host=host, icon='')
         return ''
     return site.icon
+
+
+def log_request(response):
+    """使用 gunicron 时， 自带的 logger 不能使用"""
+    logging.info('{} {} {} {}'.format(
+        request.headers.get('X-Real-IP', ''),
+        request.method, request.path,
+        response.status
+    ))
+    return response
