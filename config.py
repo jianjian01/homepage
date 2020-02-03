@@ -1,5 +1,6 @@
 import logging
 import os
+from logging.handlers import TimedRotatingFileHandler
 
 
 class Base:
@@ -46,6 +47,7 @@ class Prod(Base):
     SESSION_COOKIE_SECURE = True
     SESSION_REFRESH_EACH_REQUEST = True
     SESSION_COOKIE_SAMESITE = "Lax"
+    SECRET_KEY = 'wSt0QSG9fnfPGmiB'
 
     PONY = {
         'provider': 'mysql',
@@ -68,7 +70,9 @@ class Prod(Base):
 
 Config = None
 
-if os.getenv("mode", '').lower() == 'production':
+mode = os.getenv("mode", '').lower()
+
+if mode == 'production':
     Config = Prod
 else:
     Config = Dev
@@ -76,7 +80,16 @@ else:
 
 def set_log():
     fmt = "[%(asctime)-15s %(levelname)s %(filename)s:%(lineno)d] %(message)s"
-    logging.basicConfig(format=fmt, level=logging.INFO)
+    if mode == 'production':
+        filename = '.log'
+        handler = TimedRotatingFileHandler(filename, when='D', interval=1, backupCount=180,
+                                           encoding=None, delay=False, utc=True)
+        formatter = logging.Formatter(fmt)
+        handler.setFormatter(formatter)
+        logger = logging.getLogger()
+        logger.addHandler(handler)
+    else:
+        logging.basicConfig(format=fmt, level=logging.INFO)
     logging.info("running")
 
 
