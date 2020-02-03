@@ -13,6 +13,9 @@ pymysql = "*"
 flask-redis = "*"
 redis = '*'
 requests = "*"
+favicon = "*"
+gunicorn = "*"
+gevent = "*"
 
 [requires]
 python_version = "3.7"
