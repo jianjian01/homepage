@@ -10,5 +10,8 @@ page_bp.before_request(check_user)
 @page_bp.route('/', methods=['GET'])
 def index():
     """根据用户是否登录判断返回页面"""
-    sites, categories = select_website()
+    if hasattr(request, 'user') and request.user:
+        sites, categories = select_website()
+    else:
+        sites, categories = None, None
     return render_template('index.html', sites=sites, categories=categories)

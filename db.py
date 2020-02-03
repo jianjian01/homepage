@@ -62,7 +62,7 @@ class Site(db.Entity):
     """网站信息"""
     id = PrimaryKey(int, auto=True)
     host = Required(str, unique=True, index=True)
-    icon = Optional(str, unique=True)
+    icon = Optional(str)
 
 
 class Category(db.Entity):

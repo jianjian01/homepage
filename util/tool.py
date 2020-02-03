@@ -71,6 +71,5 @@ def query_icon(host):
     site = Site.select(lambda x: x.host == host).first()
     if not site:
         _ = Site(host=host, icon='')
-        commit()
         return ''
     return site.icon
