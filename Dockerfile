@@ -2,6 +2,8 @@ FROM python:3.7
 
 RUN apt update && apt upgrade -y && apt install -y pipenv
 
+ENV mode production
+
 WORKDIR /app
 ADD . .
 

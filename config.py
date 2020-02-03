@@ -28,11 +28,6 @@ class Dev(Base):
     REDIS_URL = 'redis://47.96.177.79:29899/0'
     RANDOM_KEY = os.urandom(16)
 
-    SMTP_HOST = 'smtpdm.aliyun.com'
-    SMTP_PORT = 465
-    SMTP_EMAIL = 'verify@chidian.xin'
-    SMTP_PASSWORD = 'G3iu3hrbwmDz1vcuaHHK'
-
     GITHUB_CLIENT_ID = '655c0721a03d26aac38c'
     GITHUB_CLIENT_SECRET = 'a31f81f1ca84b7a9ccc12e4ae3d5ed69338f8128'
     GITHUB_REDIRECT_URI = 'http://127.0.0.1:5000/auth/callback/github'
@@ -54,31 +49,26 @@ class Prod(Base):
 
     PONY = {
         'provider': 'mysql',
-        'host': 'mysql_8',
+        'host': 'mysql',
         'port': 3306,
-        'user': 'root',
-        'passwd': '8W5Qqv9IfgdvHk',
-        'db': 'chidianxin',
+        'user': 'myweb',
+        'passwd': 'T3KfkTjGmXE1ar5p',
+        'db': 'myweb',
     }
-    REDIS_URL = 'redis://@redis_5:6379/1'
-
-    SMTP_HOST = 'smtpdm.aliyun.com'
-    SMTP_PORT = 465
-    SMTP_EMAIL = 'verify@chidian.xin'
-    SMTP_PASSWORD = 'G3iu3hrbwmDz1vcuaHHK'
+    REDIS_URL = 'redis://@redis:6379/1'
 
     GITHUB_CLIENT_ID = '655c0721a03d26aac38c'
     GITHUB_CLIENT_SECRET = 'a31f81f1ca84b7a9ccc12e4ae3d5ed69338f8128'
-    GITHUB_REDIRECT_URI = 'https://chidian.xin/auth/callback/github'
+    GITHUB_REDIRECT_URI = 'https://myweb100.com/auth/callback/github'
     WEIBO_APP_KEY = '1108861131'
     WEIBO_APP_SECRET = 'b82a3cc00f20ab137e3d572000ad0f08'
-    WEIBO_REDIRECT_URI = 'https://chidian.xin/auth/callback/weibo'
-    WEIBO_CANCEL_URI = 'https://chidian.xin/auth/callback/weibo/cancel'
+    WEIBO_REDIRECT_URI = 'https://myweb100.com/auth/callback/weibo'
+    WEIBO_CANCEL_URI = 'https://myweb100.com/auth/callback/weibo/cancel'
 
 
 Config = None
 
-if os.getenv("ENV", '').lower() == 'production':
+if os.getenv("mode", '').lower() == 'production':
     Config = Prod
 else:
     Config = Dev

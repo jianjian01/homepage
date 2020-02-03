@@ -3,6 +3,8 @@ from datetime import datetime
 
 from pony.orm import Database, Required, set_sql_debug, PrimaryKey, Optional, Set, select, LongStr
 
+from config import Config
+
 db = Database()
 
 
@@ -96,8 +98,5 @@ class UserSite(db.Entity):
 
 
 if __name__ == '__main__':
-    db.bind(provider='mysql',
-            user='root', passwd='8W5Qqv9IfgdvHk',
-            host='47.96.177.79', port=29898,
-            db='chidianxin')
+    db.bind(**Config.PONY)
     db.generate_mapping(create_tables=True)
