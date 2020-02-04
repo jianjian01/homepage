@@ -1,11 +1,12 @@
 import os
 import random
 import string
+import time
 from urllib.parse import urlparse
 
 import favicon as favicon
 import requests
-from pony.orm import db_session, set_sql_debug
+from pony.orm import db_session, set_sql_debug, commit
 
 from config import Config
 from db import Site, UserSite, db
@@ -25,26 +26,43 @@ headers = {
 @db_session
 def get_icon():
     """下载"""
-    icon_dir = '/Users/jianjian/github/jianjian01/dian-xin/static/site/'
-    for site in Site.select(lambda x: not x.icon):
-        url = 'https://www.{}'.format(site.host)
+    icon_dir = '../static/site/'
+
+    for site in Site.select(lambda x: not x.icon)[:1000]:
+        icons = []
+        print(site.host)
         headers['Host'] = site.host
-        try:
-            icons = favicon.get(url, headers=headers)
-        except Exception as e:
-            continue
+        for url in ['https://', 'http://', 'http://www.', 'https://www.']:
+            if url.endswith('www.') and site.host.startswith('www.'):
+                continue
+            url = url + site.host
+            print(url)
+            try:
+                icons = favicon.get(url, headers=headers, timeout=5)
+            except Exception as e:
+                print(e)
+                continue
+            else:
+                url = url + site.host
+                break
+
         if icons:
             icon = icons[0].url
         else:
             icon = "{}/{}".format(url, 'favicon.ico')
         try:
-            response = requests.get(icon, stream=True)
+            response = requests.get(icon, stream=True, timeout=5)
+            if response.status_code != 200:
+                continue
         except Exception as e:
             continue
         icon_id = ''.join([random.choice(string.ascii_lowercase + string.digits) for _ in range(16)])
         with open(os.path.join(icon_dir, '{}.png'.format(icon_id)), 'wb') as image:
             for chunk in response.iter_content(1024):
                 image.write(chunk)
+        site.icon = icon_id
+        commit()
+        time.sleep(1)
 
 
 @db_session
@@ -62,9 +80,9 @@ def main():
     set_sql_debug(True)
     db.bind(**Config.PONY)
     db.generate_mapping()
-
-    get_icon()
-    update_icon()
+    while 1:
+        get_icon()
+    # update_icon()
 
 
 if __name__ == '__main__':
