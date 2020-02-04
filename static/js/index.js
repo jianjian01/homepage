@@ -3,6 +3,9 @@ window.onload = function () {
     let btn = document.getElementById('header-login-button');
     let modal = document.getElementById("login-modal");
     let close = document.getElementsByClassName("close")[0];
+    if (btn === null) {
+        return
+    }
     btn.onclick = function (e) {
         console.log("abcd");
         modal.style.display = "block";
