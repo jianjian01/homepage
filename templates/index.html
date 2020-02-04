@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block css %}
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ static_url('css/index.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -20,7 +20,7 @@
                                 <div class="site-item">
                                     <a href="{{ s.url }}" class="site-name" target="_blank"
                                             {% if s.icon %}
-                                       style="background-image: url(/static/site/{{ s.icon }}.png)"
+                                       style="background-image: static_url('/static/site/{{ s.icon }}.png')"
                                             {% endif %}
                                     >{{ s.name }}</a>
                                 </div>
@@ -35,5 +35,5 @@
 
 
 {% block script %}
-    <script type="application/javascript" src="{{ url_for('static', filename='js/index.js') }}"></script>
+    <script type="application/javascript" src="{{ static_url('js/index.js') }}"></script>
 {% endblock %}

@@ -10,13 +10,13 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- icon from https://www.iconfont.cn/collections/detail?spm=a313x.7781069.0.da5a778a4&cid=4878 -->
-    <link sizes="16x16" rel="shortcut icon" href="{{ url_for('static', filename='icon/16x16.png') }}">
-    <link sizes="32x32" rel="icon" href="{{ url_for('static', filename='icon/32x32.png') }}">
-    <link sizes="80x80" rel="icon" href="{{ url_for('static', filename='icon/80x80.png') }}">
-    <link sizes="120x120" rel="icon" href="{{ url_for('static', filename='icon/120x120.png') }}">
+    <link sizes="16x16" rel="shortcut icon" href="{{ static_url('icon/16x16.png') }}">
+    <link sizes="32x32" rel="icon" href="{{ static_url('icon/32x32.png') }}">
+    <link sizes="80x80" rel="icon" href="{{ static_url('icon/80x80.png') }}">
+    <link sizes="120x120" rel="icon" href="{{ static_url('icon/120x120.png') }}">
 
     <title>{% block title %}{% endblock %} MyWeb100 - 自定义网址收藏</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/base.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ static_url('css/base.css') }}">
 
     {% block css %}{% endblock %}
 
@@ -182,7 +182,7 @@
         © Copyright 2020 myweb100.com.
     </div>
 </footer>
-<script src="{{ url_for('static', filename='js/base.js') }}"></script>
+<script src="{{ static_url('js/base.js') }}"></script>
 {% block script %}{% endblock %}
 </body>
 </html>

@@ -1,7 +1,13 @@
 from flask_app import flask_app as app
-from util.tool import log_request
+from util.tool import log_request, static_url
 
 from worker import page_bp, user_bp, auth_bp
+
+
+@app.context_processor
+def static_url_processor():
+    return dict(static_url=static_url)
+
 
 app.after_request(log_request)
 app.register_blueprint(page_bp)

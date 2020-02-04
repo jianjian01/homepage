@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block css %}
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/user.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ static_url('css/user.css') }}">
 {% endblock %}
 
 
@@ -166,8 +166,8 @@
 
 {% block script %}
     {% if page == 'category' %}
-        <script src="{{ url_for('static', filename='js/user_category.js') }}"></script>
+        <script src="{{ static_url('js/user_category.js') }}"></script>
     {% elif page == 'website' %}
-        <script src="{{ url_for('static', filename='js/user_website.js') }}"></script>
+        <script src="{{ static_url('js/user_website.js') }}"></script>
     {% endif %}
 {% endblock %}

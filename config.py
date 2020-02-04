@@ -17,6 +17,7 @@ class Dev(Base):
     """开发环境"""
     DEBUG = True
     SECRET_KEY = 'testing'  # os.urandom(16)
+    STATIC_DOMAIN = "127.0.0.1:5000/static"
 
     PONY = {
         'provider': 'mysql',
@@ -50,6 +51,7 @@ class Prod(Base):
     SECRET_KEY = 'wSt0QSG9fnfPGmiB'
     PREFERRED_URL_SCHEME = "https"
     SERVER_NAME = 'myweb100.com'
+    STATIC_DOMAIN = "static.myweb100.com"
 
     PONY = {
         'provider': 'mysql',

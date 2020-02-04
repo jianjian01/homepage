@@ -83,3 +83,11 @@ def log_request(response):
         response.status
     ))
     return response
+
+
+def static_url(path):
+    """静态资源使用 单独域名"""
+    conf = current_app.config
+    domain = conf.get('STATIC_DOMAIN', '')
+    scheme = conf.get('PREFERRED_URL_SCHEME', '')
+    return '{}://{}/{}'.format(scheme, domain, path)
