@@ -21,7 +21,7 @@
                             <a href="/user/{{ request.user.u_id }}/website">网址</a>
                         </li>
                         <li class="{% if page=='rss' %}active{% endif %}">
-                            <a href="/user/{{ request.user.u_id }}/rss">RSS</a>
+                            <a href="/user/{{ request.user.u_id }}/rss">rss 订阅</a>
                         </li>
                     </ul>
                 </div>
@@ -70,7 +70,7 @@
                             <tr>
                                 <th scope="col" class="cate-num">#</th>
                                 <th scope="col">类别</th>
-                                <th scope="col">序号</th>
+                                <th scope="col" class="large-order-cel">序号</th>
                                 <th scope="col" class="cate-action">操作</th>
                             </tr>
                             </thead>
@@ -141,7 +141,8 @@
                                                     </td>
                                                     <td class="site-order">{{ s.order }}</td>
                                                     <td class="site-action">
-                                                        <span class="delete-site">删除</span></td>
+                                                        <span class="delete-site">删除</span>
+                                                    </td>
                                                 </tr>
                                             {% endfor %}
                                         {% endif %}
@@ -157,7 +158,43 @@
                         </a>
                     </div>
                 {% elif page == 'rss' %}
-                    rss
+                    <div class="form-container" id="main-rss">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">名称</th>
+                                <th scope="col">网址</th>
+                                <th scope="col">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for s in user_rss %}
+                                <tr data-id="{{ s[0] }}">
+                                    <th scope="row">
+                                        {{ loop.index }}
+                                    </th>
+                                    <td>
+                                        {{ s[1] | truncate(20) }}
+                                    </td>
+                                    <td>
+                                        {{ s[2] |truncate(50) }}
+                                    </td>
+                                    <td>
+                                        <span class="delete-rss">删除</span>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div class="btn-group">
+                        <a href="/">
+                            <button type="button" class="btn btn-success">返回主页</button>
+                        </a>
+                        <button type="button" class="btn btn-light" id="btn-add-rss">添加</button>
+                    </div>
                 {% endif %}
             </main>
         </div>
@@ -169,5 +206,8 @@
         <script src="{{ static_url('js/user_category.js') }}"></script>
     {% elif page == 'website' %}
         <script src="{{ static_url('js/user_website.js') }}"></script>
+    {% elif page == 'rss' %}
+        <script src="{{ static_url('js/user_rss.js') }}"></script>
+
     {% endif %}
 {% endblock %}

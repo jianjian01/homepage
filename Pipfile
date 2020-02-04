@@ -17,6 +17,7 @@ favicon = "*"
 gunicorn = "*"
 gevent = "*"
 lxml = "*"
+cryptography = "*"
 
 [requires]
 python_version = "3.7"

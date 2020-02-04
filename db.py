@@ -7,8 +7,7 @@ from config import Config
 
 db = Database()
 
-
-# set_sql_debug(True)
+set_sql_debug(True)
 
 
 class UserStatus:
@@ -34,6 +33,7 @@ class User(db.Entity):
 
     sites = Set(lambda: UserSite)
     categories = Set(lambda: Category)
+    user_rss = Set(lambda: UserRSS)
 
     status = Required(int, default=UserStatus.normal)
     create_time = Required(datetime, default=datetime.utcnow)
@@ -50,14 +50,6 @@ class User(db.Entity):
             n_id = random.randint(User.id_min, User.id_max)
             if not User.select(lambda c: c.u_id == n_id):
                 return n_id
-
-    @staticmethod
-    def email_status(email):
-        """检查邮件地址状态"""
-        user = User.select(lambda c: c.email == email and c.status != UserStatus.delete)
-        if user:
-            return user.first().status
-        return UserStatus.not_exist
 
 
 class Site(db.Entity):
@@ -94,6 +86,33 @@ class UserSite(db.Entity):
     order = Required(int, default=20)
     create_time = Required(datetime, default=datetime.utcnow)
     status = Required(int, default=UserSiteStatus.normal)
+    delete_time = Optional(datetime)
+
+
+class RSS(db.Entity):
+    """rss 订阅信息"""
+    id = PrimaryKey(int, auto=True)
+    link = Required(str, unique=True)
+    rss = Set(lambda: Page)
+    user_rss = Set(lambda: UserRSS)
+
+
+class Page(db.Entity):
+    """rss 获取到的信息"""
+    id = PrimaryKey(int, auto=True)
+    rss = Required(RSS)
+    link = Required(str)
+
+
+class UserRSS(db.Entity):
+    """用户信息"""
+    id = PrimaryKey(int, auto=True)
+    name = Required(str)
+    user = Required(User)
+    rss = Required(RSS)
+
+    create_time = Required(datetime, default=datetime.utcnow)
+    delete = Required(bool, default=False)
     delete_time = Optional(datetime)
 
 

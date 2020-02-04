@@ -3,9 +3,9 @@ from collections import defaultdict
 from urllib.parse import urlparse
 
 from flask import session, redirect, Blueprint, request, render_template, jsonify
-from pony.orm import commit, select
+from pony.orm import commit, select, db_session
 
-from db import Category, UserSite, UserSiteStatus
+from db import Category, UserSite, UserSiteStatus, RSS, UserRSS
 from util.tool import check_user, login_require, select_website, query_icon
 
 user_bp = Blueprint('user', __name__, template_folder='templates')
@@ -138,7 +138,43 @@ def user_website_delete(u_id: int):
 @user_bp.route('/<int:u_id>/rss', methods=['GET'])
 @login_require
 def user_rss(u_id: int):
-    return render_template('user.html', page='rss')
+    user_rss = select((ur.id, ur.name, ur.rss.link) for ur in UserRSS
+                      if ur.user == request.user and not ur.delete)[:]
+    return render_template('user.html', page='rss', user_rss=user_rss)
+
+
+@user_bp.route('/<int:u_id>/rss', methods=['POST'])
+@login_require
+@db_session
+def user_rss_post(u_id: int):
+    form = request.form
+    name = form.get('name', '')
+    url = form.get('url', '')
+    if not name or not url:
+        return jsonify({'status': -1})
+    result = urlparse(url)
+    if not result:
+        return jsonify({'status': -1})
+    rss = RSS.select(lambda x: x.link == url).first()
+    if not rss:
+        rss = RSS(link=url)
+    ur = UserRSS(user=request.user, rss=rss, name=name)
+    commit()
+    return jsonify({'status': 1, 'id': ur.id})
+
+
+@user_bp.route('/<int:u_id>/rss', methods=['DELETE'])
+@login_require
+def user_rss_delete(u_id: int):
+    rss_id = request.form.get('id', '')
+    if not rss_id or not rss_id.isdigit():
+        return jsonify({'status': -1})
+    ur = UserRSS.select(lambda x: x.id == int(rss_id) and x.user == request.user and not x.delete).first()
+    if not ur:
+        return jsonify({'status': -1})
+    ur.delete = True
+    commit()
+    return jsonify({'status': 1, 'id': ur.id})
 
 
 @user_bp.route('/logout', methods=['GET'])

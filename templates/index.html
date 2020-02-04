@@ -20,7 +20,7 @@
                                 <div class="site-item">
                                     <a href="{{ s.url }}" class="site-name" target="_blank"
                                             {% if s.icon %}
-                                       style="background-image: url({{ static_url('/site/'+ s.icon + '.png') }})"
+                                       style="background-image: url({{ static_url('site/'+ s.icon + '.png') }})"
                                             {% endif %}
                                     >{{ s.name }}</a>
                                 </div>

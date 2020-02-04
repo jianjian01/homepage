@@ -162,10 +162,9 @@ main th {
     padding: 8px 20px;
     border: none;
     font-size: large;
-    max-width: 150px;
 }
 
-.table .save-new-cate {
+.table .save-new-btn {
     border: 1px solid lightskyblue;
     border-radius: 5px;
     padding: 8px;
@@ -193,40 +192,60 @@ main th {
     cursor: pointer;
 }
 
-#main-website {
+#main-website, #main-rss {
     padding: 50px;
 }
 
-#main-website .site-category-name {
+.site-category-name {
     font-size: 20px;
     margin: 10px 20px;
 }
 
-#main-website .site-name {
+.site-name {
     width: 100px;
 }
 
-#main-website .site-url {
+.site-url {
     width: 400px;
 }
 
-#main-website .site-order {
+.site-order {
     width: 50px;
 }
 
-#main-website .site-action {
+.site-action {
     width: 50px;
 }
 
-#main-website .new-site-td {
+.new-site-td {
     padding: 5px;
 }
 
-#main-website .new-site-name-input {
+.name-cel {
     width: 100px;
 }
 
-#main-website .url-input-dom {
+.url-cel {
+    width: 300px;
+}
+
+.large-url-cel {
+    width: 350px;
+}
+
+.order-cel {
+    width: 50px;
+}
+
+.large-order-cel {
+    width: 100px;
+}
+
+.new-site-name-input {
+    width: 100px;
+}
+
+.url-input-dom {
     width: 350px;
 }
 

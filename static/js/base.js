@@ -10,6 +10,38 @@ function refresh(event) {
     window.location = window.location.href;
 }
 
+function new_input_dom(name, type, placeholder, required, autofocus) {
+    let name_dom = document.createElement("input");
+    name_dom.setAttribute('type', type);
+    name_dom.classList.add('new-cel-input');
+    name_dom.setAttribute('name', name);
+    name_dom.setAttribute('placeholder', placeholder);
+    name_dom.required = required;
+    name_dom.autofocus = autofocus;
+    return name_dom
+}
+
+function new_save_btn() {
+    let action = document.createElement("span");
+    action.innerText = "保存";
+    action.classList.add('save-new-btn');
+    return action
+}
+
+function input_valid(input_doms) {
+    let ok = true;
+    for (let dom of input_doms) {
+        if (dom.checkValidity()) {
+            dom.style.border = 'none';
+        } else {
+            dom.style.border = '1px solid red';
+            dom.style.borderRadius = '5px';
+            ok = false;
+        }
+    }
+    return ok
+}
+
 function run() {
     let dropdown = document.getElementsByClassName('dropdown');
     for (let i = 0; i < dropdown.length; i++) {

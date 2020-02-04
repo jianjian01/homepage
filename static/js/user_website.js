@@ -11,28 +11,19 @@ function add_new_website(e) {
 
     // name
     let td_name_dom = document.createElement('td');
-    td_name_dom.classList.add('site-name');
-    td_name_dom.classList.add('new-site-name');
-    td_name_dom.classList.add('new-site-td');
-    let name_input_dom = document.createElement('input');
-    name_input_dom.setAttribute('name', 'name');
-    name_input_dom.setAttribute('type', 'text');
-    name_input_dom.required = true;
-    name_input_dom.autofocus = true;
-    name_input_dom.classList.add('new-website-input-dom');
-    name_input_dom.classList.add('new-site-name-input');
-    name_input_dom.setAttribute('placeholder', 'name');
+    td_name_dom.classList.add('new-cel');
+    let name_input_dom = new_input_dom('name', 'text', 'name', true, true);
+    name_input_dom.classList.add('name-cel');
+    name_input_dom.classList.add('new-cel-input');
     td_name_dom.appendChild(name_input_dom);
     tr_dom.appendChild(td_name_dom);
 
     // url
     let td_url_dom = document.createElement('td');
-    td_url_dom.classList.add('site-url');
-    td_url_dom.classList.add('new-site-url');
-    td_url_dom.classList.add('new-site-td');
+    td_url_dom.classList.add('new-cel');
     let url_input_dom = document.createElement("input");
-    url_input_dom.classList.add('url-input-dom');
-    url_input_dom.classList.add('new-website-input-dom');
+    url_input_dom.classList.add('url-cel');
+    url_input_dom.classList.add('new-cel-input');
     url_input_dom.setAttribute('name', 'url');
     url_input_dom.setAttribute('type', 'url');
     url_input_dom.setAttribute('placeholder', 'https://example.com');
@@ -42,30 +33,26 @@ function add_new_website(e) {
 
     // order
     let td_order_dom = document.createElement('td');
-    td_order_dom.classList.add('site-order');
-    td_order_dom.classList.add('new-site-order');
-    td_order_dom.classList.add('new-site-td');
+    td_order_dom.classList.add('new-cel');
     let order_input_dom = document.createElement("input");
     order_input_dom.setAttribute('name', 'order');
-    order_input_dom.classList.add('order-input-dom');
+    order_input_dom.classList.add('new-cel-input');
+    order_input_dom.classList.add('order-cel');
     order_input_dom.setAttribute('type', 'number');
     order_input_dom.setAttribute('min', '1');
     order_input_dom.setAttribute('max', '1000');
     order_input_dom.setAttribute('placeholder', '10');
     order_input_dom.required = true;
-    order_input_dom.classList.add('new-website-input-dom');
     td_order_dom.appendChild(order_input_dom);
     tr_dom.appendChild(td_order_dom);
 
     // action
     let td_action_dom = document.createElement('td');
-    td_action_dom.classList.add('new-site-td');
+    td_action_dom.classList.add('new-cel');
     td_action_dom.classList.add('site-action');
-    td_action_dom.classList.add('new-site-action');
-    let span_action_dom = document.createElement('span');
-    span_action_dom.innerText = '保存';
-    span_action_dom.onpointerdown = save_new_website;
-    td_action_dom.appendChild(span_action_dom);
+    let save = new_save_btn();
+    save.onpointerdown = save_new_website;
+    td_action_dom.appendChild(save);
     tr_dom.appendChild(td_action_dom);
 
     let site_list = e.target.parentNode.parentNode;
@@ -76,23 +63,14 @@ function add_new_website(e) {
 }
 
 function save_new_website(e) {
+    console.log(e);
     let tr_dom = e.target.closest('tr');
     let input_doms = tr_dom.getElementsByTagName('input');
-    let name_input_dom = tr_dom.getElementsByClassName('new-site-name-input')[0];
-    let url_input_dom = tr_dom.getElementsByClassName('url-input-dom')[0];
-    let order_input_dom = tr_dom.getElementsByClassName('order-input-dom')[0];
+    let name_input_dom = tr_dom.getElementsByClassName('name-cel')[0];
+    let url_input_dom = tr_dom.getElementsByClassName('url-cel')[0];
+    let order_input_dom = tr_dom.getElementsByClassName('order-cel')[0];
 
-    let ok = true;
-    for (let dom of input_doms) {
-        if (dom.checkValidity()) {
-            dom.style.border = 'none';
-        } else {
-            dom.style.border = '1px solid red';
-            dom.style.borderRadius = '5px';
-            ok = false;
-        }
-    }
-    if (!ok) {
+    if (!input_valid(input_doms)) {
         return
     }
 

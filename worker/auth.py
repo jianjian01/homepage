@@ -137,7 +137,7 @@ def callback_github():
     u_id = save_or_update_user(UserSource.github, data.get('id', ''),
                                data.get('name', ''), data.get('avatar_url', ''), resp.text)
     set_session(conf, u_id, UserSource.github)
-    return redirect(url_for('page.index', _external=True, _scheme='https'))
+    return redirect(url_for('page.index', _external=True, _scheme=conf['PREFERRED_URL_SCHEME']))
 
 
 @auth_bp.route('/callback/weibo')
@@ -178,7 +178,7 @@ def callback_weibo():
     u_id = save_or_update_user(UserSource.weibo, data.get('id', ''), data.get('name', ''),
                                data.get('profile_image_url', ''), resp.text)
     set_session(conf, u_id, UserSource.weibo)
-    return redirect(url_for('page.index', _external=True, _scheme='https'))
+    return redirect(url_for('page.index', _external=True, _scheme=conf['PREFERRED_URL_SCHEME']))
 
 
 @auth_bp.route('/callback/weibo/cancel')

@@ -1,20 +1,8 @@
-function new_name_input_dom() {
-    let name = document.createElement("input");
-    name.setAttribute('type', 'text');
-    name.setAttribute('class', 'new-cel-input');
-    name.classList.add('name-cel');
-    name.setAttribute('name', 'name');
-    name.setAttribute('placeholder', '名称');
-    name.required = true;
-    name.autofocus = true;
-    return name
-}
-
 function new_order_input_dom() {
     let order = document.createElement("input",);
     order.setAttribute('type', 'number');
     order.setAttribute('class', 'new-cel-input');
-    order.classList.add('order-cel');
+    order.classList.add('large-order-cel');
     order.setAttribute('placeholder', '10');
     order.setAttribute('min', '1');
     order.setAttribute('max', '1000');
@@ -31,7 +19,9 @@ function add_new_category(e) {
     let num_cel = document.createElement("td");
     let name_cel = document.createElement("td");
     name_cel.setAttribute('class', 'new-cel');
-    let name = new_name_input_dom();
+    let name = new_input_dom('name', 'text', 'name', true, true);
+    name.classList.add('new-cel-input');
+    // name.classList.add('name-cel');
     name_cel.appendChild(name);
     let order_cel = document.createElement("td");
     order_cel.setAttribute('class', 'new-cel');
@@ -40,7 +30,8 @@ function add_new_category(e) {
     let action_cel = document.createElement("td");
     let action = document.createElement("span");
     action.innerText = "保存";
-    action.setAttribute('class', 'save-new-cate');
+    action.classList.add('save-new-btn');
+    action.classList.add('save-new-cate');
     action.onpointerdown = save_new_cate;
     action_cel.appendChild(action);
 
@@ -56,24 +47,16 @@ function save_new_cate(e) {
     let inputs = tr.getElementsByTagName('input');
     let name_val = "";
     let order_val = '';
-    let ok = true;
     for (let i = 0; i < inputs.length; i++) {
         let dom = inputs.item(i);
         let name = dom.getAttribute('name');
-        if (dom.checkValidity()) {
-            dom.style.border = 'none';
-        } else {
-            dom.style.border = '1px solid red';
-            dom.style.borderRadius = '5px';
-            ok = false;
-        }
         if (name === 'name') {
             name_val = dom.value;
         } else if (name === 'order') {
             order_val = dom.value;
         }
     }
-    if (!ok) {
+    if (!input_valid(inputs)) {
         return
     }
 
@@ -105,7 +88,7 @@ function update_cate(e) {
     let name_val = name_td.innerText;
     name_td.innerText = null;
     name_td.setAttribute('class', 'new-cel');
-    let name = new_name_input_dom();
+    let name = new_input_dom('name', 'text', 'name', true, true);
     name.setAttribute('value', name_val);
     name_td.appendChild(name);
 
