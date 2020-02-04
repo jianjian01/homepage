@@ -3,7 +3,7 @@ import time
 from datetime import datetime
 from functools import wraps
 import requests
-from flask import Blueprint, request, redirect, current_app, session
+from flask import Blueprint, request, redirect, current_app, session, url_for
 from pony.orm import commit, db_session
 
 from db import UserSource, User, UserStatus
@@ -137,7 +137,7 @@ def callback_github():
     u_id = save_or_update_user(UserSource.github, data.get('id', ''),
                                data.get('name', ''), data.get('avatar_url', ''), resp.text)
     set_session(conf, u_id, UserSource.github)
-    return redirect('/')
+    return redirect(url_for('page.index', _external=True, _scheme='https'))
 
 
 @auth_bp.route('/callback/weibo')
@@ -178,7 +178,7 @@ def callback_weibo():
     u_id = save_or_update_user(UserSource.weibo, data.get('id', ''), data.get('name', ''),
                                data.get('profile_image_url', ''), resp.text)
     set_session(conf, u_id, UserSource.weibo)
-    return redirect('/')
+    return redirect(url_for('page.index', _external=True, _scheme='https'))
 
 
 @auth_bp.route('/callback/weibo/cancel')
