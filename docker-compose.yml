@@ -16,6 +16,19 @@ services:
       - mysql
       - redis
     restart: always
+  index_rss:
+    build: .
+    command: python task/index_rss.py
+    volumes:
+      - .:/app
+    working_dir: /app
+    links:
+      - redis
+      - mysql
+    depends_on:
+      - mysql
+      - redis
+    restart: always
   mysql:
     image: mysql:8
     command: --default-authentication-plugin=mysql_native_password

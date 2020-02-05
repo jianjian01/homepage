@@ -9,7 +9,7 @@ class Base:
     SESSION_USER = '_u'
     SESSION_SOURCE = '_o'
     SESSION_CREATE_TIME = '_t'
-    RSS_REQUEST_NUM = 5  # 定时任务 index rss 异步执行数量
+    RSS_REQUEST_NUM = 50  # 定时任务 index rss 异步执行数量
 
     AUTH_SITES = ['weibo', 'github']
 

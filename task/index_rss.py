@@ -1,8 +1,7 @@
 import asyncio
 import logging
-from collections import namedtuple
-from datetime import datetime
-from itertools import chain
+import time
+from datetime import datetime, timedelta
 from time import mktime
 
 import aiohttp
@@ -97,4 +96,11 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    while 1:
+        start = datetime.utcnow()
+        main()
+        end = datetime.utcnow()
+        logging.info("execute: {} - {}".format(start, end))
+        if (start - end) < timedelta(hours=1):
+            logging.info("sleep an our")
+            time.sleep(60 * 60)
