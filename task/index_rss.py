@@ -23,16 +23,22 @@ def parser(rss_id, text):
     data = []
     for item in feed.entries:
         struct_time = item.get('published_parsed', None)
-        if struct_time:
-            published = datetime.fromtimestamp(mktime(struct_time))
-        else:
-            published = date_default
+        item_id = item.get('id', '')
+        item_link = item.get('link', '')
+        item_title = item.get('title', '')
+        # item_ID 是 主键，不能缺失，如果找不到，就用其他的代替
+        if not item_id:
+            item_id = item_link
+        if not item_id:
+            item_id = item_title
+        if not item_id:
+            continue
         data.append([
             rss_id,
-            item.id,
-            item.title,
-            item.link,
-            published,
+            item_id,
+            item_title,
+            item_link,
+            datetime.fromtimestamp(mktime(struct_time)) if struct_time else date_default
         ])
 
     return data
