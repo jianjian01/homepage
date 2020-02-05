@@ -21,7 +21,7 @@ def index():
             (p.page_id, p.title, p.link, p.publish_date, p.rss, ur.name) for ur in UserRSS for p in Page
             if ur.user == request.user and not ur.delete
             and p.publish_date > last_year and ur.rss == p.rss
-        ), key=lambda x: x[3])
+        ), key=lambda x: x[3], reverse=True)
     else:
         sites, categories, pages = {}, [], []
     return render_template('index.html', sites=sites, categories=categories, pages=pages)
