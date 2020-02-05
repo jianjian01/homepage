@@ -25,7 +25,7 @@ headers = {
 
 def download(host, icon):
     """下载文件"""
-    icon_dir = '../static/site/'
+    icon_dir = '/app/static/site/'
     headers['Host'] = host
     print(icon)
     try:
@@ -38,8 +38,9 @@ def download(host, icon):
     with open(os.path.join(icon_dir, '{}.png'.format(icon_id)), 'wb') as image:
         for chunk in response.iter_content(1024):
             image.write(chunk)
-    print(icon_id)
-    return icon_id
+    path = os.path.join(icon_dir, '{}.png'.format(icon_id))
+    if os.path.exists(path) and os.path.getsize(path) > 100:
+        return icon_id
 
 
 def try_request(host):
