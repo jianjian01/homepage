@@ -78,22 +78,23 @@ def try_fetch(host):
 def get_icon():
     """下载"""
     for site in Site.select(lambda x: not x.icon)[:1000]:
-        host = site.host
-        icons = try_fetch(host)
-        if not icons and host.startswith('www.'):
-            icons = try_fetch(host[4:])
-        if icons:
-            icon = icons[0].url
-            icon_id = download(host, icon)
-        else:
-            # icons = "http://{}/{}".format(host, 'favicon.ico')
-            icon_id = try_request(host)
-
-        if not icon_id:
+        try:
+            host = site.host
+            icons = try_fetch(host)
+            if not icons and host.startswith('www.'):
+                icons = try_fetch(host[4:])
+            if icons:
+                icon = icons[0].url
+                icon_id = download(host, icon)
+            else:
+                icon_id = try_request(host)
+            if not icon_id:
+                continue
+            site.icon = icon_id
+            commit()
+            time.sleep(1)
+        except Exception as _:
             continue
-        site.icon = icon_id
-        commit()
-        time.sleep(1)
 
 
 @db_session
