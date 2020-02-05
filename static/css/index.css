@@ -78,3 +78,12 @@ main A {
     outline: none;
     text-align: center;
 }
+
+.rss {
+    margin: 30px;
+}
+
+.rss-site-name {
+    display: inline-block;
+    color: #212529;
+}

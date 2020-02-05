@@ -6,7 +6,7 @@
 
 {% block content %}
     <main>
-        {% if categories %}
+        <div role="main">
             {% for c in categories | sort(attribute="order") %}
                 {% set ss = sites.get(c.id) %}
                 {% if ss %}
@@ -29,7 +29,18 @@
                     </div>
                 {% endif %}
             {% endfor %}
-        {% endif %}
+        </div>
+        <div role="feed" class="rss">
+            {% for p in pages %}
+                <div class="rss-page" data-rss-id="{{ p[4] }}" data-page-id="{{ p[0] }}">
+                    <p>
+                        <span class="rss-site-name">[{{ p[-1] }}]</span>
+                        <a role="link" class="page-link" href="{{ p[2] |truncate(200) }}">{{ p[1] }}</a>
+                        &nbsp;&nbsp;&nbsp;<small>{{ p[3] }}</small>
+                    </p>
+                </div>
+            {% endfor %}
+        </div>
     </main>
 {% endblock %}
 

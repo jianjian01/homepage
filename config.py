@@ -2,6 +2,8 @@ import logging
 import os
 from logging.handlers import TimedRotatingFileHandler
 
+from pony.orm import set_sql_debug
+
 
 class Base:
     """公共配置"""
@@ -80,6 +82,7 @@ mode = os.getenv("mode", '').lower()
 if mode == 'production':
     Config = Prod
 else:
+    set_sql_debug()
     Config = Dev
 
 
