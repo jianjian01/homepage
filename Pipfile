@@ -18,6 +18,10 @@ gunicorn = "*"
 gevent = "*"
 lxml = "*"
 cryptography = "*"
+atoma = "*"
+feedparser = {editable = true,git = "https://github.com/kurtmckee/feedparser.git",ref = "6.0.0b1"}
+aiohttp = "*"
+aiomysql = "*"
 
 [requires]
 python_version = "3.7"

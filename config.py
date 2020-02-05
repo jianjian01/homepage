@@ -9,6 +9,7 @@ class Base:
     SESSION_USER = '_u'
     SESSION_SOURCE = '_o'
     SESSION_CREATE_TIME = '_t'
+    RSS_REQUEST_NUM = 5  # 定时任务 index rss 异步执行数量
 
     AUTH_SITES = ['weibo', 'github']
 
@@ -24,7 +25,7 @@ class Dev(Base):
         'host': '47.96.177.79',
         'port': 29898,
         'user': 'root',
-        'passwd': '8W5Qqv9IfgdvHk',
+        'password': '8W5Qqv9IfgdvHk',
         'db': 'chidianxin',
     }
     REDIS_URL = 'redis://47.96.177.79:29899/0'
@@ -58,7 +59,7 @@ class Prod(Base):
         'host': 'mysql',
         'port': 3306,
         'user': 'myweb',
-        'passwd': 'T3KfkTjGmXE1ar5p',
+        'password': 'T3KfkTjGmXE1ar5p',
         'db': 'myweb',
     }
     REDIS_URL = 'redis://@redis:6379/1'

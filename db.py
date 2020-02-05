@@ -99,9 +99,13 @@ class RSS(db.Entity):
 
 class Page(db.Entity):
     """rss 获取到的信息"""
-    id = PrimaryKey(int, auto=True)
-    rss = Required(RSS)
+    page_id = Required(str)
+    title = Required(str)
     link = Required(str)
+    publish_date = Optional(datetime)
+    rss = Required(RSS)
+
+    PrimaryKey(page_id, rss)
 
 
 class UserRSS(db.Entity):
