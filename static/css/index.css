@@ -45,15 +45,13 @@
 }
 
 .site-list {
-    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
+    box-shadow: 0 0.1rem 0.2rem rgba(0, 0, 0, .15) !important;
     border-radius: .25rem !important;
     background-color: #fff !important;
     box-sizing: border-box;
     padding: 1rem !important;
-    margin-bottom: 3rem !important;
     display: flex;
     flex-wrap: wrap;
-
 }
 
 .site-name {
