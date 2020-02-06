@@ -122,7 +122,7 @@ function save_update_cate(e) {
 
 }
 
-function run() {
+function category_action() {
     let update_btn = document.getElementsByClassName('update-cate');
     let delete_btn = document.getElementsByClassName('delete-cate');
     let btn_add = document.getElementById('btn-add-cate');
@@ -137,5 +137,5 @@ function run() {
     btn_add.onpointerdown = add_new_category;
 }
 
-window.onload = run;
+category_action();
 

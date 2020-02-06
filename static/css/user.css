@@ -30,8 +30,59 @@
     }
 
     main {
-        width: 100%;
         padding: 10px 20px;
+        margin: 0;
+    }
+
+    main .form-container {
+        padding: 10px 20px;
+    }
+
+    main .form-row {
+        display: flex;
+        font-size: large;
+        padding: 10px;
+    }
+
+    main .btn-one {
+        text-align: center;
+    }
+
+    .sidebar ul {
+        padding: 0 1rem;
+        list-style: none;
+        font-size: larger;
+    }
+
+    main .btn-group {
+        margin-left: 50px;
+        margin-bottom: 50px;
+    }
+
+    .table .new-cel-input {
+        width: 100px;
+        padding: 3px 5px;
+    }
+
+    .large-order-cel {
+        width: 50px !important;
+    }
+
+    #main-website {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    .site-num {
+        display: none;
+    }
+
+    #main-website .site-url {
+        overflow: hidden;
+    }
+    #main-rss{
+        padding-left: 0;
+        padding-right: 0;
     }
 }
 
@@ -51,6 +102,49 @@
         width: 80%;
         float: right;
     }
+
+    main .form-container {
+        margin: 3rem auto;
+        display: block;
+    }
+
+    main {
+        position: relative;
+        display: flex;
+    }
+
+    main .btn-one {
+        /*margin-left: 200px !important;*/
+    }
+
+    main .form-row {
+        display: flex;
+        flex-wrap: wrap;
+        font-size: large;
+        padding: 10px;
+    }
+
+    #main-category .table {
+        width: 500px;
+    }
+
+    .table .new-cel-input {
+        padding: 6px 8px;
+        width: 80px;
+    }
+
+    .large-order-cel {
+        width: 80px !important;
+    }
+
+    #main-website {
+        padding: 0 50px;
+    }
+
+    #main-rss .table {
+        width: 600px;
+        /*margin: 0 30px;*/
+    }
 }
 
 .sidebar ul {
@@ -68,16 +162,6 @@
     color: #007bff !important;
 }
 
-main .form-container {
-    padding: 50px 100px;
-}
-
-main .form-row {
-    display: flex;
-    flex-wrap: wrap;
-    font-size: large;
-    padding: 10px;
-}
 
 main .form-row label {
     min-width: 100px;
@@ -90,12 +174,12 @@ main .form-row label {
 }
 
 main .btn {
-    margin: .25rem 30px;
     cursor: pointer;
     text-align: center;
     vertical-align: middle;
     border: 1px solid transparent;
-    padding: 10px 15px;
+    padding: 6px 9px;
+    margin: 10px 20px;
     font-size: 1rem;
     line-height: 1.5;
     border-radius: .25rem;
@@ -117,15 +201,6 @@ main .btn-light:hover {
     color: #212529;
     background-color: #e2e6ea;
     border-color: #dae0e5;
-}
-
-main .btn-group {
-    margin-left: 150px;
-    margin-bottom: 50px;
-}
-
-main .btn-one {
-    margin-left: 200px;
 }
 
 main .table {
@@ -159,7 +234,6 @@ main th {
 
 .table .new-cel-input {
     height: 22px;
-    padding: 8px 20px;
     border: none;
     font-size: large;
 }
@@ -181,7 +255,7 @@ main th {
 }
 
 .table .cate-action {
-    width: 150px;
+    width: 100px;
 }
 
 .table .action-cate {
@@ -192,13 +266,10 @@ main th {
     cursor: pointer;
 }
 
-#main-website, #main-rss {
-    padding: 50px;
-}
 
 .site-category-name {
     font-size: 20px;
-    margin: 10px 20px;
+    margin: 0.3rem 1rem;
 }
 
 .site-name {
@@ -226,20 +297,18 @@ main th {
 }
 
 .url-cel {
-    width: 300px;
+    width: 300px !important;
 }
 
 .large-url-cel {
-    width: 350px;
+    width: 350px !important;
 }
 
 .order-cel {
-    width: 50px;
+    width: 50px !important;
+    padding: 8px !important;
 }
 
-.large-order-cel {
-    width: 100px;
-}
 
 .new-site-name-input {
     width: 100px;
@@ -262,8 +331,11 @@ main th {
     padding: 3px 5px;
     border-radius: 3px;
     border: 1px solid lightskyblue;
-    background: white;
+    background: #CCEBFA;
     cursor: pointer;
+    margin-bottom: 3px;
+    margin-right: 1rem;
+    font-size: 1rem;
 }
 
 #main-website .new-website-input-dom {

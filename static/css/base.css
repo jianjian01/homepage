@@ -17,16 +17,33 @@ a {
     text-decoration: none;
 }
 
+.myweb-logo {
+    padding-top: .3125rem;
+    padding-bottom: .3125rem;
+    margin-right: 0.3rem;
+    white-space: nowrap;
+}
+
+.myweb-name {
+    font-size: 1.6rem;
+    font-weight: 500;
+    margin-bottom: -1rem;
+    color: black;
+    vertical-align: super;
+}
+
 .header {
     padding: 6px 24px;
     display: block;
     box-sizing: border-box;
-    height: 52px;
+    height: 3.5rem;
     border-bottom: 1px solid lightgray;
 }
 
 .header-logo {
     float: left;
+    box-sizing: border-box;
+
 }
 
 .header-user {
@@ -79,6 +96,7 @@ a {
 .dropdown {
     position: relative;
     display: inline-block;
+    cursor: pointer;
 }
 
 .dropdown-content {
@@ -103,11 +121,11 @@ a {
     min-width: 40px;
 }
 
-.dropdown-item:hover {
+.dropdown-item:hover, .dropdown-item:active {
     background-color: #169ad6;
 }
 
-.dropdown:hover .dropdown-content {
+.dropdown:hover, .dropdown:active .dropdown-content {
     display: block;
 }
 

@@ -42,7 +42,29 @@ function input_valid(input_doms) {
     return ok
 }
 
-function run() {
+function show_login_modal() {
+    // 弹出登录层
+    let btn = document.getElementById('header-login-button');
+    let modal = document.getElementById("login-modal");
+    let close = document.getElementsByClassName("close")[0];
+    if (btn === null) {
+        return
+    }
+    btn.onclick = function (e) {
+        console.log("abcd");
+        modal.style.display = "block";
+    };
+    close.onclick = function (e) {
+        modal.style.display = "none";
+    };
+    window.onclick = function (event) {
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    };
+}
+
+function dropdown_action() {
     let dropdown = document.getElementsByClassName('dropdown');
     for (let i = 0; i < dropdown.length; i++) {
         let dp = dropdown.item(i);
@@ -57,4 +79,9 @@ function run() {
     }
 }
 
-window.onload = run;
+function run() {
+    show_login_modal();
+    dropdown_action();
+}
+
+run();

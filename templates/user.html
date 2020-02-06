@@ -57,11 +57,17 @@
                                        value="{{ user.create_time| string |truncate(10, False, end='') }}"
                                        name="register-date">
                             </div>
+                            <div class="form-row">
+                                <label></label>
+                                <a href="/">
+                                    <button type="button" role="button" class="btn btn-success btn-one">返回主页</button>
+                                </a>
+                            </div>
+
                         </form>
+
                     </div>
-                    <a href="/">
-                        <button type="button" role="button" class="btn btn-success btn-one">返回主页</button>
-                    </a>
+
 
                 {% elif page == 'category' %}
                     <div class="form-container" id="main-category">
@@ -91,21 +97,22 @@
                         </table>
                         <small class="small">
                             1. 序号 1 ～ 1000 之间，按照从小到大排列；
-                        </small>
+                        </small><br/>
                         <small class="small">
                             2. 一次只能添加一条数据；
-                        </small>
+                        </small><br/>
                         <small class="small">
                             3. 删除分类，则分类下的网址都会被隐藏。
                         </small>
-                    </div>
-                    <div class="btn-group">
-                        <a href="/">
-                            <button type="button" class="btn btn-success">返回主页</button>
-                        </a>
-                        <button type="button" class="btn btn-light" id="btn-add-cate">添加</button>
+                        <div class="btn-group">
+                            <a href="/">
+                                <button type="button" class="btn btn-success">返回主页</button>
+                            </a>
+                            <button type="button" class="btn btn-light" id="btn-add-cate">添加</button>
 
+                        </div>
                     </div>
+
                 {% elif page == 'website' %}
                     <div class="form-container" id="main-website">
                         {% if categories %}
@@ -119,7 +126,7 @@
                                     <table class="site-table table">
                                         <thead>
                                         <tr>
-                                            <th scope="col">#</th>
+                                            <th scope="col" class="site-num">#</th>
                                             <th scope="col" class="site-name">名称</th>
                                             <th scope="col" class="site-url">网址</th>
                                             <th scope="col" class="site-order">排序</th>
@@ -130,7 +137,7 @@
                                         {% if ss %}
                                             {% for s in ss | sort(attribute="order") %}
                                                 <tr data-id="{{ s.id }}" class="site-site">
-                                                    <th scope="row">
+                                                    <th scope="row" class="site-num">
                                                         {{ loop.index }}
                                                     </th>
                                                     <td class="site-name">
@@ -151,8 +158,6 @@
                                 </div>
                             {% endfor %}
                         {% endif %}
-                    </div>
-                    <div class="btn-group">
                         <a href="/">
                             <button type="button" role="button" class="btn btn-success btn-one">返回主页</button>
                         </a>
@@ -162,7 +167,7 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <th scope="col">#</th>
+                                <th scope="col" class="site-num">#</th>
                                 <th scope="col">名称</th>
                                 <th scope="col">网址</th>
                                 <th scope="col">操作</th>
@@ -171,7 +176,7 @@
                             <tbody>
                             {% for s in user_rss %}
                                 <tr data-id="{{ s[0] }}">
-                                    <th scope="row">
+                                    <th scope="row" class="site-num">
                                         {{ loop.index }}
                                     </th>
                                     <td>
@@ -187,14 +192,14 @@
                             {% endfor %}
                             </tbody>
                         </table>
+                        <div class="btn-group">
+                            <a href="/">
+                                <button type="button" class="btn btn-success">返回主页</button>
+                            </a>
+                            <button type="button" class="btn btn-light" id="btn-add-rss">添加</button>
+                        </div>
+                    </div>
 
-                    </div>
-                    <div class="btn-group">
-                        <a href="/">
-                            <button type="button" class="btn btn-success">返回主页</button>
-                        </a>
-                        <button type="button" class="btn btn-light" id="btn-add-rss">添加</button>
-                    </div>
                 {% endif %}
             </main>
         </div>

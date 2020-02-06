@@ -36,7 +36,7 @@
                     <p>
                         <span class="rss-site-name">[{{ p[-1] }}]</span>
                         <a role="link" class="page-link" href="{{ p[2] |truncate(200) }}">{{ p[1] }}</a>
-                        &nbsp;&nbsp;&nbsp;<small>{{ p[3] }}</small>
+                        &nbsp;&nbsp;<small>{{ p[3] |string| truncate(10, False, '', 0) }}</small>
                     </p>
                 </div>
             {% endfor %}
@@ -44,7 +44,3 @@
     </main>
 {% endblock %}
 
-
-{% block script %}
-    <script type="application/javascript" src="{{ static_url('js/index.js') }}"></script>
-{% endblock %}

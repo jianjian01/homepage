@@ -6,6 +6,7 @@ function add_new_website(e) {
 
     // th
     let th_dom = document.createElement('th');
+    th_dom.classList.add('site-num');
     th_dom.setAttribute('scope', 'row');
     tr_dom.appendChild(th_dom);
 
@@ -99,7 +100,7 @@ function delete_website(e) {
     http_request_json('DELETE', document.URL, data, refresh)
 }
 
-function run() {
+function website_action() {
     let add_btn = document.getElementsByClassName('add-new-website');
     let delete_btn = document.getElementsByClassName('delete-site');
     for (let btn of add_btn) {
@@ -111,4 +112,4 @@ function run() {
 
 }
 
-window.onload = run;
+website_action();

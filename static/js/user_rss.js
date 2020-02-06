@@ -6,6 +6,7 @@ function add_new_rss(e) {
     }
     let row = tbody[0].insertRow();
     let num_dom = document.createElement('th');
+    num_dom.classList.add('site-num');
     let name_dom = document.createElement('td');
     name_dom.classList.add('new-cel');
     let name_input_dom = new_input_dom('name', 'text', 'name', true, true);
@@ -56,7 +57,7 @@ function remove_rss(e) {
     http_request_json('DELETE', document.URL, data, refresh)
 }
 
-function run() {
+function rss_action() {
     let add_btn = document.getElementById('btn-add-rss');
     let delete_btn = document.getElementsByClassName('delete-rss');
     add_btn.onpointerdown = add_new_rss;
@@ -65,4 +66,4 @@ function run() {
     }
 }
 
-window.onload = run;
+rss_action();
