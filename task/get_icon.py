@@ -39,7 +39,10 @@ def download(host, icon):
         for chunk in response.iter_content(1024):
             image.write(chunk)
     path = os.path.join(icon_dir, '{}.png'.format(icon_id))
-    if os.path.exists(path) and os.path.getsize(path) > 100:
+    if os.path.exists(path):
+        if os.path.getsize(path) < 100:
+            # icon 下载失败
+            os.remove(path)
         return icon_id
 
 
