@@ -51,33 +51,50 @@ function show_login_modal() {
         return
     }
     btn.onclick = function (e) {
-        console.log("abcd");
         modal.style.display = "block";
     };
     close.onclick = function (e) {
         modal.style.display = "none";
     };
-    window.onclick = function (event) {
-        if (event.target === modal) {
-            modal.style.display = "none";
-        }
-    };
+
 }
 
 function dropdown_action() {
     let dropdown = document.getElementsByClassName('dropdown');
     for (let i = 0; i < dropdown.length; i++) {
         let dp = dropdown.item(i);
-        dp.onpointerenter = function (e) {
+        dp.onclick = function (e) {
+            console.log(e);
             let target = dp.getElementsByClassName('dropdown-content')[0];
-            target.style.display = 'block'
+            let display = 'none';
+            if (target.style.display === 'none') {
+                display = 'block'
+            }
+            target.style.display = display;
         };
-        dp.onpointerleave = function (e) {
-            let target = dp.getElementsByClassName('dropdown-content')[0];
-            target.style.display = 'none'
-        };
+        // dp.onpointerleave = function (e) {
+        //     let target = dp.getElementsByClassName('dropdown-content')[0];
+        //     target.style.display = 'none'
+        // };
     }
 }
+
+window.onclick = function (event) {
+    let dropdown = document.getElementsByClassName('dropdown');
+
+    for (let i = 0; i < dropdown.length; i++) {
+        let dp = dropdown.item(i);
+        let content = dp.getElementsByClassName('dropdown-content')[0];
+        if (event.target in content.childNodes) {
+            content.style.display = 'none'
+        }
+    }
+
+    let modal = document.getElementById("login-modal");
+    if (modal !== null && event.target === modal) {
+        modal.style.display = "none";
+    }
+};
 
 function run() {
     show_login_modal();
