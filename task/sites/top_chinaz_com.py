@@ -3,7 +3,7 @@ import requests
 from pymysql import connect
 
 from config import Config
-from task.sites.tool import bs_get, insert
+from task.sites.tool import bs_get, insert_site
 
 
 def urll(url):
@@ -67,7 +67,7 @@ def main():
             try:
                 domains = query_top(new_url)
                 if domains:
-                    insert(conn, domains)
+                    insert_site(conn, domains)
             except Exception as e:
                 print(e)
                 continue

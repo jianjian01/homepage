@@ -80,7 +80,7 @@ def try_fetch(host):
 @db_session
 def get_icon():
     """下载"""
-    for site in Site.select(lambda x: not x.icon)[:1000]:
+    for site in Site.select(lambda x: not x.icon)[:]:
         try:
             host = site.host
             icons = try_fetch(host)
@@ -100,16 +100,6 @@ def get_icon():
             continue
 
 
-@db_session
-def update_icon():
-    """更新"""
-    for new_site in UserSite.select(lambda x: not x.icon):
-        url = urlparse(new_site.url)
-        site = Site.select(lambda x: x.host == url.netloc).first()
-        if site:
-            new_site.icon = site.icon
-
-
 def main():
     """"""
     set_sql_debug(True)
@@ -118,7 +108,6 @@ def main():
     while 1:
         get_icon()
         time.sleep(10)
-        update_icon()
 
 
 if __name__ == '__main__':
