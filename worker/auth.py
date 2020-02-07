@@ -8,7 +8,7 @@ from pony.orm import commit, db_session
 
 from db import UserSource, User, UserStatus
 from flask_app import redis
-from util.tool import random_str
+from util.tool import random_str, redirect_home
 
 auth_bp = Blueprint('auth', __name__, template_folder='templates')
 
@@ -137,7 +137,7 @@ def callback_github():
     u_id = save_or_update_user(UserSource.github, data.get('id', ''),
                                data.get('name', ''), data.get('avatar_url', ''), resp.text)
     set_session(conf, u_id, UserSource.github)
-    return redirect(url_for('page.index', _external=True, _scheme=conf['PREFERRED_URL_SCHEME']))
+    return redirect_home()
 
 
 @auth_bp.route('/callback/weibo')
@@ -173,12 +173,14 @@ def callback_weibo():
     }
     logging.info("weibo request access_token: {}, uid: {}".format(access_token, uid))
     resp = requests.get(url=url, params=params, headers={'Accept': 'application/json'})
+    if resp.status_code != 200:
+        return redirect_home()
     logging.info("weibo get response: {}".format(resp.text))
     data = resp.json()
     u_id = save_or_update_user(UserSource.weibo, data.get('id', ''), data.get('name', ''),
                                data.get('profile_image_url', ''), resp.text)
     set_session(conf, u_id, UserSource.weibo)
-    return redirect(url_for('page.index', _external=True, _scheme=conf['PREFERRED_URL_SCHEME']))
+    return redirect_home()
 
 
 @auth_bp.route('/callback/weibo/cancel')

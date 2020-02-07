@@ -15,3 +15,16 @@ USERRSS 表，用户订阅 RSS 的记录表，当用户添加一个 RSS 源的�
 ### rss 索引 ###
 `atoma` 、`feedparser` 似乎都不太靠谱，这里使用 `feedparser` ，如果抛出异常，在使用 `atoma`
 
+## 国际化 ##
+
+```shell script
+# 查找翻译文件
+pybabel extract -F babel.cfg -o messages.pot .
+# 初始化语言文件夹，zh ja en ...
+pybabel init -i messages.pot -d translations -l ja
+# 更新文件夹
+pybabel update -i messages.pot -d translations
+# 翻译之后，编译一下才能使用
+pybabel compile -d translations
+```
+

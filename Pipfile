@@ -22,6 +22,8 @@ atoma = "*"
 feedparser = {editable = true,git = "https://github.com/kurtmckee/feedparser.git",ref = "6.0.0b1"}
 aiohttp = "*"
 aiomysql = "*"
+babel = "*"
+flask-babel = "*"
 
 [requires]
 python_version = "3.7"

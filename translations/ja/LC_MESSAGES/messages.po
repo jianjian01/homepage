@@ -1,0 +1,97 @@
+# Japanese translations for PROJECT.
+# Copyright (C) 2020 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2020-02-07 11:58+0800\n"
+"PO-Revision-Date: 2020-02-07 10:44+0800\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.8.0\n"
+
+#: templates/base.html:68
+msgid "setup"
+msgstr "設定する"
+
+#: templates/base.html:71
+msgid "exit"
+msgstr "出口"
+
+#: templates/base.html:83
+msgid "login"
+msgstr "ログイン"
+
+#: templates/base.html:88
+msgid "choice_log_paltform"
+msgstr "ログイン方法を選択してください"
+
+#: templates/user.html:15
+msgid "personal_info"
+msgstr "個人情報"
+
+#: templates/user.html:18 templates/user.html:79
+msgid "category"
+msgstr "カテゴリー"
+
+#: templates/user.html:21
+msgid "Web_site"
+msgstr "URL"
+
+#: templates/user.html:24
+msgid "rss_feed"
+msgstr "RSS 購読する"
+
+#: templates/user.html:35
+msgid "avatar"
+msgstr "アバター"
+
+#: templates/user.html:45 templates/user.html:131 templates/user.html:173
+msgid "name"
+msgstr "お名前"
+
+#: templates/user.html:50
+msgid "login_paltform"
+msgstr "ログインチャンネル"
+
+#: templates/user.html:55
+msgid "register_date"
+msgstr "登録日"
+
+#: templates/user.html:64 templates/user.html:110 templates/user.html:164
+#: templates/user.html:199
+msgid "backhome"
+msgstr "ホームに戻る"
+
+#: templates/user.html:80 templates/user.html:133
+msgid "serial_num"
+msgstr "シーケンス"
+
+#: templates/user.html:81 templates/user.html:134 templates/user.html:175
+msgid "action"
+msgstr "運営"
+
+#: templates/user.html:91 templates/user.html:191
+msgid "delete"
+msgstr "削除"
+
+#: templates/user.html:93 templates/user.html:152
+msgid "update"
+msgstr "更新する"
+
+#: templates/user.html:112 templates/user.html:124 templates/user.html:201
+msgid "add"
+msgstr "追加する"
+
+#: templates/user.html:132 templates/user.html:174
+msgid "url"
+msgstr "URL"
+

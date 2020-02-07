@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="keywords" content="吃点心,chidianxin,网站导航,吃点心网址导航,自定义网址导航,上网导航,RSS 订阅">
-    <meta name="description" content="自定义网址收藏，同时支持订阅 RSS 文章">
+    <meta name="keywords"
+          content="myweb100,Internet navigation,Navigation site,Online bookmark,Rss subscription,Custom Website Favorites">
+    <meta name="description" content="myweb100,Internet navigation,Custom website and rss subscription">
     <meta content="origin" name="referrer">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -15,7 +16,7 @@
     <link sizes="80x80" rel="icon" href="{{ static_url('icon/80x80.png') }}">
     <link sizes="120x120" rel="icon" href="{{ static_url('icon/120x120.png') }}">
 
-    <title>{% block title %}{% endblock %} MyWeb100 - 自定义网址收藏</title>
+    <title>{% block title %}{% endblock %} MyWeb100.com </title>
     <link rel="stylesheet" type="text/css" href="{{ static_url('css/base.css') }}">
 
     {% block css %}{% endblock %}
@@ -49,7 +50,7 @@
                 <a href="/locale/zh">中文</a>
             </div>
             <div class="dropdown-item">
-                <a href="/locale/jp">日本語</a>
+                <a href="/locale/ja">日本語</a>
             </div>
             <div class="dropdown-item">
                 <a href="/locale/en">English</a>
@@ -64,10 +65,10 @@
             <div class="dropdown-content">
                 <div class="top-arrow"></div>
                 <div class="dropdown-item">
-                    <a href="/user/{{ user.u_id }}">设置</a>
+                    <a href="/user/{{ user.u_id }}">{{ _('setup') }}</a>
                 </div>
                 <div class="dropdown-item">
-                    <a href="/user/logout">退出</a>
+                    <a href="/user/logout">{{ _('exit') }}</a>
                 </div>
             </div>
         </div>
@@ -79,12 +80,12 @@
                 <path fill="#1296db"
                       d="M511.977739 0C293.62087 0 107.27513 136.681739 33.658435 329.149217H112.862609a438.917565 438.917565 0 0 1 88.820869-127.465739A435.934609 435.934609 0 0 1 512 73.149217c117.225739 0 227.439304 45.634783 310.316522 128.534261A435.95687 435.95687 0 0 1 950.873043 512c0 117.225739-45.634783 227.439304-128.53426 310.316522a436.023652 436.023652 0 0 1-310.338783 128.534261 435.95687 435.95687 0 0 1-310.316522-128.534261 438.962087 438.962087 0 0 1-88.820869-127.465739H33.636174C107.27513 887.318261 293.665391 1024 511.977739 1024 794.757565 1024 1024 794.779826 1024 512 1024 229.242435 794.757565 0 511.977739 0zM399.693913 667.158261l51.712 51.712L658.276174 512l-206.870261-206.870261-51.712 51.712 118.583652 118.583652H0v73.149218h518.277565z"/>
             </svg>
-            <span class="header-login-word ">登录</span>
+            <span class="header-login-word ">{{ _('login') }}</span>
         </div>
         <div id="login-modal" class="modal" role="dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLiveLabel">请选择登录方式</h5>
+                    <h5 class="modal-title" id="exampleModalLiveLabel">{{ _('choice_log_paltform') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -183,10 +184,25 @@
 
 <footer>
     <div class="footer-container">
-        © Copyright 2020 MywWeb100.com.
+        © Copyright 2020 MywWeb100.com
     </div>
 </footer>
 <script src="{{ static_url('js/base.js') }}"></script>
 {% block script %}{% endblock %}
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-51132131-4"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'UA-51132131-4');
+</script>
+
+
 </body>
 </html>

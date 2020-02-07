@@ -4,7 +4,7 @@ from flask import render_template, Blueprint, request
 from pony.orm import select, desc, raw_sql
 
 from db import Page, UserRSS, RSS
-from util.tool import check_user, select_website
+from util.tool import check_user, select_website, redirect_home
 
 page_bp = Blueprint('page', __name__, template_folder='templates')
 
@@ -25,3 +25,11 @@ def index():
     else:
         sites, categories, pages = {}, [], []
     return render_template('index.html', sites=sites, categories=categories, pages=pages)
+
+
+@page_bp.route('/locale/<lc>', methods=['GET'])
+def locale(lc):
+    """设置位置"""
+    resp = redirect_home()
+    resp.set_cookie('locale', lc, max_age=99999999)
+    return resp

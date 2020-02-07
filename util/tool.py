@@ -3,9 +3,9 @@ import random
 import string
 from collections import defaultdict
 from datetime import datetime
-from functools import wraps
+from functools import wraps, lru_cache
 
-from flask import current_app, session, request, redirect
+from flask import current_app, session, request, redirect, url_for
 from pony.orm import commit
 
 from db import User, UserStatus, UserSite, Category, UserSiteStatus, Site
@@ -91,3 +91,10 @@ def static_url(path):
     domain = conf.get('STATIC_DOMAIN', '')
     scheme = conf.get('PREFERRED_URL_SCHEME', '')
     return '{}://{}/{}'.format(scheme, domain, path)
+
+
+@lru_cache(maxsize=2020)
+def redirect_home():
+    """重定向到首页"""
+    return redirect(url_for('page.index', _external=True,
+                            _scheme=current_app.config['PREFERRED_URL_SCHEME']))

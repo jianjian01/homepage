@@ -85,8 +85,16 @@ window.onclick = function (event) {
     for (let i = 0; i < dropdown.length; i++) {
         let dp = dropdown.item(i);
         let content = dp.getElementsByClassName('dropdown-content')[0];
-        if (event.target in content.childNodes) {
-            content.style.display = 'none'
+        if (event.target !== dp) {
+            let inner = false;
+            for (let ele of dp.children) {
+                if (ele === event.target) {
+                    inner = true
+                }
+            }
+            if (!inner) {
+                content.style.display = 'none'
+            }
         }
     }
 

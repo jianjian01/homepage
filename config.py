@@ -12,6 +12,8 @@ class Base:
     SESSION_SOURCE = '_o'
     SESSION_CREATE_TIME = '_t'
     RSS_REQUEST_NUM = 50  # 定时任务 index rss 异步执行数量
+    I18N_LANGUAGES = ['zh', 'ja', 'en']
+    BABEL_TRANSLATION_DIRECTORIES = './translations'
 
     AUTH_SITES = ['weibo', 'github']
 
@@ -20,7 +22,7 @@ class Dev(Base):
     """开发环境"""
     DEBUG = True
     SECRET_KEY = 'testing'  # os.urandom(16)
-    STATIC_DOMAIN = "127.0.0.1:5000/static"
+    STATIC_DOMAIN = "192.168.199.200:5000/static"
 
     PONY = {
         'provider': 'mysql',
