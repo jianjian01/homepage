@@ -6,7 +6,7 @@ from urllib.parse import urlparse
 
 import favicon as favicon
 import requests
-from pony.orm import db_session, set_sql_debug, commit
+from pony.orm import db_session, set_sql_debug, commit, raw_sql
 
 from config import Config
 from db import Site, UserSite, db
@@ -43,6 +43,7 @@ def download(host, icon):
         if os.path.getsize(path) < 100:
             # icon 下载失败
             os.remove(path)
+        print(icon_id)
         return icon_id
 
 
@@ -80,7 +81,8 @@ def try_fetch(host):
 @db_session
 def get_icon():
     """下载"""
-    for site in Site.select(lambda x: not x.icon)[:]:
+    for site in Site.select(lambda x: not x.icon).order_by(raw_sql("rand()"))[:100]:
+        print(site.host)
         try:
             host = site.host
             icons = try_fetch(host)

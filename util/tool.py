@@ -98,3 +98,7 @@ def redirect_home():
     """重定向到首页"""
     return redirect(url_for('page.index', _external=True,
                             _scheme=current_app.config['PREFERRED_URL_SCHEME']))
+
+
+def randstr(length=16):
+    return ''.join([random.choice(string.ascii_lowercase + string.digits) for _ in range(length)])

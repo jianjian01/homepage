@@ -13,6 +13,6 @@ RUN pip install -U  pip && \
     pipenv sync && \
     pip install -e git+https://github.com/kurtmckee/feedparser.git@6.0.0b1#egg=feedparser --no-cache-dir && \
     pip install Babel
-RUN pybabel compile -d translations
+RUN pybabel compile -d /app/translations
 
 CMD ["gunicorn", "-w", "4", "-b", "127.0.0.1:5000", "app:app"]

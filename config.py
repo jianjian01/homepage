@@ -23,6 +23,7 @@ class Dev(Base):
     DEBUG = True
     SECRET_KEY = 'testing'  # os.urandom(16)
     STATIC_DOMAIN = "192.168.199.200:5000/static"
+    ICON_DIR = '/Users/jianjian/github/jianjian01/dian-xin/static/site/'
 
     PONY = {
         'provider': 'mysql',
@@ -57,6 +58,7 @@ class Prod(Base):
     PREFERRED_URL_SCHEME = "https"
     SERVER_NAME = 'myweb100.com'
     STATIC_DOMAIN = "static.myweb100.com"
+    ICON_DIR = '/app/static/site/'
 
     PONY = {
         'provider': 'mysql',
