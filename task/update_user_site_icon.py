@@ -16,6 +16,8 @@ def update_icon():
         if site:
             new_site.icon = site.icon
         commit()
+        time.sleep(1)
+
 
 def main():
     """"""
@@ -23,7 +25,7 @@ def main():
     db.bind(**Config.PONY)
     db.generate_mapping()
     while 1:
-        time.sleep(10)
+        time.sleep(600)
         update_icon()
 
 

@@ -8,14 +8,11 @@
 import asyncio
 import logging
 import os
-import random
-import string
 from datetime import datetime
 from urllib.parse import urlparse
 
 import aiofiles
 import aiohttp
-import aiomysql
 import bs4
 import pymysql
 
