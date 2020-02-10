@@ -12,12 +12,16 @@ def update_icon():
     """更新"""
     for new_site in UserSite.select(lambda x: not x.icon):
         url = urlparse(new_site.url)
-        site = Site.select(lambda x: x.host == url.netloc).first()
+        netloc = url.netloc
+        if not netloc:
+            continue
+        site = Site.select(lambda x: x.host == netloc).first()
         if site:
             new_site.icon = site.icon
         else:
-            Site(host=url.netloc)
+            Site(host=netloc)
         commit()
+        time.sleep(1)
 
 
 def main():
@@ -27,6 +31,7 @@ def main():
     db.generate_mapping()
     while 1:
         update_icon()
+        time.sleep(100)
 
 
 if __name__ == '__main__':
