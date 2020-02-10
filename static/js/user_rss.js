@@ -1,10 +1,14 @@
 function add_new_rss(e) {
     let rss_dom = document.getElementById('main-rss');
-    let tbody = rss_dom.getElementsByTagName('tbody');
+    let table = rss_dom.getElementsByTagName('table')[0];
+    let tbody = table.getElementsByTagName('tbody');
     if (tbody === null) {
-        return
+        tbody = document.createElement('tbody');
+        table.appendChild(tbody);
+    } else {
+        tbody = tbody[0];
     }
-    let row = tbody[0].insertRow();
+    let row = tbody.insertRow(0);
     let num_dom = document.createElement('th');
     num_dom.classList.add('site-num');
     let name_dom = document.createElement('td');
@@ -54,7 +58,9 @@ function remove_rss(e) {
     let rss_id = tr_dom.getAttribute('data-id');
     let data = new FormData();
     data.append('id', rss_id);
-    http_request_json('DELETE', document.URL, data, refresh)
+    http_request_json('DELETE', document.URL, data, function () {
+        tr_dom.remove()
+    })
 }
 
 function rss_action() {

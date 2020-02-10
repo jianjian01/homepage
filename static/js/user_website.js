@@ -1,7 +1,17 @@
 function add_new_website(e) {
-    console.log(e);
-
-    let tr_dom = document.createElement("tr");
+    let site_list = e.target.parentNode.parentNode.parentNode;
+    let cate_id = site_list.getAttribute("data-id");
+    let table = site_list.getElementsByTagName('table')[0];
+    let tbody = table.getElementsByTagName('tbody');
+    if (tbody === null) {
+        tbody = document.createElement('tbody');
+        table.appendChild(tbody);
+    } else {
+        tbody = tbody[0]
+    }
+    // let tr_dom = document.createElement("tr");
+    let tr_dom = tbody.insertRow(0);
+    tr_dom.setAttribute('date-cate-id', cate_id);
     tr_dom.classList.add('site-site');
 
     // th
@@ -42,7 +52,7 @@ function add_new_website(e) {
     order_input_dom.setAttribute('type', 'number');
     order_input_dom.setAttribute('min', '1');
     order_input_dom.setAttribute('max', '1000');
-    order_input_dom.setAttribute('placeholder', '10');
+    order_input_dom.setAttribute('placeholder', '1 - 1000');
     order_input_dom.required = true;
     td_order_dom.appendChild(order_input_dom);
     tr_dom.appendChild(td_order_dom);
@@ -56,11 +66,8 @@ function add_new_website(e) {
     td_action_dom.appendChild(save);
     tr_dom.appendChild(td_action_dom);
 
-    let site_list = e.target.parentNode.parentNode;
-    let cate_id = site_list.getAttribute("data-id");
-    tr_dom.setAttribute('date-cate-id', cate_id);
-    let tbody = site_list.getElementsByTagName('tbody')[0];
-    tbody.appendChild(tr_dom)
+
+    // tbody.appendChild(tr_dom)
 }
 
 function save_new_website(e) {

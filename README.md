@@ -28,3 +28,11 @@ pybabel update -i messages.pot -d translations
 pybabel compile -d translations
 ```
 
+## task ##
+```shell script
+docker build -t task .
+docker run -it --network dian-xin_default -v ~/dian-xin/static/site:/app/static/site --restart always  -d  task   python task/download_site_icon_async.py
+```
+
+
+

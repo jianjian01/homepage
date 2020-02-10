@@ -64,7 +64,7 @@ msgstr "登录渠道"
 
 #: templates/user.html:55
 msgid "register_date"
-msgstr "注册日志"
+msgstr "注册日期"
 
 #: templates/user.html:64 templates/user.html:110 templates/user.html:164
 #: templates/user.html:199

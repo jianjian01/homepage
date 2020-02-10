@@ -42,71 +42,62 @@ function input_valid(input_doms) {
     return ok
 }
 
-function show_login_modal() {
-    // 弹出登录层
-    let btn = document.getElementById('header-login-button');
-    let modal = document.getElementById("login-modal");
-    let close = document.getElementsByClassName("close")[0];
-    if (btn === null) {
-        return
-    }
-    btn.onclick = function (e) {
-        modal.style.display = "block";
-    };
-    close.onclick = function (e) {
-        modal.style.display = "none";
-    };
+function right_click_delete() {
+    let site_names = document.getElementsByClassName('site-name');
+    for (let s of site_names) {
+        s.oncontextmenu(function (e) {
 
+        })
+    }
 }
 
-function dropdown_action() {
-    let dropdown = document.getElementsByClassName('dropdown');
-    for (let i = 0; i < dropdown.length; i++) {
-        let dp = dropdown.item(i);
-        dp.onclick = function (e) {
-            console.log(e);
-            let target = dp.getElementsByClassName('dropdown-content')[0];
-            let display = 'none';
-            if (target.style.display === 'none') {
-                display = 'block'
-            }
-            target.style.display = display;
+function new_dom(tag, type, name, value, placeholder, class_list) {
+    let dom = document.createElement(tag);
+    dom.setAttribute('type', type);
+    dom.setAttribute('name', name);
+    dom.setAttribute('value', value);
+    dom.setAttribute('placeholder', placeholder);
+    for (let c of class_list) {
+        dom.classList.add(c);
+    }
+    return dom;
+}
+
+function update_form(btn) {
+    let csrf = document.head.querySelector("[name~=csrf-token][content]").content;
+    // let form = btn.closest('.dropdown').getElementsByTagName('form')[0];
+    let form = btn.closest('form');
+    let csrf_dom = new_dom('input', 'hidden', 'csrf_token', csrf, '', []);
+    let title_dom = new_dom('input', 'text', '', 'Add New Site', '',
+        ["form-control-plaintext", "add-website-input", "form-control-sm"]);
+    title_dom.readOnly = true;
+    let name_dom = new_dom('input', 'text', 'name', '', 'site name',
+        ["form-control", "add-website-input", "form-control-sm"]);
+    name_dom.required = true;
+    let url_dom = new_dom('input', 'url', 'url', '', 'https://example.com',
+        ["form-control", "add-website-input", "form-control-sm"]);
+    url_dom.required = true;
+
+    let order_dom = new_dom('input', 'number', 'order', '', '1 - 1000',
+        ["form-control", "add-website-input", "form-control-sm"]);
+    order_dom.required = true;
+
+    form.insertBefore(order_dom, form.firstChild);
+    form.insertBefore(url_dom, order_dom);
+    form.insertBefore(name_dom, url_dom);
+    form.insertBefore(title_dom, name_dom);
+    form.appendChild(csrf_dom);
+}
+
+function add_website_shortcut() {
+    let close_btn = document.getElementsByClassName('close-dropdown-add-website');
+    let submit_btn = document.getElementsByClassName('submit-dropdown-add-website');
+    for (let btn of close_btn) {
+        btn.onpointerdown = function (e) {
+            $(e.target.closest('.dropdown-add-website')).dropdown('hide');
         };
-        // dp.onpointerleave = function (e) {
-        //     let target = dp.getElementsByClassName('dropdown-content')[0];
-        //     target.style.display = 'none'
-        // };
+        update_form(btn);
     }
 }
 
-window.onclick = function (event) {
-    let dropdown = document.getElementsByClassName('dropdown');
-
-    for (let i = 0; i < dropdown.length; i++) {
-        let dp = dropdown.item(i);
-        let content = dp.getElementsByClassName('dropdown-content')[0];
-        if (event.target !== dp) {
-            let inner = false;
-            for (let ele of dp.children) {
-                if (ele === event.target) {
-                    inner = true
-                }
-            }
-            if (!inner) {
-                content.style.display = 'none'
-            }
-        }
-    }
-
-    let modal = document.getElementById("login-modal");
-    if (modal !== null && event.target === modal) {
-        modal.style.display = "none";
-    }
-};
-
-function run() {
-    show_login_modal();
-    dropdown_action();
-}
-
-run();
+add_website_shortcut();

@@ -97,10 +97,10 @@ def user_website_post(u_id: int):
     url = form.get('url', '')
     order = form.get('order', '')
     if not name or not url or not order or not order.isdigit():
-        return jsonify({'status': -1})
+        return redirect('/')
     order = int(order)
     if order > 1000 or order < 1:
-        return jsonify({'status': -1})
+        return redirect('/')
     if not cate_id or not cate_id.isdigit():
         cate_id = None
         cate = None
@@ -108,14 +108,14 @@ def user_website_post(u_id: int):
         cate_id = int(cate_id)
         cate = Category.select(lambda x: x.user == request.user and x.id == cate_id and not x.delete).first()
         if not cate:
-            return jsonify({'status': -1})
+            return redirect('/')
     try:
         icon = query_icon(urlparse(url).netloc)
     except Exception:
         icon = ''
     site = UserSite(name=name, url=url, user=request.user, icon=icon, cate=cate, order=order)
     commit()
-    return jsonify({'status': 1, 'id': site.id})
+    return redirect('/')
 
 
 @user_bp.route('/<int:u_id>/website', methods=['DELETE'])

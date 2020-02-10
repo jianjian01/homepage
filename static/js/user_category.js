@@ -2,8 +2,7 @@ function new_order_input_dom() {
     let order = document.createElement("input",);
     order.setAttribute('type', 'number');
     order.setAttribute('class', 'new-cel-input');
-    order.classList.add('large-order-cel');
-    order.setAttribute('placeholder', '10');
+    order.setAttribute('placeholder', '1 - 1000');
     order.setAttribute('min', '1');
     order.setAttribute('max', '1000');
     order.setAttribute('name', 'order');
@@ -103,7 +102,7 @@ function update_cate(e) {
     action_td.innerText = null;
     let action = document.createElement("span");
     action.innerText = "更新";
-    action.setAttribute('class', 'save-update-cate');
+    action.setAttribute('class', 'update-btn');
     action.onpointerdown = save_update_cate;
     action_td.appendChild(action);
 }

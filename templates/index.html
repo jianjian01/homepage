@@ -1,47 +1,96 @@
 {% extends "base.html" %}
 
-{% block css %}
-    <link rel="stylesheet" type="text/css" href="{{ static_url('css/index.css') }}">
-{% endblock %}
 
 {% block content %}
-    <main>
-        <div role="main">
-            {% for c in categories | sort(attribute="order") %}
-                {% set ss = sites.get(c.id) %}
-                {% if ss %}
-                    <div data-id="{{ c.id }}">
-                        {% if c.name %}
-                            <h5 class="site-category ">{{ c.name }}</h5>
-                            <hr class="site-hr">
-                        {% endif %}
-                        <div class="site-list">
-                            {% for s in ss | sort(attribute="order,create_time") %}
-                                <div class="site-item">
-                                    <a href="{{ s.url }}" class="site-name" target="_blank"
-                                            {% if s.icon %}
-                                       style="background-image: url({{ static_url('site/'+ s.icon + '.png') }})"
-                                            {% endif %}
-                                    >{{ s.name }}</a>
+    <div>
+        <main role="main">
+            <div class="container">
+                {% for c in categories | sort(attribute="order") %}
+                    {% set ss = sites.get(c.id) %}
+                    {% if ss %}
+                        <div data-id="{{ c.id }}">
+                            <div class="row justify-content-between site-header">
+                                <div class="col-4 ">
+                                    {% if c.name %}
+                                        <h5 class="sites display-5 site-header-name ">{{ c.name }}</h5>
+                                    {% endif %}
                                 </div>
-                            {% endfor %}
+                                <div class="col-4 ">
+                                    <div class="dropdown">
+                                        <div class="add-site site-header-add "
+                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <svg height="32" class="octicon octicon-plus-small" viewBox="0 0 7 16"
+                                                 version="1.1" width="14" aria-hidden="true">
+                                                <path fill-rule="evenodd" d="M4 4H3v3H0v1h3v3h1V8h3V7H4V4z"></path>
+                                            </svg>
+                                        </div>
+                                        <div class="dropdown-menu dropdown-menu-right dropdown-add-website"
+                                             aria-labelledby="dLabel">
+                                            <form action="/user/{{ request.user.u_id }}/website" method="post">
+                                                <input name="cate_id" value="{{ c.id }}" type="hidden">
+                                                <div class="row">
+                                                    <div class="col-sm-2"></div>
+                                                    <div class="col-sm-4">
+                                                        <button type="submit"
+                                                                class="btn submit-dropdown-add-website btn-outline-primary btn-sm">
+                                                            save
+                                                        </button>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <button type="reset" data-dismiss="modal"
+                                                                class="btn btn-outline-primary close-dropdown-add-website btn-sm">
+                                                            close
+                                                        </button>
+                                                    </div>
+                                                    <div class="col-sm-2"></div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% if c.name %}
+                                <hr class="site-hr">
+                            {% endif %}
+                            <div class="row p-3 mb-5 bg-white rounded site-list">
+                                {% for s in ss | sort(attribute="order,create_time") %}
+                                    <div class="col-4 col-lg-2 site-item ">
+                                        <a href="{{ s.url }}" class="site-name" target="_blank"
+                                                {% if s.icon %}
+                                           style="background-image: url({{ static_url('site/'+ s.icon + '.png') }})"
+                                                {% endif %}
+                                        >{{ s.name }}</a>
+                                    </div>
+                                {% endfor %}
+                            </div>
                         </div>
-                    </div>
-                {% endif %}
-            {% endfor %}
-        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </main>
         <div role="feed" class="rss">
-            {% for p in pages %}
-                <div class="rss-page" data-rss-id="{{ p[4] }}" data-page-id="{{ p[0] }}">
-                    <p>
-                        <span class="rss-site-name">[{{ p[-1] }}]</span>
-                        <a role="link" class="page-link" target="_blank"
-                           href="{{ p[2] |truncate(200) }}">{{ p[1] }}</a>
-                        &nbsp;&nbsp;<small>{{ p[3] |string| truncate(10, False, '', 0) }}</small>
-                    </p>
+            <div class="container">
+                <hr class="rss-hr">
+
+                <div class="row">
+
+                    {% for p in pages %}
+                        <div class=" col-sm-12 col-lg-12 rss-item" data-rss-id="{{ p[4] }}" data-page-id="{{ p[0] }}">
+                            <p>
+                                <a class="rss-site-name">[{{ p[-1] }}]</a>
+                                <a role="link" class="rss-page-link" target="_blank"
+                                   href="{{ p[2] |truncate(200) }}">{{ p[1] }} &nbsp;</a>
+
+                                <small class="text-muted">{{ p[3] |string| truncate(10, False, '', 0) }}</small>
+                            </p>
+                        </div>
+                    {% endfor %}
                 </div>
-            {% endfor %}
+            </div>
         </div>
-    </main>
+    </div>
+    <div class="context-menu">
+
+    </div>
 {% endblock %}
 
