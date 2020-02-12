@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 
-from flask import render_template, Blueprint, request
+from flask import render_template, Blueprint, request, current_app
 from pony.orm import select, desc, raw_sql
 
 from db import Page, UserRSS, RSS
@@ -22,9 +22,18 @@ def index():
             if ur.user == request.user and not ur.delete
             and p.publish_date > last_year and ur.rss == p.rss
         ), key=lambda x: x[3], reverse=True)
-    else:
-        sites, categories, pages = {}, [], []
-    return render_template('index.html', sites=sites, categories=categories, pages=pages)
+        return render_template('index.html', sites=sites, categories=categories, pages=pages)
+    cl = request.cookies.get('locale', '')
+    if not cl:
+        cl = request.accept_languages.best_match(current_app.config['I18N_LANGUAGES'])
+    if not cl:
+        cl = 'en'
+    if cl == 'zh':
+        return render_template('index.zh.html')
+    if cl == 'en':
+        return render_template('index.en.html')
+    if cl == 'ja':
+        return render_template('index.ja.html')
 
 
 @page_bp.route('/locale/<lc>', methods=['GET'])

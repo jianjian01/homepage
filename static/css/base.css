@@ -20,7 +20,7 @@
 }
 
 main {
-    margin-top: 80px;
+    /*margin-top: 80px;*/
 }
 
 .site-item {
@@ -111,6 +111,16 @@ main {
 
 @media (min-width: 1200px) {
     .nav-sidebar {
+        margin: 0 50px;
+    }
+}
+
+@media (max-width: 720px) {
+    .site-item {
+        padding: 0 3px;
+    }
+     .nav-sidebar ul {
+         display: inline-block;
         margin: 0 50px;
     }
 }

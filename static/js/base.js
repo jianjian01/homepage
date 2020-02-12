@@ -45,8 +45,16 @@ function input_valid(input_doms) {
 function right_click_delete() {
     let site_names = document.getElementsByClassName('site-name');
     for (let s of site_names) {
-        s.oncontextmenu(function (e) {
-
+        s.addEventListener('contextmenu', function (e) {
+            // console.log(e);
+            // e.preventDefault();
+            // let menu = document.getElementsByClassName('context-menu')[0];
+            // console.log(menu);
+            // menu.style.display = 'block';
+            // menu.style.left = e.x;
+            // menu.style.top = e.y;
+            // menu.classList.add('show');
+            // return false;
         })
     }
 }
@@ -101,3 +109,4 @@ function add_website_shortcut() {
 }
 
 add_website_shortcut();
+right_click_delete();

@@ -9,10 +9,13 @@ from db import db, Site, UserSite, User
 from task.download_site_icon_async import run
 
 urls = [
-    'https://www.cnmooc.org/',
-    'https://www.icourse163.org/',
-    'https://open.163.com/',
-    'http://www.chinesemooc.org/'
+    'https://www.lu.com/',
+    'https://jr.mi.com/',
+    'http://www.fund123.cn/',
+
+    'https://www.topys.cn/',
+    'http://www.xici.net',
+    'https://mail.163.com/',
 ]
 
 
@@ -34,8 +37,12 @@ def main():
         if not icon:
             download_list.append([site.id, site.host])
         else:
-            us = UserSite(name=site.host, url=url, user=user, icon=icon)
-            insert_list.append(us)
+            us = UserSite.select(lambda x: x.url == url and x.user == user).first()
+            if us:
+                us.icon = icon
+            else:
+                us = UserSite(name=site.host, url=url, user=user, icon=icon)
+            print('{} {}'.format(url, icon))
     commit()
     if download_list:
         conn = pymysql.connect(**Config.PONY)
