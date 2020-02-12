@@ -56,10 +56,11 @@ def get_icon(content, response, url, host):
             href = l.get('href', '')
             if not href:
                 return
+            us = urlparse(url)
             if href.startswith('//'):
-                href = '{}:{}'.format(url[0], href)
+                href = '{}:{}'.format(us.scheme, href)
             elif href.startswith('/'):
-                href = '{}://{}{}'.format(url[0], host, href)
+                href = '{}://{}{}'.format(us.scheme, host, href)
             elif href.startswith('http'):
                 pass
             else:
@@ -113,7 +114,7 @@ async def try_download(url, host):
     """尝试对 获取到的 icon url，下载 """
     async with aiohttp.ClientSession() as session:
         try:
-            headers['Host'] = host
+            headers['Host'] = urlparse(url).netloc
             async with session.get(url, headers=headers, timeout=20) as response:
                 if response.status != 200:
                     return None
@@ -143,7 +144,7 @@ async def try_icon_direct(host):
 async def fetch(site, semaphore):
     """对于 site 的处理"""
     host = site[1]
-    print(host)
+    print(site)
 
     async with semaphore:
         try:

@@ -22,7 +22,7 @@ class Dev(Base):
     """开发环境"""
     DEBUG = True
     SECRET_KEY = 'testing'  # os.urandom(16)
-    STATIC_DOMAIN = "192.168.199.200:5000/static"
+    STATIC_DOMAIN = "127.0.0.1:5000/static"
     ICON_DIR = '/Users/jianjian/github/jianjian01/dian-xin/static/site/'
 
     PONY = {
@@ -32,6 +32,7 @@ class Dev(Base):
         'user': 'root',
         'password': '8W5Qqv9IfgdvHk',
         'db': 'chidianxin',
+        'autocommit': 'True',
     }
     REDIS_URL = 'redis://47.96.177.79:29899/0'
     RANDOM_KEY = os.urandom(16)
@@ -67,6 +68,7 @@ class Prod(Base):
         'user': 'myweb',
         'password': 'T3KfkTjGmXE1ar5p',
         'db': 'myweb',
+        'autocommit': 'True',
     }
     REDIS_URL = 'redis://@redis:6379/1'
 
