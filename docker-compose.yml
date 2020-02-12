@@ -1,7 +1,10 @@
 version: '3'
 services:
-  web:
+  image:
     build: .
+    image: myweb
+  web:
+    image: myweb
     ports:
       - "5000:5000"
     command: gunicorn -w 4 -b 0.0.0.0:5000 app:app --worker-class gevent --log-level=info --log-file=/dev/stdout
@@ -15,9 +18,10 @@ services:
     depends_on:
       - mysql
       - redis
+      - image
     restart: always
   index_rss:
-    build: .
+    image: myweb
     command: python task/index_rss.py
     volumes:
       - .:/app
@@ -28,6 +32,7 @@ services:
     depends_on:
       - mysql
       - redis
+      - image
     restart: always
   mysql:
     image: mysql:8

@@ -11,7 +11,7 @@ ADD . .
 RUN pip install -U  pip && \
     pipenv install --system --deploy --ignore-pipfile && \
     pipenv sync && \
-    pip install -e git+https://github.com/kurtmckee/feedparser.git@6.0.0b1#egg=feedparser --no-cache-dir && \
+    pipenv shell pip install -e git+https://github.com/kurtmckee/feedparser.git@6.0.0b1#egg=feedparser --no-cache-dir && \
     pip install Babel
 RUN pybabel compile -d /app/translations
 
