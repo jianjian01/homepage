@@ -9,13 +9,13 @@ from db import db, Site, UserSite, User
 from task.download_site_icon_async import run
 
 urls = [
-    'https://www.lu.com/',
-    'https://jr.mi.com/',
-    'http://www.fund123.cn/',
-
-    'https://www.topys.cn/',
-    'http://www.xici.net',
-    'https://mail.163.com/',
+    'https://slack.com/',
+    'https://quip.com/',
+    'https://zoom.com',
+    'https://www.larksuite.com/',
+    'https://evernote.com/',
+    'https://www.teambition.com/',
+    'https://trello.com/',
 ]
 
 
