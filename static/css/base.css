@@ -23,6 +23,62 @@ main {
     /*margin-top: 80px;*/
 }
 
+.login-row {
+    margin: 4px;
+}
+
+.btn-login {
+    position: relative;
+    display: inline-block;
+    padding: .4rem 2.5rem;
+    border: 1px solid transparent;
+    outline: none;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: normal;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    color: #0077cc;
+    border-radius: 5px;
+    width: 251px;
+}
+
+.svg-icon {
+    -moz-transform: rotate(360deg);
+    vertical-align: baseline;
+    margin-top: -0.3em;
+    margin-bottom: -0.3em;
+    transition: opacity 200ms cubic-bezier(.165, .84, .44, 1);
+}
+
+.btn-google, .btn-weibo {
+    border-color: #d6d9dc;
+    background-color: #fff;
+    color: #3c4146;
+}
+
+.btn-google:hover, .btn-weibo:hover {
+    background-color: #f7f7f7;
+}
+
+.btn-login .svg-icon {
+    margin-right: 6px;
+}
+
+.btn-github {
+    background-color: #2f3337;
+    color: #fff;
+}
+
+.btn-github:hover {
+    background-color: #535a60;
+}
+
+.svg-icon-github:not(.native) * {
+    fill: currentColor;
+}
+
 .site-item {
     margin: 5px 0;
     font-size: large;
@@ -119,8 +175,9 @@ main {
     .site-item {
         padding: 0 3px;
     }
-     .nav-sidebar ul {
-         display: inline-block;
+
+    .nav-sidebar ul {
+        display: inline-block;
         margin: 0 50px;
     }
 }

@@ -96,6 +96,16 @@ def login_redirect():
             'scope': 'email',
             'state': state
         }
+    elif source == 'google':
+        url = 'https://accounts.google.com/o/oauth2/v2/auth'
+        params = {
+            'client_id': conf['GOOGLE_CLIENT_ID'],
+            'response_type': 'code',
+            'redirect_uri': conf['GOOGLE_REDIRECT_URI'],
+            'scope': 'openid email',
+            'nonce': random_str(16),
+            'state': state,
+        }
     else:
         url = "/"
         params = {}
@@ -146,7 +156,6 @@ def callback_github():
 def callback_weibo():
     """处理weibo回调请求"""
     code = request.args.get('code', '')
-    state = request.args.get('state', '')
     conf = current_app.config
     url = 'https://api.weibo.com/oauth2/access_token'
     params = {
@@ -187,3 +196,61 @@ def callback_weibo():
 @db_session
 def callback_weibo_cancel():
     """用户取消授权"""
+    logging.warning(request.args)
+    logging.warning(request.data)
+    return {'hello': 'yes, i know'}
+
+
+@auth_bp.route('/callback/google')
+@callback_auth('google')
+@db_session
+def callback_google():
+    """处理 google 回调请求"""
+    code = request.args.get('code', '')
+    state = request.args.get('state', '')
+    error = request.args.get('error', '')
+    scope = request.args.get('scope', '')
+    conf = current_app.config
+    if error:
+        logging.warning("get error response")
+        return redirect_home()
+
+    url = 'https://oauth2.googleapis.com/token'
+    params = {
+        'code': code,
+        'client_id': conf['GOOGLE_CLIENT_ID'],
+        'client_secret': conf['GOOGLE_CLIENT_SECRET'],
+        'redirect_uri': conf['GOOGLE_REDIRECT_URI'],
+        'grant_type': 'authorization_code',
+    }
+    headers = {
+        'Host': 'oauth2.googleapis.com',
+        'Content-Type': 'application/x-www-form-urlencoded',
+    }
+    logging.info("google request code {}".format(code))
+    resp = requests.post(url=url, params=params, headers=headers)
+    logging.info("google get response: {}".format(resp.text))
+    data = resp.json()
+    access_token = data.get('access_token', '')
+    if not access_token:
+        logging.warning('google get error response')
+        return redirect_home()
+
+    url = 'https://www.googleapis.com/oauth2/v2/userinfo.profile'
+    headers = {
+        'Host': 'www.googleapis.com',
+        'Authorization':'Bearer {}'.format(access_token)
+    }
+    logging.info("google request access_token: {}".format(access_token))
+    resp = requests.get(url=url, headers=headers)
+    if resp.status_code != 200:
+        return redirect_home()
+    logging.info("google get response: {}".format(resp.text))
+    data = resp.json()
+    name = data.get('name', '')
+    if not name:
+        name = data.get('email', '')
+    u_id = save_or_update_user(UserSource.google, data.get('sub', ''),name,
+                               data.get('picture', ''), resp.text)
+    set_session(conf, u_id, UserSource.google)
+    return redirect_home()

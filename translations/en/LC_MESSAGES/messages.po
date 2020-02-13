@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-02-07 11:58+0800\n"
+"POT-Creation-Date: 2020-02-13 09:24+0800\n"
 "PO-Revision-Date: 2020-02-07 11:19+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -18,80 +18,92 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.8.0\n"
 
-#: templates/base.html:68
+#: templates/base.html:77
 msgid "setup"
 msgstr "Setup"
 
-#: templates/base.html:71
+#: templates/base.html:80
 msgid "exit"
 msgstr "Exit"
 
-#: templates/base.html:83
+#: templates/base.html:92
 msgid "login"
 msgstr "Login"
 
-#: templates/base.html:88
+#: templates/base.html:103
 msgid "choice_log_paltform"
 msgstr "Choice login platform"
 
-#: templates/user.html:15
+#: templates/base.html:128
+msgid "log_in_with_google"
+msgstr "Log in with Google"
+
+#: templates/base.html:153
+msgid "log_in_with_weibo"
+msgstr "Log in with Weibo"
+
+#: templates/base.html:171
+msgid "log_in_with_github"
+msgstr "Log in with GitHub"
+
+#: templates/user.html:10
 msgid "personal_info"
 msgstr "Personal information"
 
-#: templates/user.html:18 templates/user.html:79
+#: templates/user.html:13 templates/user.html:88
 msgid "category"
 msgstr "Category"
 
-#: templates/user.html:21
+#: templates/user.html:16
 msgid "Web_site"
 msgstr "Web Site"
 
-#: templates/user.html:24
+#: templates/user.html:19
 msgid "rss_feed"
 msgstr "Rss Feet"
 
-#: templates/user.html:35
+#: templates/user.html:30
 msgid "avatar"
 msgstr "avatar"
 
-#: templates/user.html:45 templates/user.html:131 templates/user.html:173
+#: templates/user.html:44 templates/user.html:154 templates/user.html:207
 msgid "name"
 msgstr "name"
 
-#: templates/user.html:50
+#: templates/user.html:51
 msgid "login_paltform"
 msgstr "login platform"
 
-#: templates/user.html:55
+#: templates/user.html:59
 msgid "register_date"
 msgstr "register date"
 
-#: templates/user.html:64 templates/user.html:110 templates/user.html:164
-#: templates/user.html:199
+#: templates/user.html:71 templates/user.html:126 templates/user.html:190
+#: templates/user.html:236
 msgid "backhome"
 msgstr "home"
 
-#: templates/user.html:80 templates/user.html:133
-msgid "serial_num"
-msgstr "serial num"
-
-#: templates/user.html:81 templates/user.html:134 templates/user.html:175
-msgid "action"
-msgstr "action"
-
-#: templates/user.html:91 templates/user.html:191
-msgid "delete"
-msgstr "delete"
-
-#: templates/user.html:93 templates/user.html:152
-msgid "update"
-msgstr "update"
-
-#: templates/user.html:112 templates/user.html:124 templates/user.html:201
+#: templates/user.html:81 templates/user.html:144 templates/user.html:200
 msgid "add"
 msgstr "add"
 
-#: templates/user.html:132 templates/user.html:174
+#: templates/user.html:89 templates/user.html:156
+msgid "serial_num"
+msgstr "serial num"
+
+#: templates/user.html:90 templates/user.html:157 templates/user.html:209
+msgid "action"
+msgstr "action"
+
+#: templates/user.html:101 templates/user.html:177 templates/user.html:227
+msgid "delete"
+msgstr "delete"
+
+#: templates/user.html:105
+msgid "update"
+msgstr "update"
+
+#: templates/user.html:155 templates/user.html:208
 msgid "url"
 msgstr "URL"
 

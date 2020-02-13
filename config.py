@@ -79,6 +79,10 @@ class Prod(Base):
     WEIBO_APP_SECRET = 'b82a3cc00f20ab137e3d572000ad0f08'
     WEIBO_REDIRECT_URI = 'https://myweb100.com/auth/callback/weibo'
     WEIBO_CANCEL_URI = 'https://myweb100.com/auth/callback/weibo/cancel'
+    GOOGLE_CLIENT_ID = '925382553833-t8ieg4gc6df1sr6kum3fldurrvi6rtke.apps.googleusercontent.com'
+    GOOGLE_CLIENT_SECRET = 'DUMbH8oL6dGSJoNk9NJq9bja'
+    GOOGLE_REDIRECT_URI = 'https://myweb100.com/auth/callback/google'
+
 
 
 Config = None
