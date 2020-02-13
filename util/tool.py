@@ -122,7 +122,10 @@ def batch_insert_website(data, user):
         i = 0
         for k, ws in data.items():
             i += 1
-            c = Category(name=k, user=user, order=10 * i)
+            if k:
+                c = Category(name=k, user=user, order=10 * i)
+            else:
+                c = None
             k = 0
             for w in ws:
                 k += 1
