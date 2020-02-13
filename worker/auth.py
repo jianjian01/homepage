@@ -102,7 +102,7 @@ def login_redirect():
             'client_id': conf['GOOGLE_CLIENT_ID'],
             'response_type': 'code',
             'redirect_uri': conf['GOOGLE_REDIRECT_URI'],
-            'scope': 'openid email',
+            'scope': 'openid profile email',
             'nonce': random_str(16),
             'state': state,
         }
@@ -207,9 +207,7 @@ def callback_weibo_cancel():
 def callback_google():
     """处理 google 回调请求"""
     code = request.args.get('code', '')
-    state = request.args.get('state', '')
     error = request.args.get('error', '')
-    scope = request.args.get('scope', '')
     conf = current_app.config
     if error:
         logging.warning("get error response")
@@ -236,21 +234,25 @@ def callback_google():
         logging.warning('google get error response')
         return redirect_home()
 
-    url = 'https://www.googleapis.com/oauth2/v2/userinfo.profile'
+    url = 'https://www.googleapis.com/oauth2/v3/userinfo'
+    # url = 'https://www.googleapis.com/auth/userinfo.profile'
     headers = {
         'Host': 'www.googleapis.com',
-        'Authorization':'Bearer {}'.format(access_token)
+        'Authorization': 'Bearer {}'.format(access_token)
     }
     logging.info("google request access_token: {}".format(access_token))
     resp = requests.get(url=url, headers=headers)
+    logging.info("google get response: {}".format(resp.text))
     if resp.status_code != 200:
         return redirect_home()
-    logging.info("google get response: {}".format(resp.text))
     data = resp.json()
     name = data.get('name', '')
     if not name:
         name = data.get('email', '')
-    u_id = save_or_update_user(UserSource.google, data.get('sub', ''),name,
+    s_id = data.get('id', '')
+    if not s_id:
+        s_id = data.get('sub', '')
+    u_id = save_or_update_user(UserSource.google, s_id, name,
                                data.get('picture', ''), resp.text)
     set_session(conf, u_id, UserSource.google)
     return redirect_home()
