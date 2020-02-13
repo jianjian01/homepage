@@ -18,7 +18,7 @@
                 {% for c in categories | sort(attribute="order") %}
                     <div data-id="{{ c.id }}">
                         <div class="row justify-content-between site-header">
-                            <div class="col-4 ">
+                            <div class="col-8 ">
                                 {% if c.name %}
                                     <h5 class="sites display-5 site-header-name ">{{ c.name }}</h5>
                                 {% endif %}
