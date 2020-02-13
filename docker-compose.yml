@@ -3,6 +3,7 @@ services:
   image:
     build: .
     image: myweb
+    command: echo '^_^'
   web:
     image: myweb
     ports:

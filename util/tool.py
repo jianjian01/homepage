@@ -6,7 +6,7 @@ from datetime import datetime
 from functools import wraps, lru_cache
 
 from flask import current_app, session, request, redirect, url_for
-from pony.orm import commit
+from pony.orm import commit, db_session
 
 from db import User, UserStatus, UserSite, Category, UserSiteStatus, Site
 from flask_app import redis
@@ -102,3 +102,28 @@ def redirect_home():
 
 def randstr(length=16):
     return ''.join([random.choice(string.ascii_lowercase + string.digits) for _ in range(length)])
+
+
+def guess_locale():
+    cl = request.cookies.get('locale', '')
+    if not cl:
+        cl = request.accept_languages.best_match(current_app.config['I18N_LANGUAGES'])
+    if not cl:
+        cl = 'en'
+    return cl
+
+
+def batch_insert_website(data, user):
+    """批量插入数据
+    :type data: dict key -> category, values -> sites
+    :type user: User
+    """
+    with db_session:
+        i = 0
+        for k, ws in data:
+            i += 1
+            c = Category(name=k, user=user, order=10 * i)
+            k = 0
+            for w in ws:
+                k += 1
+                UserSite(name=w[0], cate=c, user=user, url=w[1], icon=w[2], order=10 * k)

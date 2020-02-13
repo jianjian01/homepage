@@ -8,7 +8,7 @@ from pony.orm import commit, db_session
 
 from db import UserSource, User, UserStatus
 from flask_app import redis
-from util.tool import random_str, redirect_home
+from util.tool import random_str, redirect_home, guess_locale, batch_insert_website
 
 auth_bp = Blueprint('auth', __name__, template_folder='templates')
 
@@ -39,11 +39,19 @@ def save_or_update_user(source, user_id, name, avatar_url, content):
         user_id = str(user_id)
     if not avatar_url:
         avatar_url = ''
+    conf = current_app.config
     user = User.select(lambda x: x.source == source and x.source_id == user_id
                                  and x.status == UserStatus.normal).first()
     if not user:
         user = User(u_id=User.new_uid(), name=name, source=source, source_id=user_id,
                     avatar_url=avatar_url, source_data=content)
+        cl = guess_locale()
+        if cl == 'zh':
+            batch_insert_website(conf['ZH_INIT_SITES'], user)
+        elif cl == 'jp':
+            pass
+        else:
+            batch_insert_website(conf['EN_INIT_SITES'], user)
         logging.info("create new user: {}".format(user.u_id))
     else:
         user.name = name
