@@ -20,11 +20,12 @@ function add_new_category(e) {
     name_cel.setAttribute('class', 'new-cel');
     let name = new_input_dom('name', 'text', 'name', true, true);
     name.classList.add('new-cel-input');
-    // name.classList.add('name-cel');
+    name.classList.add('name-cel-input');
     name_cel.appendChild(name);
     let order_cel = document.createElement("td");
     order_cel.setAttribute('class', 'new-cel');
     let order = new_order_input_dom();
+    order.classList.add('order-cel-input');
     order_cel.appendChild(order);
     let action_cel = document.createElement("td");
     let action = document.createElement("span");
@@ -111,8 +112,8 @@ function update_cate(e) {
 function save_update_cate(e) {
     let tr = e.target.closest('tr');
     let cate_id = tr.getAttribute('data-id');
-    let name_dom = tr.getElementsByClassName('name-cel');
-    let order_dom = tr.getElementsByClassName('order-cel');
+    let name_dom = tr.getElementsByClassName('name-cel-input');
+    let order_dom = tr.getElementsByClassName('order-cel-input');
     let data = new FormData();
     data.set('id', cate_id);
     data.set('name', name_dom[0].value);
