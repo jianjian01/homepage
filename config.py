@@ -151,7 +151,7 @@ class Prod(Base):
     PREFERRED_URL_SCHEME = "https"
     SERVER_NAME = 'myweb100.com'
     STATIC_DOMAIN = "static.myweb100.com"
-    ICON_DIR = '/app/static/site/'
+    ICON_DIR = '/static/site/'
 
     PONY = {
         'provider': 'mysql',

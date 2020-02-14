@@ -30,8 +30,12 @@ pybabel compile -d translations
 
 ## task ##
 ```shell script
-docker build -t task .
-docker run -it --network dian-xin_default -v ~/dian-xin/static/site:/app/static/site --restart always  -d  task   python task/download_site_icon_async.py
+docker run -it --network dian-xin_default -v ~/static/site:/app/static/site  -v ~/dian-xin/task:/task --restart always --name download_icon -d  myweb   python /task/download_site_icon_async.py
+```
+
+## nginx ##
+```shell script
+docker run -v /home/ubuntu/dian-xin/static:/app/dian-xin/static -v /home/ubuntu/nginx/conf.d:/etc/nginx/conf.d -v /home/ubuntu/nginx/html:/usr/share/nginx/html -v /home/ubuntu/nginx/cert:/cert -v /home/ubuntu/nginx/letsencrypt:/etc/letsencrypt -v /home/ubuntu/static/site:/static/site -p 443:443 -p 80:80 --name nginx1 -d nginx
 ```
 
 
