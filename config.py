@@ -150,7 +150,7 @@ class Prod(Base):
     SECRET_KEY = 'wSt0QSG9fnfPGmiB'
     PREFERRED_URL_SCHEME = "https"
     SERVER_NAME = 'myweb100.com'
-    STATIC_DOMAIN = "static.myweb100.com"
+    STATIC_DOMAIN = "myweb.chidian.xin"
     ICON_DIR = '/static/site/'
 
     PONY = {
