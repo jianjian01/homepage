@@ -147,7 +147,8 @@ function append_website(data) {
             let a_dom = document.createElement('a');
             a_dom.setAttribute('href', s.url);
             a_dom.setAttribute('target', '_blank');
-            a_dom.style.backgroundImage = new URL('/site/${s.icon}.png', "https://website.chidian.xin");
+            let url = new URL('/site/${s.icon}.png', "https://website.chidian.xin");
+            a_dom.setAttribute('style', "background-image: url(" + url.toString() + ")");
             a_dom.innerText = s.name;
             item.appendChild(a_dom);
             site_list.appendChild(item);
