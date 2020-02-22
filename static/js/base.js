@@ -141,13 +141,14 @@ function append_website(data) {
 
         for (const s of site.website) {
             let item = document.createElement('div');
+            console.log("'" + s.url + "',");
             item.classList.add('col-4');
             item.classList.add('col-lg-2');
             item.classList.add('site-item');
             let a_dom = document.createElement('a');
             a_dom.setAttribute('href', s.url);
             a_dom.setAttribute('target', '_blank');
-            a_dom.style.backgroundImage = new URL('/site/${s.icon}.png', "https://website.chidian.xin");
+            // a_dom.style.backgroundImage = new URL('/site/${s.icon}.png', "https://website.chidian.xin");
             a_dom.innerText = s.name;
             item.appendChild(a_dom);
             site_list.appendChild(item);

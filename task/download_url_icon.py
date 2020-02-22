@@ -9,6 +9,12 @@ from db import db, Site, UserSite, User
 from task.download_site_icon_async import run
 
 urls = [
+    'https://www.nubia.com/cn/',
+    'https://www.1more.com/index.html',
+    'https://www.nikon.com.cn/sc_CN/',
+    'https://www.canon.com.cn/',
+    'https://gopro.com/zh/cn/',
+    'https://dumall.baidu.com/',
 ]
 
 
@@ -19,7 +25,7 @@ def main():
     # db.generate_mapping()
     download_list = []
     insert_list = []
-    user = User.select(lambda x: x.u_id == 500422424).first()
+    user = User.select(lambda x: x.u_id == 542956691).first()
     for url in urls:
         us = urlparse(url)
         site = Site.select(lambda x: x.host == us.netloc).first()

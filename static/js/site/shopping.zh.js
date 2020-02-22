@@ -5,11 +5,11 @@ let shopping_website = [
             {
                 'name': '三宅一生',
                 'url': 'https://www.isseymiyake.com/cn/',
-                'icon': ''
+                'icon': 'v72n4ilwrom19zfd'
             }, {
                 'name': 'JACK & JONES',
                 'url': 'https://www.jackjones.com.cn',
-                'icon': ''
+                'icon': 'vat0v0vp1ntn1lzy'
             }, {
                 'name': '优衣库',
                 'url': 'https://www.uniqlo.com/',
@@ -17,27 +17,27 @@ let shopping_website = [
             }, {
                 'name': 'ZARA',
                 'url': 'https://www.zara.cn/cn/',
-                'icon': ''
+                'icon': 'ifs7xvd0nt3ydqw2'
             }, {
                 'name': 'H & M',
                 'url': 'https://www.hm.com.cn/en_cn/',
-                'icon': ''
+                'icon': '7l8frxj91832h7fq'
             }, {
                 'name': '美特斯邦威',
                 'url': 'https://www.banggo.com/',
-                'icon': ''
+                'icon': 'etp10rskx4oul6g7'
             }, {
                 'name': '海澜之家',
                 'url': 'http://www.hlamall.cn/',
-                'icon': ''
+                'icon': 'i5pe7xz9341bpnus'
             }, {
                 'name': '佐丹奴',
                 'url': 'https://www2.giordano.com/cn/',
-                'icon': ''
+                'icon': '8ftyoeh9wb8wfcp1'
             }, {
                 'name': '韩都衣舍',
-                'url': 'https://www.handu.com',
-                'icon': ''
+                'url': 'https://handuyishe.tmall.com/',
+                'icon': 'xny84p41ss4ao63d'
             }
         ]
     }, {
@@ -57,47 +57,47 @@ let shopping_website = [
         }, {
             'name': '李宁',
             'url': 'https://store.lining.com/',
-            'icon': ''
+            'icon': '3g0oriy7q992oe0s'
         }, {
             'name': '特步',
             'url': 'http://www.xtep.com.cn/',
-            'icon': ''
+            'icon': 'yfvy97ivdop35e4b'
         }, {
             'name': '安踏',
             'url': 'http://www.anta.cn/',
-            'icon': ''
+            'icon': 'zuk3wk8s9ntnp7f6'
         }, {
             'name': '361˚',
             'url': 'http://www.361sport.com/',
-            'icon': ''
+            'icon': 'v8zkeqrtms1s7lqq'
         }, {
             'name': '贵人鸟',
             'url': 'http://www.grn.cn/',
-            'icon': ''
+            'icon': 'mnfbgw5edjaaxi70'
         }, {
             'name': '鸿星尔克',
             'url': 'https://www.erke.com/',
-            'icon': ''
+            'icon': 'jbjzoz1xzbjmp5qo'
         }, {
             'name': '匹克',
             'url': 'http://www.epeaksport.com/',
-            'icon': ''
+            'icon': '11d8j4cg3gta2mcr'
         }, {
             'name': 'PUMA',
             'url': 'https://cn.puma.com/',
-            'icon': ''
+            'icon': 'pxbhxh4uxkn7mti1'
         }, {
             'name': 'New Balance',
             'url': 'https://www.newbalance.com.cn/',
-            'icon': ''
+            'icon': '8n7866ogor710ddo'
         }, {
             'name': '锐步',
             'url': 'https://www.reebok.com.cn/index',
-            'icon': ''
+            'icon': 'j0fqo934stq4t9an'
         }, {
             'name': '鬼冢虎',
             'url': 'https://www.onitsukatiger.com/cn/zh-cn',
-            'icon': ''
+            'icon': 'h3o9ef9apl7h891v'
         }, {
             'name': 'GAP',
             'url': 'https://www.gap.com/',
@@ -105,23 +105,23 @@ let shopping_website = [
         }, {
             'name': 'YONEX',
             'url': 'http://www.yonex.cn/',
-            'icon': ''
+            'icon': 'ums9jpy1hrzw6utx'
         }, {
             'name': '美津浓',
             'url': 'http://www.mizuno.com.cn/',
-            'icon': ''
+            'icon': '2gwvbacijsaws896'
         }, {
             'name': 'ASICS',
             'url': 'http://www.asics.com.cn/',
-            'icon': ''
+            'icon': 'n5fazf8ldffjmpof'
         }, {
             'name': 'Under Armour',
             'url': 'https://www.underarmour.cn/',
-            'icon': ''
+            'icon': 'j882o6yxrjki1avd'
         }, {
             'name': '斯凯奇',
             'url': 'https://store.skechers.cn/',
-            'icon': ''
+            'icon': '3bzo4xq0o5igpsql'
         }
         ]
     },
@@ -131,107 +131,95 @@ let shopping_website = [
             {
                 'name': '爱马仕',
                 'url': 'https://www.hermes.cn/cn/zh/',
-                'icon': ''
+                'icon': 'pbpds0mc1hy5forh'
             }, {
                 'name': 'Burberry',
                 'url': 'https://cn.burberry.com/?selected=Y',
-                'icon': ''
+                'icon': '9c83qpq6h2judnua'
             }, {
                 'name': 'GUCCI',
                 'url': 'https://www.gucci.cn/zh/',
-                'icon': ''
+                'icon': 'zxay9l7qcpq9tbgs'
             }, {
                 'name': '迪奥',
                 'url': 'https://www.dior.cn/zh_cn',
-                'icon': ''
+                'icon': 'r5e30nvf14w0u68d'
             }, {
                 'name': '普拉达',
                 'url': 'https://www.prada.com/cn/zh.html',
-                'icon': ''
+                'icon': 'c9kpni9oe0ls6qhd'
             }, {
                 'name': 'LV 路易威登',
                 'url': 'https://www.louisvuitton.cn/zhs-cn/homepage',
-                'icon': ''
+                'icon': 'tlfnv7ht3xvl11g6'
             }, {
                 'name': '范思哲',
                 'url': 'https://www.versace.cn/',
-                'icon': ''
+                'icon': 'dlyr534dwcmp8z08'
             }, {
                 'name': '香奈儿',
                 'url': 'https://www.chanel.cn/zh_CN/',
-                'icon': ''
+                'icon': 'meu1snk6080iqpgh'
             }, {
                 'name': '阿玛尼',
                 'url': 'https://www.armani.com',
-                'icon': ''
+                'icon': '23irj9jt9q6wwqwe'
             }, {
                 'name': '纪梵希',
                 'url': 'https://www.givenchy.com/apac/zh/homepage',
-                'icon': ''
+                'icon': 'ljhlsk28m4giss4c'
             }, {
                 'name': 'FENDI 芬迪',
                 'url': 'https://www.fendi.cn/',
-                'icon': ''
+                'icon': 'yktfnkhg3xptqr9h'
             }, {
                 'name': 'Zegna',
                 'url': 'https://www.zegna.cn/cn-zh/home.html',
-                'icon': ''
-            }, {
-                'name': '',
-                'url': '',
-                'icon': ''
-            }, {
-                'name': '',
-                'url': '',
-                'icon': ''
-            }, {
-                'name': '',
-                'url': '',
-                'icon': ''
+                'icon': 'lbunwfqck6yi0uyd'
             }, {
                 'name': 'Sisley',
                 'url': 'https://www.sisley.com.cn/',
-                'icon': ''
+                'icon': '3txhyeyprhlocox6'
             }, {
                 'name': '娇兰',
                 'url': 'https://www.guerlain.com.cn/',
-                'icon': ''
+                'icon': '3mcehde5dfuq66zd'
             }, {
                 'name': 'la prairie',
                 'url': 'https://www.laprairie.com.cn/',
-                'icon': ''
+                'icon': '6rjv5u69fsj5gi5r'
             }, {
                 'name': '海蓝之谜',
                 'url': 'https://www.lamer.com.cn/',
-                'icon': ''
+                'icon': 'gallcyvk69xizrx7'
             }, {
                 'name': '丝芙兰',
                 'url': 'https://www.sephora.cn/',
-                'icon': ''
+                'icon': 'dwnj3560jbv7j427'
             }, {
                 'name': '阿玛尼美妆',
                 'url': 'https://www.giorgioarmanibeauty.cn/',
-                'icon': ''
+                'icon': '4iwbbz9g0nr8wugz'
             }, {
                 'name': '圣罗兰美妆',
                 'url': 'https://www.yslbeautycn.com/',
-                'icon': ''
+                'icon': 'zdieyq44361xtlcz'
             }, {
                 'name': '兰蔻',
                 'url': 'https://www.lancome.com.cn/',
-                'icon': ''
+                'icon': 'ju4fblbaqsqlx0gt'
             }, {
                 'name': 'M·A·C',
                 'url': 'https://www.maccosmetics.com.cn/',
-                'icon': ''
+                'icon': 'zazteyvty6lb9om8'
             }, {
                 'name': 'Biotherm',
                 'url': 'https://www.biotherm.com.cn/',
-                'icon': ''
+                'icon': 'rrtllshc717hg8nb'
             }, {
                 'name': '雅诗兰黛',
                 'url': 'https://www.esteelauder.com.cn/',
-                'icon': ''
+                'icon': 'tkkyl1v09tr8c3im'
             }
         ]
     },
@@ -241,169 +229,166 @@ let shopping_website = [
             {
                 'name': 'Tiffany & Co',
                 'url': 'https://www.tiffany.cn/',
-                'icon': ''
+                'icon': 'o32emq9rhzpbv7ku'
             }, {
                 'name': '卡地亚',
                 'url': 'https://www.cartier.cn/',
-                'icon': ''
+                'icon': '9suu8p1xehugfh22'
             }, {
                 'name': '施华洛世奇',
                 'url': 'https://www.swarovski.com.cn/zh-CN/',
-                'icon': ''
+                'icon': '2tcpi2wvwmnjg2n4'
             }, {
                 'name': 'Chaumet',
                 'url': 'https://www.chaumet.cn/',
-                'icon': ''
+                'icon': '0107iivxukw1d7nc'
             }, {
                 'name': '伯爵',
                 'url': 'https://www.piaget.cn/',
-                'icon': ''
+                'icon': 'ejbauzt4aszeu7hk'
             }, {
                 'name': '格拉芙',
                 'url': 'https://www.graff.cn/zh-hans/',
-                'icon': ''
+                'icon': 'bunj3hglm75rp17l'
             }, {
                 'name': 'Harry Winston',
                 'url': 'https://www.harrywinston.com/zh-hans',
-                'icon': ''
+                'icon': 'gzm3r6imw0urasp2'
             }, {
                 'name': 'Bulgari',
                 'url': 'https://www.bulgari.cn/zh-cn/',
-                'icon': ''
+                'icon': '9nbno6jqfdphppil'
             }, {
                 'name': 'Chopard 萧邦',
                 'url': 'https://www.chopard.cn/',
-                'icon': ''
+                'icon': 'ws4ne3xyljj4x4sh'
             }, {
                 'name': 'Pomellato',
                 'url': 'http://www.pomellato.com/wy/',
-                'icon': ''
+                'icon': '4hh8gktrt0x3mj24'
             }, {
                 'name': '布契拉提',
                 'url': 'http://buccellati.com/zh-hans/',
-                'icon': ''
+                'icon': 'mmej11g0t4h6x413'
             }, {
                 'name': '梵克雅宝',
                 'url': 'https://www.vancleefarpels.cn/',
-                'icon': ''
+                'icon': 'acv4tgyslcg3g590'
             }, {
                 'name': '万宝龙',
                 'url': 'https://www.montblanc.cn/zh-cn/home.html',
-                'icon': ''
+                'icon': 'g2qpz6jnxrazpu0o'
             }, {
                 'name': 'MIKIMOTO',
                 'url': 'http://cn.mikimoto.com/sc/index.html',
-                'icon': ''
+                'icon': 'oawh71yzojifqn92'
             }, {
                 'name': 'CINDY CHAO',
                 'url': 'https://www.cindychao.com/zh-hans',
-                'icon': ''
+                'icon': 'tf3vnkmcnj0ha2gi'
             }, {
                 'name': '宝诗龙',
                 'url': 'https://cn.boucheron.com/zh_cn/',
-                'icon': ''
+                'icon': '90unz999kvq2nb43'
             }, {
                 'name': 'TASAKI',
                 'url': 'https://www.tasaki.com.cn/',
-                'icon': ''
+                'icon': 'rfjayxv1osiao05a'
             }, {
                 'name': '周大福',
                 'url': 'https://www.ctf.com.cn/zh-hans/',
-                'icon': ''
+                'icon': 'f1f5b1h8piz5fmum'
             }, {
                 'name': '周生生',
                 'url': 'https://cn.chowsangsang.com/',
-                'icon': ''
+                'icon': 'yjfxhi6pxaowpsny'
             }, {
                 'name': '中国黄金',
                 'url': 'http://shop.chnau99999.com/',
-                'icon': ''
+                'icon': '8por0lgsuwyl0akp'
             }, {
                 'name': '老庙黄金',
                 'url': 'https://www.laomiao.com.cn/',
-                'icon': ''
+                'icon': '2bp1hk5a3vocgyx1'
             }, {
                 'name': 'ENZO',
                 'url': 'http://www.enzo-jewelry.com/cn/index',
-                'icon': ''
+                'icon': 'cl7m7bwqhg2vmjom'
             }, {
                 'name': '劳力士',
                 'url': 'https://www.rolex.com/zh-hans',
-                'icon': ''
+                'icon': 'vyy4vlg54fnrm7bs'
             }, {
                 'name': '欧米茄',
                 'url': 'https://www.omegawatches.cn/cn/',
-                'icon': ''
+                'icon': 'fumq18dsqjpze8qt'
             }, {
                 'name': '百达翡丽',
                 'url': 'https://www.patek.com',
-                'icon': ''
+                'icon': 'e6nylffzd8wny1t1'
             }, {
                 'name': 'Tissot 天梭',
                 'url': 'https://www.tissotwatches.cn/',
-                'icon': ''
+                'icon': 'i8li1vrbjxmcw03k'
             }, {
                 'name': '江诗丹顿',
                 'url': 'https://www.vacheron-constantin.cn/cn/home.html',
-                'icon': ''
+                'icon': 'iwr7pwnx8qjbrqd8'
             }, {
                 'name': 'Longines 浪琴',
                 'url': 'https://www.longines.cn/',
-                'icon': ''
+                'icon': 'silswb0ftc0q8eb3'
             }, {
                 'name': '汉米尔顿',
                 'url': 'https://www.hamiltonwatch.com/zhs-cn/',
-                'icon': ''
+                'icon': 'bfhk92fxdix0h5za'
             }, {
                 'name': 'Breguet',
                 'url': 'https://www.breguet.cn/cn',
-                'icon': ''
+                'icon': 'n87kojerttvmqrfu'
             }, {
                 'name': 'Swatch',
                 'url': 'https://www.swatch.cn/zh_cn/',
-                'icon': ''
+                'icon': '6yvip0nm1ny5wwnm'
             }, {
                 'name': 'Jaquet Droz',
                 'url': 'https://www.jaquet-droz.com/cn',
-                'icon': ''
+                'icon': 'ldf3dwqi5ueaqnet'
             }, {
                 'name': '爱彼',
                 'url': 'https://www.audemarspiguet.com/zh-hans/',
-                'icon': ''
+                'icon': 'sqpg9rbebtfv7g4g'
             }, {
                 'name': '帝舵表',
                 'url': 'https://www.tudorwatch.cn/watches',
-                'icon': ''
+                'icon': '33pqj6f8o2axc19r'
             }, {
                 'name': '卡西欧',
                 'url': 'https://www.casio.com.cn/',
-                'icon': ''
+                'icon': '3aa454rn65oluqc7'
             }, {
                 'name': '万国表',
                 'url': 'https://www.iwc.cn/cn/zh-cn/home.html',
-                'icon': ''
+                'icon': 'm7tp5t0tclbrf3xv'
             }
         ]
     },
     {
-        'name': "电器",
+        'name': "数码电器",
         'website': [
             {
+                'name': '大疆',
+                'url': 'https://www.dji.com/cn',
+                'icon': 'd4llako6k75sgwqm'
+            }, {
                 'name': '苏宁易购',
                 'url': 'https://www.suning.com/',
                 'icon': 'ucwl8rbmdla74dm1'
-            },
-            {
+            }, {
                 'name': '国美在线',
                 'url': 'https://www.gome.com.cn/',
                 'icon': 'teen5dxuiojcxn0w'
-            }
-        ]
-    },
-    {
-        'name': "手机数码",
-        'website': [
-            {
+            }, {
                 'name': '华为商城',
                 'url': 'https://www.vmall.com/',
                 'icon': 'awto6g8cqfzflqvh'
@@ -414,15 +399,75 @@ let shopping_website = [
             }, {
                 'name': '小米',
                 'url': 'https://www.mi.com/',
-                'icon': ''
+                'icon': 'j86ono4c64fieqsq'
+            }, {
+                'name': '一加手机',
+                'url': 'https://www.oneplus.com/cn',
+                'icon': 'i3jgp0yyzi7qik9d'
+            }, {
+                'name': 'OPPO',
+                'url': 'https://www.opposhop.cn/',
+                'icon': '8gsz8ttegvw44h96'
+            }, {
+                'name': 'vivo',
+                'url': 'https://shop.vivo.com.cn/',
+                'icon': '70ncupypxexlwxte'
+            }, {
+                'name': '魅族',
+                'url': 'https://www.meizu.com/',
+                'icon': 'h8epop5sjywf1orv'
+            }, {
+                'name': '努比亚',
+                'url': 'https://www.nubia.com/cn/',
+                'icon': 'wogeosk0r5xu1rma'
             }, {
                 'name': '联想',
                 'url': 'https://www.lenovo.com.cn/',
-                'icon': ''
+                'icon': 'zsx29kwtenivaiwf'
+            }, {
+                'name': '索尼',
+                'url': 'https://www.sony.com.cn/',
+                'icon': 'qr9q4e6glqrbc8j1'
             }, {
                 'name': '微软',
                 'url': 'https://www.microsoftstore.com.cn/',
-                'icon': ''
+                'icon': 'kzva8morwso5z650'
+            }, {
+                'name': '戴尔',
+                'url': 'https://www.dell.com/zh-cn',
+                'icon': 'u3cc12t2u2h1vn1n'
+            }, {
+                'name': '惠普',
+                'url': 'https://www8.hp.com/cn/zh/home.html',
+                'icon': '9bcpnzc3ghvmxxb0'
+            }, {
+                'name': '三星',
+                'url': 'https://www.samsung.com/cn/',
+                'icon': 'ftzv44yhmaq09rvi'
+            }, {
+                'name': '极米',
+                'url': 'https://www.xgimi.com/',
+                'icon': 'ltbcm3iq51pu1bnn'
+            }, {
+                'name': '1more',
+                'url': 'https://www.1more.com/index.html',
+                'icon': 'j7as7oljrswpzvtr'
+            }, {
+                'name': '尼康',
+                'url': 'https://www.nikon.com.cn/sc_CN/',
+                'icon': 'o89mw3nvxsf9lry9'
+            }, {
+                'name': '佳能',
+                'url': 'https://www.canon.com.cn/',
+                'icon': 'v1rt77lh8phobgpo'
+            }, {
+                'name': 'gopro',
+                'url': 'https://gopro.com/zh/cn/',
+                'icon': 'cm1o7rbi4aftxlcl'
+            }, {
+                'name': '小度商城',
+                'url': 'https://dumall.baidu.com/',
+                'icon': 'qif5nn0b8oprdweq'
             }
         ]
     },
