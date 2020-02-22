@@ -6,7 +6,9 @@
             <div class="container">
                 <div class="p-3 text-center">
                     <h1 class="display-3" style="color: #69c0ff">简单网址导航</h1>
-                    <small class="text-muted">登录之后可以自定义哦</small>
+                    {% if not request.user %}
+                        <small class="text-muted">登录之后可以自定义哦</small>
+                    {% endif %}
                 </div>
                 <div class="row p-3 site-list">
                     <div class="col-4 col-lg-2 site-item ">
@@ -84,22 +86,16 @@
                            style="background-image: url({{ static_url('site/bfm3bwtkyla8ym3y.png') }})">爱奇艺</a>
                     </div>
                 </div>
-                <div data-id="1">
+                <div>
                     <div class="row justify-content-between site-header">
                         <div class="col-8 ">
-                            <h5 class="sites display-5 site-header-name ">购物</h5>
+                            <a href="/zh/shopping" class="header-link">
+                                <h5 class="sites display-5 site-header-name ">购物</h5>
+                            </a>
                         </div>
                     </div>
                     <hr class="site-hr">
                     <div class="row p-3 site-list">
-                        {#                        <div class="col-4 col-lg-2 site-item ">#}
-                        {#                            <a href="https://www.taobao.com/" class="site-name" target="_blank"#}
-                        {#                               style="background-image: url({{ static_url('site/21gnefna5199gpij.png') }})">淘&nbsp;宝</a>#}
-                        {#                        </div>#}
-                        {#                        <div class="col-4 col-lg-2 site-item ">#}
-                        {#                            <a href="https://www.jd.com/" class="site-name" target="_blank"#}
-                        {#                               style="background-image: url({{ static_url('site/j7hagpmu75tl1623.png') }})">京&nbsp;东</a>#}
-                        {#                        </div>#}
                         <div class="col-4 col-lg-2 site-item ">
                             <a href="http://www.jumei.com/" class="site-name" target="_blank"
                                style="background-image: url({{ static_url('site/cl8zzihvay4p5zyo.png') }})">聚美优品</a>
@@ -200,7 +196,7 @@
 
                     </div>
                 </div>
-                <div data-id="1">
+                <div>
                     <div class="row justify-content-between site-header">
                         <div class="col-4 ">
                             <h5 class="sites display-5 site-header-name">娱乐</h5>
@@ -212,18 +208,6 @@
                             <a href="https://www.cctv.com" class="site-name" target="_blank"
                                style="background-image: url({{ static_url('site/h7qcvs6z48lqqth8.png') }})">CCTV</a>
                         </div>
-                        {#                        <div class="col-4 col-lg-2 site-item ">#}
-                        {#                            <a href="https://v.qq.com" class="site-name" target="_blank"#}
-                        {#                               style="background-image: url({{ static_url('site/6e0p469y48w82a8z.png') }})">腾讯视频</a>#}
-                        {#                        </div>#}
-                        {#                        <div class="col-4 col-lg-2 site-item ">#}
-                        {#                            <a href="https://youku.com/" class="site-name" target="_blank"#}
-                        {#                               style="background-image: url({{ static_url('site/czvgza9l10gyh7gz.png') }})">优&nbsp酷</a>#}
-                        {#                        </div>#}
-                        {#                        <div class="col-4 col-lg-2 site-item ">#}
-                        {#                            <a href="https://iqiyi.com" class="site-name" target="_blank"#}
-                        {#                               style="background-image: url({{ static_url('site/bfm3bwtkyla8ym3y.png') }})">爱奇艺</a>#}
-                        {#                        </div>#}
                         <div class="col-4 col-lg-2 site-item ">
                             <a href="https://www.mgtv.com" class="site-name" target="_blank"
                                style="background-image: url({{ static_url('site/aq20edj6fmtet048.png') }})">芒果TV</a>
@@ -403,7 +387,7 @@
                     </div>
                 </div>
 
-                <div data-id="1">
+                <div>
                     <div class="row justify-content-between site-header">
                         <div class="col-8 ">
                             <h5 class="sites display-5 site-header-name">学习教育</h5>
@@ -509,7 +493,7 @@
                         </div>
                     </div>
                 </div>
-                <div data-id="1">
+                <div>
                     <div class="row justify-content-between site-header">
                         <div class="col-8 ">
                             <h5 class="sites display-5 site-header-name">旅游</h5>
@@ -567,7 +551,7 @@
                         </div>
                     </div>
                 </div>
-                <div data-id="1">
+                <div>
                     <div class="row justify-content-between site-header">
                         <div class="col-8 ">
                             <h5 class="sites display-5 site-header-name">银行金融</h5>
@@ -697,7 +681,7 @@
                         </div>
                     </div>
                 </div>
-                <div data-id="1">
+                <div>
                     <div class="row justify-content-between site-header">
                         <div class="col-8 ">
                             <h5 class="sites display-5 site-header-name">办公</h5>
@@ -743,7 +727,8 @@
                         </div>
                         <div class="col-4 col-lg-2 site-item ">
                             <a href="https://send.firefox.com/" class="site-name" target="_blank"
-                               style="background-image: url({{ static_url('site/44cx2e4nzdy2b84h.png') }})">Firefox Send</a>
+                               style="background-image: url({{ static_url('site/44cx2e4nzdy2b84h.png') }})">Firefox
+                                Send</a>
                         </div>
                         <div class="col-4 col-lg-2 site-item ">
                             <a href="https://docs.qq.com/desktop/" class="site-name" target="_blank"
@@ -795,7 +780,7 @@
                         </div>
                     </div>
                 </div>
-                <div data-id="1">
+                <div>
                     <div class="row justify-content-between site-header">
                         <div class="col-8 ">
                             <h5 class="sites display-5 site-header-name">在线社区</h5>
@@ -879,7 +864,7 @@
                     </div>
                 </div>
 
-                <div data-id="1">
+                <div>
                     <div class="row justify-content-between site-header">
                         <div class="col-8 ">
                             <h5 class="sites display-5 site-header-name">常用工具</h5>

@@ -259,3 +259,7 @@ main {
     margin: 5px 10px;
     width: 90%;
 }
+
+.header-link:hover{
+    text-decoration: none;
+}

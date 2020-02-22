@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <main>
+        <div role="main">
+            <div class="container" id="site-container">
+                <div class="p-3 text-center">
+                    <h1 class="display-3" style="color: #69c0ff">简单购物导航</h1>
+                    {% if not request.user %}
+                        <small class="text-muted">登录之后可以自定义哦</small>
+                    {% endif %}
+                </div>
+                <div class="row p-3 site-list">
+                    <div class="col-4 col-lg-2 site-item ">
+                        <a href="https://www.taobao.com/" class="site-name" target="_blank"
+                           style="background-image: url({{ static_url('site/21gnefna5199gpij.png') }})">淘&nbsp;宝</a>
+                    </div>
+                    <div class="col-4 col-lg-2 site-item ">
+                        <a href="https://www.jd.com/" class="site-name" target="_blank"
+                           style="background-image: url({{ static_url('site/j7hagpmu75tl1623.png') }})">京&nbsp;东</a>
+                    </div>
+                    <div class="col-4 col-lg-2 site-item ">
+                        <a href="https://www.tmall.com/" class="site-name" target="_blank"
+                           style="background-image: url({{ static_url('site/hoqja02he360o76m.png') }})">天猫商城</a>
+                    </div>
+                    <div class="col-4 col-lg-2 site-item ">
+                        <a href="http://www.dangdang.com" class="site-name" target="_blank"
+                           style="background-image: url({{ static_url('site/4ifwn7jvav3s3i3d.png') }})">当当网</a>
+                    </div>
+                    <div class="col-4 col-lg-2 site-item ">
+                        <a href="https://www.amazon.cn/" class="site-name" target="_blank"
+                           style="background-image: url({{ static_url('site/777lkmduv9xa42d5.png') }})">亚马逊</a>
+                    </div>
+                    <div class="col-4 col-lg-2 site-item ">
+                        <a href="http://www.jumei.com/" class="site-name" target="_blank"
+                           style="background-image: url({{ static_url('site/cl8zzihvay4p5zyo.png') }})">聚美优品</a>
+                    </div>
+                    <div class="col-4 col-lg-2 site-item ">
+                        <a href="https://www.vip.com/" class="site-name" target="_blank"
+                           style="background-image: url({{ static_url('site/hwmssa4iwfry9jcz.png') }})">唯品会</a>
+                    </div>
+                    <div class="col-4 col-lg-2 site-item ">
+                        <a href="https://www.kaola.com/" class="site-name" target="_blank"
+                           style="background-image: url({{ static_url('site/hfru5kzm5p274uh0.png') }})">考拉海购</a>
+                    </div>
+                    <div class="col-4 col-lg-2 site-item ">
+                        <a href="https://www.mogu.com/" class="site-name" target="_blank"
+                           style="background-image: url({{ static_url('site/xns64gmejpsqchqk.png') }})">蘑菇街</a>
+                    </div>
+                    <div class="col-4 col-lg-2 site-item ">
+                        <a href="https://www.xiaomiyoupin.com/" class="site-name" target="_blank"
+                           style="background-image: url({{ static_url('site/qe5goldmmwmqbp23.png') }})">小米有品</a>
+                    </div>
+                    <div class="col-4 col-lg-2 site-item ">
+                        <a href="http://you.163.com/" class="site-name" target="_blank"
+                           style="background-image: url({{ static_url('site/eq3r9lw3lz4wk34i.png') }})">网易严选</a>
+                    </div>
+                    <div class="col-4 col-lg-2 site-item ">
+                        <a href="https://www.yohobuy.com/" class="site-name" target="_blank"
+                           style="background-image: url({{ static_url('site/msmv3asn51qpfl39.png') }})">YOHO有货</a>
+                    </div>
+
+                    <div class="col-4 col-lg-2 site-item ">
+                        <a href="https://www.gome.com.cn/" class="site-name" target="_blank"
+                           style="background-image: url({{ static_url('site/teen5dxuiojcxn0w.png') }})"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
+
+{% block script %}
+    <script src="{{ static_url('js/site/shopping.zh.js') }}"></script>
+{% endblock %}
+
+

@@ -108,5 +108,55 @@ function add_website_shortcut() {
     }
 }
 
+
+function append_website(data) {
+    let container = document.getElementById('site-container');
+    for (const site of data) {
+        let dom = document.createElement('div');
+        let header = document.createElement('div');
+        header.classList.add("row");
+        header.classList.add("site-header");
+        header.classList.add("justify-content-between");
+
+        let name = document.createElement('div');
+        name.classList.add('col-8');
+        let h5 = document.createElement('h5');
+        h5.classList.add('sites');
+        h5.classList.add('display-5');
+        h5.classList.add('site-header-name');
+        h5.innerText = site.name;
+        name.appendChild(h5);
+
+        header.appendChild(name);
+        dom.appendChild(header);
+
+        let hr = document.createElement('hr');
+        hr.classList.add('site-hr');
+        dom.appendChild(hr);
+
+        let site_list = document.createElement('div');
+        site_list.classList.add('row');
+        site_list.classList.add('p-3');
+        site_list.classList.add('site-list');
+
+        for (const s of site.website) {
+            let item = document.createElement('div');
+            item.classList.add('col-4');
+            item.classList.add('col-lg-2');
+            item.classList.add('site-item');
+            let a_dom = document.createElement('a');
+            a_dom.setAttribute('href', s.url);
+            a_dom.setAttribute('target', '_blank');
+            a_dom.style.backgroundImage = new URL('/site/${s.icon}.png', "https://website.chidian.xin");
+            a_dom.innerText = s.name;
+            item.appendChild(a_dom);
+            site_list.appendChild(item);
+        }
+        dom.appendChild(site_list);
+        container.appendChild(dom);
+    }
+}
+
+
 add_website_shortcut();
 right_click_delete();

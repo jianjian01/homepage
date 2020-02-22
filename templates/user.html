@@ -27,7 +27,8 @@
                     <div class="form-container" id="main-user">
                         <form action="#">
                             <div class="form-group row">
-                                <label for="avatar_url" class="col-sm-3 col-form-label text-right user-form-avatar">{{ _('avatar') }}</label>
+                                <label for="avatar_url"
+                                       class="col-sm-3 col-form-label text-right user-form-avatar">{{ _('avatar') }}</label>
                                 <div class="col-sm-9">
                                     <img width="100px" height="100px" alt="{{ user.name }}"
                                          src="{{ user.avatar_url }}"/>
@@ -48,7 +49,8 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="source" class="col-sm-3 col-form-label text-right">{{ _('login_paltform') }}</label>
+                                <label for="source"
+                                       class="col-sm-3 col-form-label text-right">{{ _('login_paltform') }}</label>
                                 <div class="col-sm-9">
                                     <input readonly id="source" class="form-control-plaintext"
                                            value="{{ [0, 'GitHub', '微博', 'Google'][user.source] }}" name="source">
@@ -248,11 +250,10 @@
 
 {% block script %}
     {% if page == 'category' %}
-        <script src="{{ static_url('js/user_category.js') }}"></script>
+        <script src="{{ static_url('js/user/category.js') }}"></script>
     {% elif page == 'website' %}
-        <script src="{{ static_url('js/user_website.js') }}"></script>
+        <script src="{{ static_url('js/user/website.js') }}"></script>
     {% elif page == 'rss' %}
-        <script src="{{ static_url('js/user_rss.js') }}"></script>
-
+        <script src="{{ static_url('js/user/rss.js') }}"></script>
     {% endif %}
 {% endblock %}

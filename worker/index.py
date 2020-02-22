@@ -32,6 +32,16 @@ def index():
     return render_template('index.en.html')
 
 
+@page_bp.route('/<cl>/shopping', methods=['GET'])
+def shopping(cl):
+    """购物网站"""
+    if cl == 'zh':
+        return render_template('shopping/shopping.zh.html')
+    if cl == 'ja':
+        return render_template('shopping/shopping.ja.html')
+    return render_template('shopping/shopping.en.html')
+
+
 @page_bp.route('/locale/<lc>', methods=['GET'])
 def locale(lc):
     """设置位置"""
