@@ -36,6 +36,7 @@
                                          aria-labelledby="dLabel">
                                         <form action="/user/{{ request.user.u_id }}/website" method="post">
                                             <input name="cate_id" value="{{ c.id }}" type="hidden">
+                                            <input name="type" value="index" type="hidden">
                                             <div class="row">
                                                 <div class="col-sm-2"></div>
                                                 <div class="col-sm-4">
