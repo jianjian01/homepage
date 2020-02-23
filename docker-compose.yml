@@ -36,6 +36,20 @@ services:
       - redis
       - image
     restart: always
+  download_icon:
+    image: myweb
+    command: python task/download_icon_redis_job.py
+    volumes:
+      - .:/app
+    working_dir: /app
+    links:
+      - redis
+      - mysql
+    depends_on:
+      - mysql
+      - redis
+      - image
+    restart: always
   mysql:
     image: mysql:8
     command: --default-authentication-plugin=mysql_native_password

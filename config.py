@@ -14,6 +14,7 @@ class Base:
     RSS_REQUEST_NUM = 50  # 定时任务 index rss 异步执行数量
     I18N_LANGUAGES = ['zh', 'ja', 'en']
     BABEL_TRANSLATION_DIRECTORIES = './translations'
+    REDIS_DOWNLOAD_ICON_CHANNEL = 'myweb:download:icon'
 
     ZH_INIT_SITES = {
         '': [

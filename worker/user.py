@@ -6,7 +6,7 @@ from flask import session, redirect, Blueprint, request, render_template, jsonif
 from pony.orm import commit, select, db_session
 
 from db import Category, UserSite, UserSiteStatus, RSS, UserRSS
-from util.tool import check_user, login_require, select_website, query_icon, redirect_home
+from util.tool import check_user, login_require, select_website, query_icon, redirect_home, download_icon_job
 
 user_bp = Blueprint('user', __name__, template_folder='templates')
 
@@ -117,6 +117,8 @@ def user_website_post(u_id: int):
         icon = ''
     site = UserSite(name=name, url=url, user=request.user, icon=icon, cate=cate, order=order)
     commit()
+    if not icon:
+        download_icon_job(site.id)
     if type_ == 'index':
         return redirect_home()
     return jsonify({'status': 1, 'id': site.id})

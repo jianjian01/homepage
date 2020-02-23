@@ -1,13 +1,17 @@
 import logging
+import os
 import random
 import string
 from collections import defaultdict
 from datetime import datetime
 from functools import wraps, lru_cache
+from urllib.parse import urlparse
 
+import bs4
 from flask import current_app, session, request, redirect, url_for
 from pony.orm import commit, db_session
 
+from config import Config
 from db import User, UserStatus, UserSite, Category, UserSiteStatus, Site
 from flask_app import redis
 
@@ -130,3 +134,54 @@ def batch_insert_website(data, user):
             for w in ws:
                 k += 1
                 UserSite(name=w[0], cate=c, user=user, url=w[1], icon=w[2], order=10 * k)
+
+
+def download_icon_job(usersite_id):
+    """
+    发送下载任务到 redis
+    :param usersite_id:
+    :return:
+    """
+    redis.publish(current_app.config['REDIS_DOWNLOAD_ICON_CHANNEL'], usersite_id)
+
+
+def download_icon(response):
+    while 1:
+        file_name = randstr(16)
+        path = os.path.join(Config.ICON_DIR, '{}.png'.format(file_name))
+        if not os.path.exists(path):
+            break
+    with open(path, mode='wb') as f:
+        f.write(await response.read())
+        f.close()
+    if os.path.exists(path):
+        if os.path.getsize(path) < 50:
+            os.remove(path)
+        return file_name
+    return None
+
+
+def parse_icon_html(content, url):
+    us = urlparse(url)
+    root = bs4.BeautifulSoup(content, "lxml")
+    icons = []
+    for l in root.find('head').find_all('link'):
+        if l.get('rel') and 'icon' in l.get('rel') and l.get('href'):
+            href = l.get('href', '')
+            if not href:
+                return
+            if href.startswith('//'):
+                href = '{}:{}'.format(us.scheme, href)
+            elif href.startswith('/'):
+                href = '{}://{}{}'.format(us.scheme, us.netloc, href)
+            elif href.startswith('http'):
+                pass
+            else:
+                if us.path:
+                    rurl = url.split('/')[:-1]
+                    rurl.append(href)
+                    href = '/'.join(rurl)
+                else:
+                    href = '{}/{}'.format(url, href)
+            icons.append(href)
+    return icons
