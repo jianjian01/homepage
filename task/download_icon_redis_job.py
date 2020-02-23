@@ -65,9 +65,11 @@ def main():
             user_site = cursor.fetchone()
             url = user_site[1]
             icon = fetch(url)
+            us = urlparse(url)
             if not icon:
                 continue
             cursor.execute("update  usersite  set icon = %s where id=%s", [icon, data])
+            cursor.execute("REPLACE INTO `site` (`host`, `icon`) VALUES (%s, %s)", [us.netloc, icon])
             mysql.commit()
 
 

@@ -41,6 +41,7 @@ services:
     command: python task/download_icon_redis_job.py
     volumes:
       - .:/app
+      - /home/ubuntu/static:/static
     working_dir: /app
     links:
       - redis
