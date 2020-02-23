@@ -23,6 +23,7 @@ aiomysql = "*"
 babel = "*"
 flask-babel = "*"
 aiofiles = "*"
+qiniu = "*"
 
 [requires]
 python_version = "3.7"

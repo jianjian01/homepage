@@ -175,6 +175,9 @@ class Prod(Base):
     GOOGLE_CLIENT_ID = '925382553833-t8ieg4gc6df1sr6kum3fldurrvi6rtke.apps.googleusercontent.com'
     GOOGLE_CLIENT_SECRET = 'DUMbH8oL6dGSJoNk9NJq9bja'
     GOOGLE_REDIRECT_URI = 'https://myweb100.com/auth/callback/google'
+    QINIU_ACCESS_KEY = 'hg7jzgsWkRKWJOsrXHJGeQpGfU4UUNtMTDC8R0p3'
+    QINIU_ACCESS_SECRET = 'E0zi9ZTCOBwp5xxBz2lyUvmSh6pQPOAu9kOpG-z7'
+    QINIU_BUCKET = 'myweb100'
 
 
 Config = None

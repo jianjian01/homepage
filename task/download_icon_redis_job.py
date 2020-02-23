@@ -1,8 +1,10 @@
 # 下载 icon
+import os
 from urllib.parse import urlparse
 
 import pymysql
 import requests
+from qiniu import Auth, put_file
 from redis import Redis
 
 from config import Config
@@ -51,6 +53,8 @@ def main():
     mysql_config.pop('provider', '')
     redis = Redis.from_url(Config.REDIS_URL)
     mysql = pymysql.Connect(**mysql_config)
+    q = Auth(Config.QINIU_ACCESS_KEY, Config.QINIU_ACCESS_SECRET)
+
     ps = redis.pubsub()
     ps.subscribe(Config.REDIS_DOWNLOAD_ICON_CHANNEL)
     for item in ps.listen():
@@ -71,6 +75,10 @@ def main():
             cursor.execute("update  usersite  set icon = %s where id=%s", [icon, data])
             cursor.execute("REPLACE INTO `site` (`host`, `icon`) VALUES (%s, %s)", [us.netloc, icon])
             mysql.commit()
+        key = 'site/{}.png'.format(icon)
+        token = q.upload_token(Config.QINIU_BUCKET, key, 60)
+        ret, info = put_file(token, key, os.path.join(Config.ICON_DIR, '{}.png'.format(icon)))
+        print(info)
 
 
 if __name__ == '__main__':
