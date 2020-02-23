@@ -89,12 +89,14 @@ function update_cate(e) {
     name_td.innerText = null;
     name_td.setAttribute('class', 'new-cel');
     let name = new_input_dom('name', 'text', 'name', true, true);
+    name.classList.add('name-cel-input');
     name.setAttribute('value', name_val);
     name_td.appendChild(name);
 
     let order_td = tds.item(1);
     let order_val = order_td.innerText;
     let order = new_order_input_dom();
+    order.classList.add('order-cel-input');
     order.setAttribute('value', order_val);
     order_td.innerText = '';
     order_td.appendChild(order);

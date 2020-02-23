@@ -35,7 +35,7 @@ def fetch(url):
     us = urlparse(new_url)
     icons = parse_icon_html(resp.content, new_url)
     if not icons:
-        icons = ['{}:{}/{}'.format(us.scheme, us.netloc, "favicon.ico")]
+        icons = ['{}://{}/{}'.format(us.scheme, us.netloc, "favicon.ico")]
     for icon_url in icons:
         headers['Host'] = us.netloc
         resp = session.get(icon_url, headers=headers, stream=True)
