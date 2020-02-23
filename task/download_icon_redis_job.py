@@ -38,7 +38,7 @@ def fetch(url):
         icons = ['{}:{}/{}'.format(us.scheme, us.netloc, "favicon.ico")]
     for icon_url in icons:
         headers['Host'] = us.netloc
-        resp = session.get(icon_url, headers=headers)
+        resp = session.get(icon_url, headers=headers, stream=True)
         icon = download_icon(resp)
         if icon:
             return icon

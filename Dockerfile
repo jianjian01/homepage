@@ -9,8 +9,8 @@ WORKDIR /app
 ADD . .
 
 RUN pip install -U  pip && \
-    pipenv install --system --deploy --ignore-pipfile && \
-    pipenv sync && \
+    pipenv install --system --deploy --ignore-pipfile
+RUN pipenv sync && \
     pip install Babel
 RUN pybabel compile -d /app/translations
 RUN pip install -e git+https://github.com/kurtmckee/feedparser.git@6.0.0b1#egg=feedparser --no-cache-dir --src /pypi/src
