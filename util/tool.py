@@ -152,7 +152,7 @@ def download_icon(response):
         if not os.path.exists(path):
             break
     with open(path, mode='wb') as f:
-        f.write(await response.read())
+        f.write(response.read())
         f.close()
     if os.path.exists(path):
         if os.path.getsize(path) < 50:
