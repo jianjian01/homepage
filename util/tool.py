@@ -98,7 +98,6 @@ def static_url(path):
     return '{}://{}/{}'.format(scheme, domain, path)
 
 
-@lru_cache(maxsize=2020)
 def redirect_home():
     """重定向到首页"""
     return redirect(url_for('page.index', _external=True,

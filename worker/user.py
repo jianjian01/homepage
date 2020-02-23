@@ -1,5 +1,6 @@
 import logging
 from collections import defaultdict
+from datetime import datetime
 from urllib.parse import urlparse
 
 from flask import session, redirect, Blueprint, request, render_template, jsonify
@@ -34,6 +35,7 @@ def user_category(u_id: int):
 @login_require
 def user_category_post(u_id: int):
     form = request.form
+    logging.info('user {} data {}'.format(u_id, form))
     name = form.get('name', '')
     order = form.get('order', '')
     if not name or not order or not order.isdigit():
@@ -42,6 +44,7 @@ def user_category_post(u_id: int):
     if 1 > order or order > 1000:
         return jsonify({'status': -1})
     cate = Category(name=name, order=order, user=request.user)
+    logging.info('user {} add new category {} {}'.format(u_id, cate.id, name))
     commit()
     return jsonify({'status': 1, 'id': cate.id})
 
@@ -50,6 +53,7 @@ def user_category_post(u_id: int):
 @login_require
 def user_category_delete(u_id: int):
     form = request.form
+    logging.info('user {} delete data {}'.format(u_id, form))
     cate_id = form.get('id', '')
     if not cate_id or not cate_id.isdigit():
         return jsonify({'status': -1})
@@ -58,6 +62,7 @@ def user_category_delete(u_id: int):
     if not cate:
         return jsonify({'status': -1})
     cate.delete = True
+    logging.warning('user {} delete category {}'.format(u_id, cate.id))
     commit()
     return jsonify({'status': 1, 'id': cate.id})
 
@@ -66,6 +71,7 @@ def user_category_delete(u_id: int):
 @login_require
 def user_category_put(u_id: int):
     form = request.form
+    logging.info('user {} update data {}'.format(u_id, form))
     cate_id = form.get('id', '')
     name = form.get('name', '')
     order = form.get('order', '')
@@ -78,6 +84,7 @@ def user_category_put(u_id: int):
     cate.name = name
     cate.order = order
     commit()
+    logging.info('user {} update category {}'.format(u_id, cate.id))
     return jsonify({'status': 1, 'id': cate.id})
 
 
@@ -92,6 +99,7 @@ def user_website(u_id: int):
 @login_require
 def user_website_post(u_id: int):
     form = request.form
+    logging.info('user {} post data {}'.format(u_id, form))
     cate_id = form.get('cate_id', '')
     name = form.get('name', '')
     url = form.get('url', '')
@@ -117,7 +125,9 @@ def user_website_post(u_id: int):
         icon = ''
     site = UserSite(name=name, url=url, user=request.user, icon=icon, cate=cate, order=order)
     commit()
+    logging.info('user {} post site {}'.format(u_id, site.id))
     if not icon:
+        logging.warning("icon not found, send to redis")
         download_icon_job(site.id)
     if type_ == 'index':
         return redirect_home()
@@ -128,6 +138,7 @@ def user_website_post(u_id: int):
 @login_require
 def user_website_delete(u_id: int):
     form = request.form
+    logging.info('user {} delete data {}'.format(u_id, form))
     cate_id = form.get('id', '')
     if not cate_id or not cate_id.isdigit():
         return jsonify({'status': -1})
@@ -137,7 +148,9 @@ def user_website_delete(u_id: int):
     if not site:
         return jsonify({'status': -1})
     site.status = UserSiteStatus.delete
+    site.delete_time = datetime.utcnow()
     commit()
+    logging.warning('user {} delete website {}'.format(u_id, site.id))
     return jsonify({'status': 1, 'id': site.id})
 
 
@@ -154,6 +167,7 @@ def user_rss(u_id: int):
 @db_session
 def user_rss_post(u_id: int):
     form = request.form
+    logging.info('user {} post data {}'.format(u_id, form))
     name = form.get('name', '')
     url = form.get('url', '')
     if not name or not url:
@@ -166,12 +180,14 @@ def user_rss_post(u_id: int):
         rss = RSS(link=url)
     ur = UserRSS(user=request.user, rss=rss, name=name)
     commit()
+    logging.info('user {} post rss {}'.format(u_id, ur.id))
     return jsonify({'status': 1, 'id': ur.id})
 
 
 @user_bp.route('/<int:u_id>/rss', methods=['DELETE'])
 @login_require
 def user_rss_delete(u_id: int):
+    logging.info('user {} update data {}'.format(u_id, request.form))
     rss_id = request.form.get('id', '')
     if not rss_id or not rss_id.isdigit():
         return jsonify({'status': -1})
@@ -179,7 +195,9 @@ def user_rss_delete(u_id: int):
     if not ur:
         return jsonify({'status': -1})
     ur.delete = True
+    ur.delete_time = datetime.utcnow()
     commit()
+    logging.info('user {} delete rss {}'.format(u_id, rss_id))
     return jsonify({'status': 1, 'id': ur.id})
 
 

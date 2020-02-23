@@ -3,7 +3,7 @@ import time
 from datetime import datetime
 from functools import wraps
 import requests
-from flask import Blueprint, request, redirect, current_app, session, url_for
+from flask import Blueprint, request, redirect, current_app, session
 from pony.orm import commit, db_session
 
 from db import UserSource, User, UserStatus

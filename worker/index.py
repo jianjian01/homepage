@@ -1,9 +1,9 @@
 from datetime import datetime, timedelta
 
-from flask import render_template, Blueprint, request, current_app
-from pony.orm import select, desc, raw_sql
+from flask import render_template, Blueprint, request
+from pony.orm import select
 
-from db import Page, UserRSS, RSS
+from db import Page, UserRSS
 from util.tool import check_user, select_website, redirect_home, guess_locale
 
 page_bp = Blueprint('page', __name__, template_folder='templates')
