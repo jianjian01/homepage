@@ -6,10 +6,11 @@ ENV mode production
 ENV PYTHONPATH "${PYTHONPATH}:/app"
 
 WORKDIR /app
-ADD . .
 
 RUN pip install -U  pip && \
     pipenv install --system --deploy --ignore-pipfile
+
+ADD . .
 RUN pipenv sync && \
     pip install Babel
 RUN pybabel compile -d /app/translations
