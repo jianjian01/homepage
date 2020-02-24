@@ -152,8 +152,11 @@ def callback_github():
     resp = requests.get(url=url, headers=headers)
     logging.info("github get response: {}".format(resp.text))
     data = resp.json()
+    name = data.get('name', '')
+    if not name:
+        name = data.get('login', 'Github user')
     u_id = save_or_update_user(UserSource.github, data.get('id', ''),
-                               data.get('name', ''), data.get('avatar_url', ''), resp.text)
+                               name, data.get('avatar_url', ''), resp.text)
     set_session(conf, u_id, UserSource.github)
     return redirect_home()
 
