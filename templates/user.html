@@ -122,12 +122,10 @@
                         </small>
                         <br/>
                         <div class="button-group">
-
                             <a href="/">
                                 <button type="button" role="button"
                                         class="btn btn-outline-primary">{{ _('backhome') }}</button>
                             </a>
-
                         </div>
                     </div>
 
@@ -149,10 +147,10 @@
                                     </div>
                                     {% set ss = sites.get(c.id) %}
                                     <table class="site-table table table-striped">
-                                        {#                                        <caption>List of websites</caption>#}
                                         <thead>
                                         <tr>
                                             <th scope="col" class="site-num">#</th>
+                                            <th scope="col" class="site-name">icon</th>
                                             <th scope="col" class="site-name">{{ _('name') }}</th>
                                             <th scope="col" class="site-url">{{ _('url') }}</th>
                                             <th scope="col" class="site-order">{{ _('serial_num') }}</th>
@@ -166,6 +164,14 @@
                                                     <th scope="row" class="site-num">
                                                         {{ loop.index }}
                                                     </th>
+                                                    <td class="site-icon">
+                                                        <img class="site-icon-img"
+                                                             src="{{ static_url('site/'+ s.icon + '.png') }}"
+                                                             alt="upload icon"/>
+                                                        {#                                                        <img class="site-icon-img"#}
+                                                        {#                                                             src="https://myweb.chidian.xin/site/7kek6vyby8rngp64.png"#}
+                                                        {#                                                             alt="icon"/>#}
+                                                    </td>
                                                     <td class="site-name">
                                                         {{ s.name }}
                                                     </td>

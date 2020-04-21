@@ -267,3 +267,9 @@ main {
 .header-link:hover {
     text-decoration: none;
 }
+
+.site-icon-img {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}

@@ -1,13 +1,14 @@
 import logging
-from collections import defaultdict
+import os
 from datetime import datetime
 from urllib.parse import urlparse
 
-from flask import session, redirect, Blueprint, request, render_template, jsonify
+from flask import session, redirect, Blueprint, request, render_template, jsonify, current_app
 from pony.orm import commit, select, db_session
+from qiniu import put_file, Auth
 
 from db import Category, UserSite, UserSiteStatus, RSS, UserRSS
-from util.tool import check_user, login_require, select_website, query_icon, redirect_home, download_icon_job
+from util.tool import check_user, login_require, select_website, query_icon, redirect_home, download_icon_job, randstr
 
 user_bp = Blueprint('user', __name__, template_folder='templates')
 
@@ -152,6 +153,36 @@ def user_website_delete(u_id: int):
     commit()
     logging.warning('user {} delete website {}'.format(u_id, site.id))
     return jsonify({'status': 1, 'id': site.id})
+
+
+@user_bp.route('/website/icon', methods=['POST'])
+@login_require
+def update_icon():
+    """"""
+    icon = request.files['icon']
+    site_id = request.form.get('id', '')
+    conf = current_app.config
+    if not icon or not site_id:
+        return ''
+    filename = randstr(16)
+    filepath = os.path.join(conf['ICON_DIR'], "{}.png".format(filename))
+    icon.save(filepath)
+    if not os.path.exists(filepath) or os.stat(filepath).st_size > 5 * 1024:
+        return ''
+
+    key = 'site/{}.png'.format(filename)
+    q = Auth(conf['QINIU_ACCESS_KEY'], conf['QINIU_ACCESS_SECRET'])
+    token = q.upload_token(conf['QINIU_BUCKET'], key, 60)
+    ret, info = put_file(token, key, filepath)
+    logging.info(info)
+    site = UserSite.select(
+        lambda x: x.id == site_id and x.user == request.user and x.status == UserSiteStatus.normal).first()
+    if not site:
+        return jsonify({'status': -1})
+    site.icon = filename
+    commit()
+
+    return ''
 
 
 @user_bp.route('/<int:u_id>/rss', methods=['GET'])

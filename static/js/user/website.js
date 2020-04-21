@@ -110,13 +110,46 @@ function delete_website(e) {
 function website_action() {
     let add_btn = document.getElementsByClassName('add-new-website');
     let delete_btn = document.getElementsByClassName('delete-site');
+    let icon_images = document.getElementsByClassName('site-icon-img');
     for (let btn of add_btn) {
         btn.onpointerdown = add_new_website;
     }
     for (let btn of delete_btn) {
         btn.onpointerdown = delete_website;
     }
+    for (let img of icon_images) {
+        img.onclick = change_icon;
+    }
+}
 
+function upload_icon(e) {
+    let input = e.target;
+    let icon = input.files[0];
+    if (icon.size > 5000) {
+        alert('文件不能大于 5kb');
+        return
+    }
+    let tr = input.closest('tr');
+    let website_id = tr.getAttribute('data-id');
+    let data = new FormData();
+    data.append('id', website_id);
+    data.append('icon', icon);
+    http_request_json('POST', '/user/website/icon', data, refresh)
+
+}
+
+function change_icon(e) {
+    let tr = e.target.closest('tr');
+    let website_id = tr.getAttribute('data-id');
+
+    let input_dom = document.createElement('input');
+    input_dom.type = 'file';
+    input_dom.name = 'icon';
+    input_dom.accept = ".png, .jpg, .jpeg";
+    input_dom.hidden = true;
+    input_dom.onchange = upload_icon;
+    tr.appendChild(input_dom);
+    input_dom.click();
 }
 
 website_action();
