@@ -149,7 +149,7 @@ main {
     color: #181818;
 }
 
-.user-form-avatar{
+.user-form-avatar {
     align-self: center;
 }
 
@@ -183,6 +183,10 @@ main {
     .nav-sidebar ul {
         display: inline-block;
         margin: 0 50px;
+    }
+
+    .page-display-title {
+        font-size: 2.5rem !important;
     }
 }
 
@@ -260,6 +264,6 @@ main {
     width: 90%;
 }
 
-.header-link:hover{
+.header-link:hover {
     text-decoration: none;
 }
