@@ -167,7 +167,7 @@ def update_icon():
     filename = randstr(16)
     filepath = os.path.join(conf['ICON_DIR'], "{}.png".format(filename))
     icon.save(filepath)
-    if not os.path.exists(filepath) or os.stat(filepath).st_size > 5 * 1024:
+    if not os.path.exists(filepath) or os.stat(filepath).st_size > 10 * 1024:
         return ''
 
     key = 'site/{}.png'.format(filename)

@@ -125,8 +125,8 @@ function website_action() {
 function upload_icon(e) {
     let input = e.target;
     let icon = input.files[0];
-    if (icon.size > 5000) {
-        alert('文件不能大于 5kb');
+    if (icon.size > 10240) {
+        alert('图片不能大于 10kb');
         return
     }
     let tr = input.closest('tr');
