@@ -1,7 +1,9 @@
-# dian-xin
+# 个人主页
 
-## 静态文件 
-static.myweb100.com
+## 网站收藏
+1. 设置分组，添加网址。默认存在一个没有名称的分组，
+2. 分组和网址都有序号，用来排序。
+3. 控制台点击网址的 icon 能设置新的 icon。
 
 ## RSS 
 考虑到用户可能会订阅相同的 RSS 源，避免重复请求 RSS 源，这里设计多个表。
@@ -28,15 +30,12 @@ pybabel update -i messages.pot -d translations
 pybabel compile -d translations
 ```
 
-## task ##
-```shell script
-docker run -it --network dian-xin_default -v ~/static/site:/app/static/site  -v ~/dian-xin/task:/task --restart always --name download_icon -d  myweb   python /task/download_site_icon_async.py
+## 运行
+
+```
+docker-compose up -d --build
 ```
 
-## nginx ##
-```shell script
-docker run -v /home/ubuntu/dian-xin/static:/app/dian-xin/static -v /home/ubuntu/nginx/conf.d:/etc/nginx/conf.d -v /home/ubuntu/nginx/html:/usr/share/nginx/html -v /home/ubuntu/nginx/cert:/cert -v /home/ubuntu/nginx/letsencrypt:/etc/letsencrypt -v /home/ubuntu/static/site:/static/site -p 443:443 -p 80:80 --name nginx1 -d nginx
-```
 
 
 
