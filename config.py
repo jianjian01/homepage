@@ -120,21 +120,21 @@ class Dev(Base):
 
     PONY = {
         'provider': 'mysql',
-        'host': '47.96.177.79',
+        'host': '127.0.0.1',
         'port': 29898,
         'user': 'root',
-        'password': '8W5Qqv9IfgdvHk',
+        'password': '',
         'db': 'chidianxin',
         'autocommit': 'True',
     }
-    REDIS_URL = 'redis://47.96.177.79:29899/0'
+    REDIS_URL = 'redis://127.0.0.1:29899/0'
     RANDOM_KEY = os.urandom(16)
 
-    GITHUB_CLIENT_ID = '655c0721a03d26aac38c'
-    GITHUB_CLIENT_SECRET = 'a31f81f1ca84b7a9ccc12e4ae3d5ed69338f8128'
+    GITHUB_CLIENT_ID = ''
+    GITHUB_CLIENT_SECRET = ''
     GITHUB_REDIRECT_URI = 'http://127.0.0.1:5000/auth/callback/github'
-    WEIBO_APP_KEY = '1108861131'
-    WEIBO_APP_SECRET = 'b82a3cc00f20ab137e3d572000ad0f08'
+    WEIBO_APP_KEY = ''
+    WEIBO_APP_SECRET = ''
     WEIBO_REDIRECT_URI = 'http://127.0.0.1:5000/auth/callback/weibo'
     WEIBO_CANCEL_URI = 'http://127.0.0.1:5000/auth/callback/weibo/cancel'
 
@@ -148,7 +148,7 @@ class Prod(Base):
     SESSION_COOKIE_SECURE = True
     SESSION_REFRESH_EACH_REQUEST = True
     SESSION_COOKIE_SAMESITE = "Lax"
-    SECRET_KEY = 'wSt0QSG9fnfPGmiB'
+    SECRET_KEY = ''
     PREFERRED_URL_SCHEME = "https"
     SERVER_NAME = 'myweb100.com'
     STATIC_DOMAIN = "myweb.chidian.xin"
@@ -159,24 +159,24 @@ class Prod(Base):
         'host': 'mysql',
         'port': 3306,
         'user': 'myweb',
-        'password': 'T3KfkTjGmXE1ar5p',
+        'password': '',
         'db': 'myweb',
         'autocommit': 'True',
     }
     REDIS_URL = 'redis://@redis:6379/1'
 
-    GITHUB_CLIENT_ID = '655c0721a03d26aac38c'
-    GITHUB_CLIENT_SECRET = 'a31f81f1ca84b7a9ccc12e4ae3d5ed69338f8128'
+    GITHUB_CLIENT_ID = ''
+    GITHUB_CLIENT_SECRET = ''
     GITHUB_REDIRECT_URI = 'https://myweb100.com/auth/callback/github'
-    WEIBO_APP_KEY = '1108861131'
-    WEIBO_APP_SECRET = 'b82a3cc00f20ab137e3d572000ad0f08'
+    WEIBO_APP_KEY = ''
+    WEIBO_APP_SECRET = ''
     WEIBO_REDIRECT_URI = 'https://myweb100.com/auth/callback/weibo'
     WEIBO_CANCEL_URI = 'https://myweb100.com/auth/callback/weibo/cancel'
-    GOOGLE_CLIENT_ID = '925382553833-t8ieg4gc6df1sr6kum3fldurrvi6rtke.apps.googleusercontent.com'
-    GOOGLE_CLIENT_SECRET = 'DUMbH8oL6dGSJoNk9NJq9bja'
+    GOOGLE_CLIENT_ID = ''
+    GOOGLE_CLIENT_SECRET = ''
     GOOGLE_REDIRECT_URI = 'https://myweb100.com/auth/callback/google'
-    QINIU_ACCESS_KEY = 'hg7jzgsWkRKWJOsrXHJGeQpGfU4UUNtMTDC8R0p3'
-    QINIU_ACCESS_SECRET = 'E0zi9ZTCOBwp5xxBz2lyUvmSh6pQPOAu9kOpG-z7'
+    QINIU_ACCESS_KEY = ''
+    QINIU_ACCESS_SECRET = ''
     QINIU_BUCKET = 'myweb100'
 
 
