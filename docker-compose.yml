@@ -60,10 +60,10 @@ services:
     ports:
       - "3306:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: exampleexampleexample
-      MYSQL_DATABASE: myweb
-      MYSQL_USER: myweb
-      MYSQL_PASSWORD: T3KfkTjGmXE1ar5p
+      MYSQL_ROOT_PASSWORD: 
+      MYSQL_DATABASE: 
+      MYSQL_USER: 
+      MYSQL_PASSWORD: 
   redis:
     image: redis
     restart: always
