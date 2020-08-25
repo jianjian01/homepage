@@ -146,6 +146,8 @@ def download_icon_job(usersite_id):
 
 
 def download_icon(response):
+    if not os.path.exists(Config.ICON_DIR):
+        os.mkdir(Config.ICON_DIR)
     while 1:
         file_name = randstr(16)
         path = os.path.join(Config.ICON_DIR, '{}.png'.format(file_name))

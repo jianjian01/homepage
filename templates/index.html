@@ -6,7 +6,7 @@
         <main role="main">
             <div class="container">
 
-                <div class="p-3 text-center">
+                <!-- <div class="p-3 text-center">
                     <h1 class="display-3 page-display-title" style="color: #69c0ff">
                         {% if locale == 'zh' %}
                             简单网址导航
@@ -14,7 +14,7 @@
                             Simple URL Navigation
                         {% endif %}
                     </h1>
-                </div>
+                </div> -->
                 {% for c in categories | sort(attribute="order") %}
                     <div data-id="{{ c.id }}">
                         <div class="row justify-content-between site-header">
