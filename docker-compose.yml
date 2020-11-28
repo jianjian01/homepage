@@ -1,71 +1,31 @@
 version: '3'
 services:
-  image:
-    build: .
-    image: myweb
-    command: echo '^_^'
   web:
+    build: .
+    container_name: myweb
     image: myweb
     ports:
       - "5000:5000"
-    command: gunicorn -w 4 -b 0.0.0.0:5000 app:app --worker-class gevent --log-level=info --log-file=/dev/stdout
+    command: gunicorn -w 1 -b 0.0.0.0:5000 app:app --log-level=info --log-file=/dev/stdout
     volumes:
-      - .:/app
       - /home/ubuntu/logs:/logs
-      - /home/ubuntu/static:/static
     working_dir: /app
-    links:
-      - redis
-      - mysql
-    depends_on:
-      - mysql
-      - redis
-      - image
     restart: always
   index_rss:
+    container_name: index_rss
     image: myweb
     command: python task/index_rss.py
-    volumes:
-      - .:/app
     working_dir: /app
-    links:
-      - redis
-      - mysql
     depends_on:
-      - mysql
-      - redis
-      - image
+      - web
     restart: always
   download_icon:
+    container_name: download_icon
     image: myweb
     command: python task/download_icon_redis_job.py
-    volumes:
-      - .:/app
-      - /home/ubuntu/static:/static
     working_dir: /app
-    links:
-      - redis
-      - mysql
     depends_on:
-      - mysql
-      - redis
-      - image
-    restart: always
-  mysql:
-    image: mysql:8
-    command: --default-authentication-plugin=mysql_native_password
-    restart: always
+      - web
     volumes:
-      - /home/ubuntu/data/mysql:/var/lib/mysql
-    ports:
-      - "3306:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: 
-      MYSQL_DATABASE: 
-      MYSQL_USER: 
-      MYSQL_PASSWORD: 
-  redis:
-    image: redis
+      - /home/ubuntu/data/static:/static
     restart: always
-    ports:
-      - "6379:6379"

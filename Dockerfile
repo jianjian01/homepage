@@ -4,7 +4,7 @@ RUN apt update && apt upgrade -y && apt install -y pipenv
 
 ENV mode production
 ENV PYTHONPATH "${PYTHONPATH}:/app"
-
+RUN mkdir -p /static/site/
 WORKDIR /app
 
 COPY Pipfile* ./
@@ -19,4 +19,4 @@ ADD . .
 
 RUN pybabel compile -d /app/translations
 
-CMD ["gunicorn", "-w", "4", "-b", "127.0.0.1:5000", "app:app"]
+CMD ["gunicorn", "-w", "1", "-b", "127.0.0.1:5000", "app:app"]
