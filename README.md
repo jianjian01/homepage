@@ -23,7 +23,7 @@ USERRSS 表，用户订阅 RSS 的记录表，当用户添加一个 RSS 源的�
 # 查找翻译文件
 pybabel extract -F babel.cfg -o messages.pot .
 # 初始化语言文件夹，zh ja en ...
-pybabel init -i messages.pot -d translations -l ja
+pybabel init -i messages.pot -d translations -l zh
 # 更新文件夹
 pybabel update -i messages.pot -d translations
 # 翻译之后，编译一下才能使用

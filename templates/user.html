@@ -7,16 +7,16 @@
             <nav role="navigation" class="nav-sidebar col-md-2 col-xl-3">
                 <ul class="nav-ul">
                     <li class="{% if page=='info' %}active{% endif %}">
-                        <a href="/user/{{ request.user.u_id }}">{{ _('personal_info') }}</a>
+                        <a href="/user/{{ request.user.u_id }}">{{ _('personal info') }}</a>
                     </li>
                     <li class="{% if page=='category' %}active{% endif %}">
                         <a href="/user/{{ request.user.u_id }}/category">{{ _('category') }}</a>
                     </li>
                     <li class="{% if page=='website' %}active{% endif %}">
-                        <a href="/user/{{ request.user.u_id }}/website">{{ _('Web_site') }}</a>
+                        <a href="/user/{{ request.user.u_id }}/website">{{ _('web site') }}</a>
                     </li>
                     <li class="{% if page=='rss' %}active{% endif %}">
-                        <a href="/user/{{ request.user.u_id }}/rss">{{ _('rss_feed') }}</a>
+                        <a href="/user/{{ request.user.u_id }}/rss">{{ _('rss feed') }}</a>
                     </li>
                 </ul>
 
@@ -50,7 +50,7 @@
                             </div>
                             <div class="form-group row">
                                 <label for="source"
-                                       class="col-sm-3 col-form-label text-right">{{ _('login_paltform') }}</label>
+                                       class="col-sm-3 col-form-label text-right">{{ _('login platform') }}</label>
                                 <div class="col-sm-9">
                                     <input readonly id="source" class="form-control-plaintext"
                                            value="{{ [0, 'GitHub', '微博', 'Google'][user.source] }}" name="source">
@@ -58,7 +58,7 @@
                             </div>
                             <div class="form-group row">
                                 <label for="register-date" class="col-sm-3 col-form-label text-right">
-                                    {{ _('register_date') }}
+                                    {{ _('register date') }}
                                 </label>
                                 <div class="col-sm-9">
                                     <input readonly id="register-date" class="form-control-plaintext"
@@ -88,7 +88,7 @@
                             <tr>
                                 <th scope="col" class="cate-num">#</th>
                                 <th scope="col">{{ _('category') }}</th>
-                                <th scope="col" class="large-order-cel">{{ _('serial_num') }}</th>
+                                <th scope="col" class="large-order-cel">{{ _('sequence') }}</th>
                                 <th scope="col" class="cate-action">{{ _('action') }}</th>
                             </tr>
                             </thead>
@@ -153,7 +153,7 @@
                                             <th scope="col" class="site-name">icon</th>
                                             <th scope="col" class="site-name">{{ _('name') }}</th>
                                             <th scope="col" class="site-url">{{ _('url') }}</th>
-                                            <th scope="col" class="site-order">{{ _('serial_num') }}</th>
+                                            <th scope="col" class="site-order">{{ _('sequence') }}</th>
                                             <th scope="col" class="site-action">{{ _('action') }}</th>
                                         </tr>
                                         </thead>

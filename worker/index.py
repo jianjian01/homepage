@@ -27,8 +27,6 @@ def index():
 
     if cl == 'zh':
         return render_template('index.zh.html')
-    if cl == 'ja':
-        return render_template('index.ja.html')
     return render_template('index.en.html')
 
 

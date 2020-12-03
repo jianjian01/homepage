@@ -33,6 +33,9 @@ def parser(rss_id, text):
             item_id = item_title
         if not item_id:
             continue
+        if not struct_time:
+            struct_time = item.get('updated', None)
+
         data.append([
             rss_id,
             item_id,
