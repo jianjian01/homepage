@@ -34,14 +34,19 @@ def parser(rss_id, text):
         if not item_id:
             continue
         if not struct_time:
-            struct_time = item.get('updated', None)
-
+            struct_time = item.get('updated_parsed', None)
+        pub_date = date_default
+        if struct_time:
+            try:
+                pub_date = datetime.fromtimestamp(mktime(struct_time))
+            except Exception:
+                print(item)
         data.append([
             rss_id,
             item_id,
             item_title,
             item_link,
-            datetime.fromtimestamp(mktime(struct_time)) if struct_time else date_default
+            pub_date
         ])
 
     return data
