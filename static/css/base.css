@@ -30,7 +30,7 @@ main {
 .btn-login {
     position: relative;
     display: inline-block;
-    padding: .4rem 2.5rem;
+    padding: .4rem 1.5rem;
     border: 1px solid transparent;
     outline: none;
     font-family: inherit;
@@ -41,7 +41,6 @@ main {
     cursor: pointer;
     color: #0077cc;
     border-radius: 5px;
-    width: 251px;
 }
 
 .svg-icon {
