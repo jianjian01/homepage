@@ -30,13 +30,19 @@ def fetch(url):
     """
     headers['Host'] = urlparse(url).netloc
     session = requests.Session()
-    resp = session.get(url, headers=headers)
-    new_url = resp.url
+    icons = []
+    try:
+        resp = session.get(url, headers=headers)
+        new_url = resp.url
+        if resp.status_code == 200:
+            icons = parse_icon_html(resp.content, new_url)
+    except Exception:
+        new_url = url
     us = urlparse(new_url)
-    icons = parse_icon_html(resp.content, new_url)
     if not icons:
         icons = ['{}://{}/{}'.format(us.scheme, us.netloc, "favicon.ico")]
     for icon_url in icons:
+        us = urlparse(icon_url)
         headers['Host'] = us.netloc
         resp = session.get(icon_url, headers=headers, stream=True)
         icon = download_icon(resp)
@@ -61,7 +67,6 @@ def main():
         if item['type'] != 'message':
             continue
         data = item.get('data', '')
-        print(data)
         if not data:
             continue
         with mysql.cursor() as cursor:
