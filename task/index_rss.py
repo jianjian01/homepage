@@ -115,6 +115,7 @@ if __name__ == '__main__':
         main()
         end = datetime.utcnow()
         logging.info("execute: {} - {}".format(start, end))
-        if (start - end) < timedelta(hours=1):
-            logging.info("sleep an our")
-            time.sleep(60 * 60)
+        duration = start - end
+        if duration < timedelta(hours=0.5):
+            logging.info("sleep for a while")
+            time.sleep(30 * 60 - duration.seconds)
