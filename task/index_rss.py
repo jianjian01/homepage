@@ -99,12 +99,12 @@ def main():
     conn = pymysql.connect(**conf.PONY)
     logging.info("query database")
     with conn.cursor() as cursor:
-        cursor.execute("select id, link from rss")
+        cursor.execute("select id, link from rss order by rand()")
         result = cursor.fetchall()
     conn.close()
     logging.info("rss {}".format(len(result)))
 
-    loop = asyncio.get_event_loop()
+    loop = asyncio.new_event_loop()
     loop.run_until_complete(run(loop, result, conf))
     loop.close()
 
@@ -115,7 +115,7 @@ if __name__ == '__main__':
         main()
         end = datetime.utcnow()
         logging.info("execute: {} - {}".format(start, end))
-        duration = start - end
+        duration = end - start
         if duration < timedelta(hours=0.5):
             logging.info("sleep for a while")
-            time.sleep(30 * 60 - duration.seconds)
+            time.sleep(600 - duration.seconds)
