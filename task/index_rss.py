@@ -85,7 +85,7 @@ async def run(loop, rss_list, conf):
     for res in pending:
         print(res)
 
-    pool.close()
+    await pool.close()
     await pool.wait_closed()
 
 
@@ -99,7 +99,7 @@ def main():
     conn = pymysql.connect(**conf.PONY)
     logging.info("query database")
     with conn.cursor() as cursor:
-        cursor.execute("select id, link from rss")
+        cursor.execute("select id, link from rss order by rand()")
         result = cursor.fetchall()
     conn.close()
     logging.info("rss {}".format(len(result)))
@@ -115,7 +115,7 @@ if __name__ == '__main__':
         main()
         end = datetime.utcnow()
         logging.info("execute: {} - {}".format(start, end))
-        duration = start - end
+        duration = end - start
         if duration < timedelta(hours=0.5):
             logging.info("sleep for a while")
-            time.sleep(30 * 60 - duration.seconds)
+            time.sleep(max(0, 30 * 60 - duration.seconds))
