@@ -85,7 +85,7 @@ async def run(loop, rss_list, conf):
     for res in pending:
         print(res)
 
-    await pool.close()
+    pool.close()
     await pool.wait_closed()
 
 
