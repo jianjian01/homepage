@@ -2,12 +2,12 @@ import asyncio
 import logging
 import time
 from datetime import datetime, timedelta
-from time import mktime
 
 import aiohttp
 import aiomysql
 import feedparser
 import pymysql
+from dateutil.parser import parse
 
 from config import Config
 
@@ -18,29 +18,28 @@ SQL = "INSERT INTO page (`rss`, `page_id`, `title`, `link`, `publish_date`) " \
 
 def parser(rss_id, text):
     """解析内容"""
-    date_default = datetime.utcnow()
     feed = feedparser.parse(text)
     data = []
     for item in feed.entries:
-        struct_time = item.get('published_parsed', None)
-        item_id = item.get('id', '')
         item_link = item.get('link', '')
         item_title = item.get('title', '')
         # item_ID 是 主键，不能缺失，如果找不到，就用其他的代替
-        if not item_id:
-            item_id = item_link
-        if not item_id:
-            item_id = item_title
+        for key in ['id', 'guid', 'link']:
+            item_id = item.get(key, '')
+            if item_id:
+                break
         if not item_id:
             continue
-        if not struct_time:
-            struct_time = item.get('updated_parsed', None)
-        pub_date = date_default
-        if struct_time:
+        pub_date = datetime.utcnow() - timedelta(days=7)
+        for key in ['published_parsed', 'pubDate', 'published', 'updated_parsed', 'updated']:
+            struct_time = item.get(key, None)
+            if not struct_time:
+                continue
             try:
-                pub_date = datetime.fromtimestamp(mktime(struct_time))
+                pub_date = parse(struct_time)
+                break
             except Exception:
-                print(item)
+                pass
         data.append([
             rss_id,
             item_id,
@@ -58,10 +57,10 @@ async def fetch(rss, semaphore, pool):
         async with aiohttp.ClientSession() as session:
             try:
                 logging.info('start: {}'.format(rss_url))
-                async with session.get(rss_url, timeout=20) as response:
+                async with session.get(rss_url, timeout=20000) as response:
                     content = await response.text()
-            except Exception as _:
-                logging.warning('timeout: {}'.format(rss_url))
+            except Exception as e:
+                logging.warning('exception: {}'.format(e))
                 return rss_url, []
             data = parser(rss_id, content)
             async with pool.acquire() as conn:
@@ -84,8 +83,8 @@ async def run(loop, rss_list, conf):
         print(res.result())
     for res in pending:
         print(res)
-
-    pool.close()
+    await asyncio.sleep(100000)
+    await pool.close()
     await pool.wait_closed()
 
 
