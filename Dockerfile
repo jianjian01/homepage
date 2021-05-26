@@ -1,19 +1,16 @@
-FROM python:3.7
+FROM python:3.9
 
-RUN apt update && apt upgrade -y && apt install -y pipenv
+RUN apt update && apt upgrade -y && pip install poetry
 
 ENV mode production
 ENV PYTHONPATH "${PYTHONPATH}:/app"
 RUN mkdir -p /static/site/
 WORKDIR /app
 
-COPY Pipfile* ./
+COPY poetry.lock ./
+COPY pyproject.toml ./
 
-RUN pip install -U  pip && \
-    pipenv install --system --deploy --ignore-pipfile
-RUN pip install Babel && \
-    pip install -e git+https://github.com/kurtmckee/feedparser.git@6.0.0b1#egg=feedparser --no-cache-dir --src /pypi/src
-
+RUN poetry config virtualenvs.create false  && poetry install --no-dev --no-interaction
 
 ADD . .
 

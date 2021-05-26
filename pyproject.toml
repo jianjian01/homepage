@@ -24,6 +24,7 @@ flask-redis = "^0.4.0"
 pony = "^0.7.14"
 Flask-WTF = "^0.15.0"
 python-dateutil = "^2.8.1"
+Babel = "^2.9.1"
 
 [tool.poetry.dev-dependencies]
 
