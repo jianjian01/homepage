@@ -93,9 +93,11 @@ class UserSite(db.Entity):
 class RSS(db.Entity):
     """rss 订阅信息"""
     id = PrimaryKey(int, auto=True)
+    name = Required(str, nullable=True)
     link = Required(str, unique=True)
     page = Set(lambda: Page)
     user_rss = Set(lambda: UserRSS)
+    mark = Required(bool, default=False)
 
 
 class Page(db.Entity):

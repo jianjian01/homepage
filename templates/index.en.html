@@ -590,7 +590,24 @@
 
         </div>
         <div role="feed" class="rss">
+            <div class="container">
+                <hr class="rss-hr">
 
+                <div class="row">
+
+                    {% for p in pages %}
+                        <div class=" col-sm-12 col-lg-12 rss-item" data-rss-id="{{ p[4] }}" data-page-id="{{ p[0] }}">
+                            <p>
+                                <a class="rss-site-name">[{{ p[-1] }}]</a>
+                                <a role="link" class="rss-page-link" target="_blank"
+                                   href="{{ p[2] |truncate(200) }}">{{ p[1] }} &nbsp;</a>
+
+                                <small class="text-muted">{{ p[3] |string| truncate(10, False, '', 0) }}</small>
+                            </p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
     </main>
 {% endblock %}

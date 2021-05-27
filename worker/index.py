@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from flask import render_template, Blueprint, request
 from pony.orm import select
 
-from db import Page, UserRSS
+from db import Page, UserRSS, RSS
 from util.tool import check_user, select_website, redirect_home, guess_locale
 
 page_bp = Blueprint('page', __name__, template_folder='templates')
@@ -15,9 +15,9 @@ page_bp.before_request(check_user)
 def index():
     """根据用户是否登录判断返回页面"""
     cl = guess_locale()
+    last_year = datetime.utcnow() - timedelta(days=365)
     if hasattr(request, 'user') and request.user:
         sites, categories = select_website()
-        last_year = datetime.utcnow() - timedelta(days=365)
         pages = sorted(select(
             (p.page_id, p.title, p.link, p.publish_date, p.rss, ur.name) for ur in UserRSS for p in Page
             if ur.user == request.user and not ur.delete
@@ -25,9 +25,14 @@ def index():
         ), key=lambda x: x[3], reverse=True)
         return render_template('index.html', sites=sites, categories=categories, pages=pages, locale=cl)
 
+    pages = sorted(select(
+        (p.page_id, p.title, p.link, p.publish_date, p.rss, r.name) for p in Page for r in RSS
+        if r.mark == 1 and p.publish_date > last_year and p.rss == r
+    ), key=lambda x: x[3], reverse=True)
+
     if cl == 'zh':
-        return render_template('index.zh.html')
-    return render_template('index.en.html')
+        return render_template('index.zh.html', pages=pages)
+    return render_template('index.en.html', pages=pages)
 
 
 @page_bp.route('/<cl>/shopping', methods=['GET'])
