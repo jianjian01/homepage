@@ -14,7 +14,7 @@ services:
   index_rss:
     container_name: index_rss
     image: myweb
-    command: python task/index_rss.py
+    command: python task/new_index_rss.py
     working_dir: /app
     depends_on:
       - web
