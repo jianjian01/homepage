@@ -15,7 +15,7 @@ page_bp.before_request(check_user)
 def index():
     """根据用户是否登录判断返回页面"""
     cl = guess_locale()
-    last_year = datetime.utcnow() - timedelta(days=365)
+    last_year = datetime.utcnow() - timedelta(days=90)
     if hasattr(request, 'user') and request.user:
         sites, categories = select_website()
         pages = sorted(select(

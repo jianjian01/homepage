@@ -2,18 +2,27 @@ import logging
 import time
 from datetime import datetime, timedelta
 
+import cchardet
 import feedparser
 import pymysql
+import pytz
 import requests
+import urllib3
 from dateutil.parser import parse
 
 from config import Config
 
+urllib3.disable_warnings()
+utc = pytz.UTC
 
+logging.getLogger().setLevel(logging.DEBUG)
+
+logging.info("start")
 def parser(rss_id, text):
     """解析内容"""
     feed = feedparser.parse(text)
     data = []
+    old_date = datetime.today() - timedelta(days=30)
     for item in feed.entries:
         item_link = item.get('link', '')
         item_title = item.get('title', '')
@@ -34,6 +43,8 @@ def parser(rss_id, text):
                 break
             except Exception:
                 pass
+        if pub_date.replace(tzinfo=None) < old_date.replace(tzinfo=None):
+            continue
         data.append([
             rss_id,
             item_id[:255],
@@ -63,19 +74,26 @@ def main():
     with conn.cursor() as cursor:
         cursor.execute("select id, link from rss order by rand()")
         rows = cursor.fetchall()
+    results = []
     for rss_id, rss_url in rows:
-        a = time.time()
-        response = session.get(rss_url, timeout=2000)
-        content = response.text
-        data = parser(rss_id, content)
-        b = time.time()
-        print(b - a)
-        print(data)
-        with conn.cursor() as cursor:
-            cursor.executemany(SQL, data)
-        conn.commit()
-        c = time.time()
-        print(c - b)
+        try:
+            response = session.get(rss_url, timeout=2000, verify=False)
+        except Exception:
+            continue
+        coding = cchardet.detect(response.content)['encoding']
+        data = ''
+        if coding:
+            try:
+                data = parser(rss_id, response.content.decode(coding))
+            except Exception:
+                pass
+        if not data:
+            data = parser(rss_id, response.text)
+        if data:
+            results.extend(data)
+    with conn.cursor() as cursor:
+        cursor.executemany(SQL, results)
+    conn.commit()
 
 
 if __name__ == '__main__':
@@ -87,4 +105,4 @@ if __name__ == '__main__':
         duration = end - start
         if duration < timedelta(hours=0.5):
             logging.info("sleep for a while")
-            time.sleep(600 - duration.seconds)
+            time.sleep(3600)

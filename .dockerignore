@@ -1,0 +1,16 @@
+.git
+.env
+.env.*
+.ssh
+.venv
+__pycache__
+**/__pycache__
+*.pyc
+.DS_Store
+data
+db
+logs
+nginx/cloudflare
+nginx/*.key
+nginx/*.pem
+nginx/*.before-*

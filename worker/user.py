@@ -5,7 +5,6 @@ from urllib.parse import urlparse
 
 from flask import session, redirect, Blueprint, request, render_template, jsonify, current_app
 from pony.orm import commit, select, db_session
-from qiniu import put_file, Auth
 
 from db import Category, UserSite, UserSiteStatus, RSS, UserRSS
 from util.tool import check_user, login_require, select_website, query_icon, redirect_home, download_icon_job, randstr
@@ -171,10 +170,6 @@ def update_icon():
         return ''
 
     key = 'site/{}.png'.format(filename)
-    q = Auth(conf['QINIU_ACCESS_KEY'], conf['QINIU_ACCESS_SECRET'])
-    token = q.upload_token(conf['QINIU_BUCKET'], key, 60)
-    ret, info = put_file(token, key, filepath)
-    logging.info(info)
     site = UserSite.select(
         lambda x: x.id == site_id and x.user == request.user and x.status == UserSiteStatus.normal).first()
     if not site:
@@ -208,7 +203,7 @@ def user_rss_post(u_id: int):
         return jsonify({'status': -1})
     rss = RSS.select(lambda x: x.link == url).first()
     if not rss:
-        rss = RSS(link=url)
+        rss = RSS(link=url, name=name)
     ur = UserRSS(user=request.user, rss=rss, name=name)
     commit()
     logging.info('user {} post rss {}'.format(u_id, ur.id))

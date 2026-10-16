@@ -1,6 +1,6 @@
 FROM python:3.9
 
-RUN apt update && apt upgrade -y && pip install poetry
+RUN apt update && apt upgrade -y && pip install -U "poetry<2" -i https://mirrors.bfsu.edu.cn/pypi/web/simple
 
 ENV mode production
 ENV PYTHONPATH "${PYTHONPATH}:/app"
@@ -11,7 +11,7 @@ COPY poetry.lock ./
 COPY pyproject.toml ./
 
 RUN poetry config virtualenvs.create false  && poetry install --no-dev --no-interaction
-
+RUN pip install -U cchardet -i https://mirrors.bfsu.edu.cn/pypi/web/simple
 ADD . .
 
 RUN pybabel compile -d /app/translations

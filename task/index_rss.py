@@ -40,6 +40,7 @@ def parser(rss_id, text):
                 break
             except Exception:
                 pass
+        logging.info(tiem.link)
         data.append([
             rss_id,
             item_id,
@@ -65,6 +66,7 @@ async def fetch(rss, semaphore, pool):
             data = parser(rss_id, content)
             async with pool.acquire() as conn:
                 async with conn.cursor() as cur:
+                    # logging.info(data)
                     count = await cur.executemany(SQL, data)
                     logging.info("{} insert {} row".format(rss_url, count))
                 await conn.commit()
@@ -83,7 +85,7 @@ async def run(loop, rss_list, conf):
         print(res.result())
     for res in pending:
         print(res)
-    await asyncio.sleep(100000)
+    await asyncio.sleep(600)
     await pool.close()
     await pool.wait_closed()
 
@@ -117,4 +119,4 @@ if __name__ == '__main__':
         duration = end - start
         if duration < timedelta(hours=0.5):
             logging.info("sleep for a while")
-            time.sleep(600 - duration.seconds)
+            time.sleep(1200)

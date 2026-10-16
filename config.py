@@ -11,7 +11,7 @@ class Base:
     SESSION_USER = '_u'
     SESSION_SOURCE = '_o'
     SESSION_CREATE_TIME = '_t'
-    RSS_REQUEST_NUM = 50  # 定时任务 index rss 异步执行数量
+    RSS_REQUEST_NUM = 1  # 定时任务 index rss 异步执行数量
     I18N_LANGUAGES = ['zh', 'ja', 'en']
     BABEL_TRANSLATION_DIRECTORIES = './translations'
     REDIS_DOWNLOAD_ICON_CHANNEL = 'myweb:download:icon'
@@ -20,7 +20,7 @@ class Base:
 class Dev(Base):
     """开发环境"""
     DEBUG = True
-    SECRET_KEY = 'testing'  # os.urandom(16)
+    SECRET_KEY = os.getenv("DEV_SECRET_KEY", "")  # os.urandom(16)
     STATIC_DOMAIN = "127.0.0.1:5000/static"
     ICON_DIR = '/Users/jianjian/github/jianjian01/dian-xin/static/site/'
 
@@ -29,18 +29,18 @@ class Dev(Base):
         'host': '127.0.0.1',
         'port': 29898,
         'user': 'root',
-        'password': '',
+        'password': os.getenv("DEV_MYSQL_PASSWORD", ""),
         'db': 'chidianxin',
         'autocommit': 'True',
     }
     REDIS_URL = 'redis://127.0.0.1:29899/0'
     RANDOM_KEY = os.urandom(16)
 
-    GITHUB_CLIENT_ID = ''
-    GITHUB_CLIENT_SECRET = ''
+    GITHUB_CLIENT_ID = os.getenv("DEV_GITHUB_CLIENT_ID", "")
+    GITHUB_CLIENT_SECRET = os.getenv("DEV_GITHUB_CLIENT_SECRET", "")
     GITHUB_REDIRECT_URI = 'http://127.0.0.1:5000/auth/callback/github'
-    WEIBO_APP_KEY = ''
-    WEIBO_APP_SECRET = ''
+    WEIBO_APP_KEY = os.getenv("DEV_WEIBO_APP_KEY", "")
+    WEIBO_APP_SECRET = os.getenv("DEV_WEIBO_APP_SECRET", "")
     WEIBO_REDIRECT_URI = 'http://127.0.0.1:5000/auth/callback/weibo'
     WEIBO_CANCEL_URI = 'http://127.0.0.1:5000/auth/callback/weibo/cancel'
 
@@ -48,16 +48,16 @@ class Dev(Base):
 class Prod(Base):
     """正式环境"""
     DEBUG = False
-
-    SESSION_COOKIE_DOMAIN = 'myweb100.com'
+    SESSION_COOKIE_DOMAIN = 'dooest.com'
     SESSION_COOKIE_HTTPONLY = True
     SESSION_COOKIE_SECURE = True
     SESSION_REFRESH_EACH_REQUEST = True
     SESSION_COOKIE_SAMESITE = "Lax"
-    SECRET_KEY = ''
+    SECRET_KEY = os.getenv("SECRET_KEY", "")
     PREFERRED_URL_SCHEME = "https"
-    SERVER_NAME = 'myweb100.com'
+    SERVER_NAME = 'dooest.com'
     STATIC_DOMAIN = "myweb.chidian.xin"
+    STATIC_DOMAIN = "dooest.com"
     ICON_DIR = '/static/site/'
 
     PONY = {
@@ -65,24 +65,24 @@ class Prod(Base):
         'host': 'mysql',
         'port': 3306,
         'user': 'myweb',
-        'password': '',
+        'password': os.getenv("MYSQL_PASSWORD", ""),
         'db': 'myweb',
         'autocommit': 'True',
     }
     REDIS_URL = 'redis://@redis:6379/1'
 
-    GITHUB_CLIENT_ID = ''
-    GITHUB_CLIENT_SECRET = ''
-    GITHUB_REDIRECT_URI = 'https://myweb100.com/auth/callback/github'
-    WEIBO_APP_KEY = ''
-    WEIBO_APP_SECRET = ''
+    GITHUB_CLIENT_ID = os.getenv("GITHUB_CLIENT_ID", "")
+    GITHUB_CLIENT_SECRET = os.getenv("GITHUB_CLIENT_SECRET", "")
+    GITHUB_REDIRECT_URI = 'https://dooest.com/auth/callback/github'
+    WEIBO_APP_KEY = os.getenv("WEIBO_APP_KEY", "")
+    WEIBO_APP_SECRET = os.getenv("WEIBO_APP_SECRET", "")
     WEIBO_REDIRECT_URI = 'https://myweb100.com/auth/callback/weibo'
     WEIBO_CANCEL_URI = 'https://myweb100.com/auth/callback/weibo/cancel'
-    GOOGLE_CLIENT_ID = ''
-    GOOGLE_CLIENT_SECRET = ''
+    GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID", "")
+    GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET", "")
     GOOGLE_REDIRECT_URI = 'https://myweb100.com/auth/callback/google'
-    QINIU_ACCESS_KEY = ''
-    QINIU_ACCESS_SECRET = ''
+    QINIU_ACCESS_KEY = os.getenv("QINIU_ACCESS_KEY", "")
+    QINIU_ACCESS_SECRET = os.getenv("QINIU_ACCESS_SECRET", "")
     QINIU_BUCKET = 'myweb100com'
 
 
@@ -95,7 +95,7 @@ if mode == 'production':
 else:
     set_sql_debug()
     Config = Dev
-
+print(mode)
 
 def set_log():
     fmt = "[%(asctime)-15s %(levelname)s %(filename)s:%(lineno)d] %(message)s"

@@ -7,7 +7,6 @@ from config import Config
 
 db = Database()
 
-set_sql_debug(True)
 
 
 class UserStatus:

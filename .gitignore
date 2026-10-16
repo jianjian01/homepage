@@ -133,3 +133,14 @@ static/site/
 __pycache__
 logs/
 .DS_Store
+
+# Deployment state and credentials
+.env.*
+!.env.example
+.ssh/
+data/
+db/*.sql*
+nginx/cloudflare/
+nginx/*.key
+nginx/*.pem
+nginx/*.before-*
