@@ -71,6 +71,11 @@ function delete_bookmark(event) {
     bookmark_request('DELETE', '/bookmarks/' + item.dataset.id, new FormData(), refresh);
 }
 
+function retry_bookmark_ai(event) {
+    let item = event.target.closest('.bookmark-item');
+    bookmark_request('POST', '/bookmarks/' + item.dataset.id + '/ai', new FormData(), refresh);
+}
+
 document.getElementById('btn-add-bookmark').addEventListener('click', add_bookmark);
 document.getElementById('bookmark-form').addEventListener('submit', save_bookmark);
 for (let button of document.getElementsByClassName('edit-bookmark')) {
@@ -78,4 +83,7 @@ for (let button of document.getElementsByClassName('edit-bookmark')) {
 }
 for (let button of document.getElementsByClassName('delete-bookmark')) {
     button.addEventListener('click', delete_bookmark);
+}
+for (let button of document.getElementsByClassName('retry-bookmark-ai')) {
+    button.addEventListener('click', retry_bookmark_ai);
 }

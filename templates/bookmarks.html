@@ -3,23 +3,24 @@
      data-confirm-delete="{{ _('confirm delete bookmark') }}"
      data-request-failed="{{ _('request failed') }}">
     <div class="bookmark-toolbar">
-        <h4>{{ _('bookmarks') }} <span class="bookmark-count">{{ total }}</span></h4>
+        <details class="bookmark-search-disclosure" {% if query_string %}open{% endif %}>
+            <summary class="btn btn-outline-secondary btn-sm">{{ _('search') }}</summary>
+            <form method="get" action="{{ url_for('page.index') }}" class="bookmark-search">
+                <input type="hidden" name="view" value="bookmarks">
+                {% if selected_tag %}<input type="hidden" name="tag" value="{{ selected_tag.id }}">{% endif %}
+                <label class="sr-only" for="bookmark-search">{{ _('search') }}</label>
+                <input id="bookmark-search" class="form-control form-control-sm" name="q" type="search"
+                       value="{{ query_string }}" maxlength="100" placeholder="{{ _('search bookmarks') }}">
+                <button type="submit" class="btn btn-outline-secondary btn-sm">{{ _('search') }}</button>
+                {% if query_string or selected_tag %}
+                    <a class="btn btn-link btn-sm" href="{{ url_for('page.index', view='bookmarks') }}">{{ _('clear') }}</a>
+                {% endif %}
+            </form>
+        </details>
         <button type="button" class="btn btn-outline-primary btn-sm" id="btn-add-bookmark">
             + {{ _('add bookmark') }}
         </button>
     </div>
-
-    <form method="get" action="{{ url_for('page.index') }}" class="bookmark-search">
-        <input type="hidden" name="view" value="bookmarks">
-        {% if selected_tag %}<input type="hidden" name="tag" value="{{ selected_tag.id }}">{% endif %}
-        <label class="sr-only" for="bookmark-search">{{ _('search') }}</label>
-        <input id="bookmark-search" class="form-control form-control-sm" name="q" type="search"
-               value="{{ query_string }}" maxlength="100" placeholder="{{ _('search bookmarks') }}">
-        <button type="submit" class="btn btn-outline-secondary btn-sm">{{ _('search') }}</button>
-        {% if query_string or selected_tag %}
-            <a class="btn btn-link btn-sm" href="{{ url_for('page.index', view='bookmarks') }}">{{ _('clear') }}</a>
-        {% endif %}
-    </form>
 
     <div class="bookmark-tag-filters">
         <a class="btn btn-outline-secondary btn-sm {% if not selected_tag %}active{% endif %}"
@@ -53,34 +54,58 @@
     <div class="bookmark-list">
         {% for bookmark in bookmarks %}
             {% set bookmark_tags = bookmark.tags | sort(attribute='name') %}
-            <article class="bookmark-item" data-id="{{ bookmark.id }}"
-                     data-title="{{ bookmark.title }}" data-url="{{ bookmark.url }}"
-                     data-tags="{{ bookmark_tags | map(attribute='name') | join(', ') }}">
-                <a class="bookmark-name" href="{{ bookmark.url }}" target="_blank"
-                   rel="noopener noreferrer">{{ bookmark.title }}</a>
-                <div class="bookmark-meta">
-                    <span class="bookmark-tags">
-                        {% for tag in bookmark_tags[:3] %}
-                            <a class="bookmark-tag"
-                               href="{{ url_for('page.index', view='bookmarks', tag=tag.id, q=query_string) }}">#{{ tag.name }}</a>
-                        {% endfor %}
-                        {% if bookmark_tags | length > 3 %}
-                            <span class="bookmark-tag-more">+{{ bookmark_tags | length - 3 }}</span>
+            <div class="bookmark-entry">
+                <article class="bookmark-item" data-id="{{ bookmark.id }}"
+                         data-title="{{ bookmark.title }}" data-url="{{ bookmark.url }}"
+                         data-tags="{{ bookmark_tags | map(attribute='name') | join(', ') }}">
+                    <a class="bookmark-name" href="{{ bookmark.url }}" target="_blank"
+                       rel="noopener noreferrer">{{ bookmark.title }}</a>
+                    {% if bookmark.ai_status in (ai_status.pending, ai_status.processing) %}
+                        <span class="bookmark-ai-status">{{ _('ai processing') }}</span>
+                    {% elif bookmark.ai_status == ai_status.failed %}
+                        <span class="bookmark-ai-status text-danger" title="{{ bookmark.ai_error }}">{{ _('ai failed') }}</span>
+                    {% endif %}
+                    <div class="bookmark-meta">
+                        {% if bookmark.summary %}
+                            <button type="button" class="bookmark-summary-toggle" data-toggle="collapse"
+                                    data-target="#bookmark-summary-{{ bookmark.id }}" aria-expanded="false"
+                                    aria-controls="bookmark-summary-{{ bookmark.id }}">{{ _('summary') }}</button>
                         {% endif %}
-                    </span>
-                    <time class="bookmark-date" datetime="{{ bookmark.create_time.isoformat() }}">
-                        {{ bookmark.create_time.strftime('%Y-%m-%d') }}
-                    </time>
-                </div>
-                <div class="bookmark-actions dropdown">
-                    <button class="bookmark-more" type="button" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false" aria-label="{{ _('action') }}">⋯</button>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <button type="button" class="dropdown-item edit-bookmark">{{ _('update') }}</button>
-                        <button type="button" class="dropdown-item delete-bookmark">{{ _('delete') }}</button>
+                        <span class="bookmark-tags">
+                            {% for tag in bookmark_tags[:3] %}
+                                <a class="bookmark-tag"
+                                   href="{{ url_for('page.index', view='bookmarks', tag=tag.id, q=query_string) }}">#{{ tag.name }}</a>
+                            {% endfor %}
+                            {% if bookmark_tags | length > 3 %}
+                                <span class="bookmark-tag-more">+{{ bookmark_tags | length - 3 }}</span>
+                            {% endif %}
+                        </span>
+                        <time class="bookmark-date" datetime="{{ bookmark.create_time.isoformat() }}">
+                            {{ bookmark.create_time.strftime('%Y-%m-%d') }}
+                        </time>
                     </div>
-                </div>
-            </article>
+                    <div class="bookmark-actions dropdown">
+                        <button class="bookmark-more" type="button" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false" aria-label="{{ _('action') }}">⋯</button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            {% if bookmark.ai_status == ai_status.not_configured %}
+                                <a class="dropdown-item" href="/user/{{ request.user.u_id }}/ai">{{ _('configure ai') }}</a>
+                            {% elif bookmark.ai_status not in (ai_status.pending, ai_status.processing) %}
+                                <button type="button" class="dropdown-item retry-bookmark-ai">
+                                    {{ _('retry ai') if bookmark.ai_status == ai_status.failed else _('ai organize') }}
+                                </button>
+                            {% endif %}
+                            <button type="button" class="dropdown-item edit-bookmark">{{ _('update') }}</button>
+                            <button type="button" class="dropdown-item delete-bookmark">{{ _('delete') }}</button>
+                        </div>
+                    </div>
+                </article>
+                {% if bookmark.summary %}
+                    <div class="collapse bookmark-summary" id="bookmark-summary-{{ bookmark.id }}">
+                        <p>{{ bookmark.summary }}</p>
+                    </div>
+                {% endif %}
+            </div>
         {% else %}
             <div class="bookmark-empty">{{ _('no bookmarks') }}</div>
         {% endfor %}

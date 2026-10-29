@@ -36,6 +36,7 @@ class User(db.Entity):
     user_rss = Set(lambda: UserRSS)
     bookmarks = Set(lambda: Bookmark)
     tags = Set(lambda: Tag)
+    ai_config = Optional(lambda: UserAIConfig)
 
     status = Required(int, default=UserStatus.normal)
     create_time = Required(datetime, default=datetime.utcnow)
@@ -52,6 +53,17 @@ class User(db.Entity):
             n_id = random.randint(User.id_min, User.id_max)
             if not User.select(lambda c: c.u_id == n_id):
                 return n_id
+
+
+class UserAIConfig(db.Entity):
+    """用户收藏 AI 配置"""
+    id = PrimaryKey(int, auto=True)
+    user = Required(User, unique=True)
+    provider = Required(str, 20)
+    model = Required(str, 100)
+    api_key = Required(LongStr)
+    create_time = Required(datetime, default=datetime.utcnow)
+    update_time = Required(datetime, default=datetime.utcnow)
 
 
 class Site(db.Entity):
@@ -129,6 +141,16 @@ class BookmarkStatus:
     delete = 0
 
 
+class BookmarkAIStatus:
+    idle = 0
+    pending = 1
+    processing = 2
+    success = 3
+    no_content = 4
+    not_configured = 5
+    failed = 6
+
+
 class Bookmark(db.Entity):
     """用户收藏的网址"""
     id = PrimaryKey(int, auto=True)
@@ -139,6 +161,10 @@ class Bookmark(db.Entity):
     update_time = Required(datetime, default=datetime.utcnow)
     status = Required(int, default=BookmarkStatus.normal)
     delete_time = Optional(datetime)
+    summary = Optional(LongStr)
+    ai_status = Required(int, default=BookmarkAIStatus.idle)
+    ai_error = Optional(str, 255)
+    ai_update_time = Optional(datetime)
     tags = Set(lambda: Tag)
 
 

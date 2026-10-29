@@ -2,7 +2,7 @@
 
 {% block css %}
     {% if request.user and view == 'bookmarks' %}
-        <link rel="stylesheet" href="{{ static_url('css/bookmark.css') }}?v=20261029">
+        <link rel="stylesheet" href="{{ static_url('css/bookmark.css') }}?v=20261029-ai-ui">
     {% endif %}
 {% endblock %}
 
@@ -89,12 +89,12 @@
                 {% if request.user %}
                     <ul class="nav nav-tabs mt-4 mb-3">
                         <li class="nav-item">
-                            <a class="nav-link {% if view == 'bookmarks' %}active{% endif %}"
-                               href="{{ url_for('page.index', view='bookmarks') }}#home-content">{{ _('bookmarks') }}</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link {% if view == 'rss' %}active{% endif %}"
                                href="{{ url_for('page.index', view='rss') }}#home-content">{{ _('rss feed') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if view == 'bookmarks' %}active{% endif %}"
+                               href="{{ url_for('page.index', view='bookmarks') }}#home-content">{{ _('bookmarks') }}</a>
                         </li>
                     </ul>
                 {% endif %}
@@ -127,7 +127,7 @@
 
 {% block script %}
     {% if request.user and view == 'bookmarks' %}
-        <script src="{{ static_url('js/bookmark.js') }}?v=20261029-2"></script>
+        <script src="{{ static_url('js/bookmark.js') }}?v=20261029-ai-ui-2"></script>
     {% endif %}
 {% endblock %}
 

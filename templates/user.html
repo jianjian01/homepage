@@ -15,6 +15,9 @@
                     <li class="{% if page=='website' %}active{% endif %}">
                         <a href="/user/{{ request.user.u_id }}/website">{{ _('web site') }}</a>
                     </li>
+                    <li class="{% if page=='ai' %}active{% endif %}">
+                        <a href="/user/{{ request.user.u_id }}/ai">{{ _('ai settings') }}</a>
+                    </li>
                     <li class="{% if page=='rss' %}active{% endif %}">
                         <a href="/user/{{ request.user.u_id }}/rss">{{ _('rss feed') }}</a>
                     </li>
@@ -200,6 +203,46 @@
                             </a>
                         </div>
                     </div>
+                {% elif page == 'ai' %}
+                    <div class="form-container" id="main-ai"
+                         data-request-failed="{{ _('request failed') }}"
+                         data-save-success="{{ _('settings saved') }}">
+                        <h4>{{ _('ai settings') }}</h4>
+                        <p class="text-muted">{{ _('ai settings description') }}</p>
+                        <form id="ai-config-form" action="/user/{{ request.user.u_id }}/ai" method="post">
+                            <div class="form-group row">
+                                <label for="ai-provider" class="col-sm-3 col-form-label text-right">{{ _('ai provider') }}</label>
+                                <div class="col-sm-9">
+                                    <select id="ai-provider" class="form-control" name="provider" required>
+                                        <option value="kimi" {% if not ai_config or ai_config.provider == 'kimi' %}selected{% endif %}>Kimi</option>
+                                        <option value="deepseek" {% if ai_config and ai_config.provider == 'deepseek' %}selected{% endif %}>DeepSeek</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="ai-model" class="col-sm-3 col-form-label text-right">{{ _('model name') }}</label>
+                                <div class="col-sm-9">
+                                    <input id="ai-model" class="form-control" name="model" type="text"
+                                           maxlength="100" value="{{ ai_config.model if ai_config else '' }}" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="ai-api-key" class="col-sm-3 col-form-label text-right">API Key</label>
+                                <div class="col-sm-9">
+                                    <input id="ai-api-key" class="form-control" name="api_key" type="password"
+                                           maxlength="512" autocomplete="new-password"
+                                           placeholder="{{ _('api key configured') if has_api_key else '' }}">
+                                    <small class="form-text text-muted">{{ _('api key help') }}</small>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-9 offset-sm-3">
+                                    <button type="submit" class="btn btn-outline-primary">{{ _('save') }}</button>
+                                    <span id="ai-config-status" class="ml-2 text-success" role="status"></span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 {% elif page == 'rss' %}
                     <div class="form-container" id="main-rss">
                         <div class="row justify-content-end">
@@ -259,6 +302,8 @@
         <script src="{{ static_url('js/user/category.js') }}"></script>
     {% elif page == 'website' %}
         <script src="{{ static_url('js/user/website.js') }}"></script>
+    {% elif page == 'ai' %}
+        <script src="{{ static_url('js/user/ai.js') }}"></script>
     {% elif page == 'rss' %}
         <script src="{{ static_url('js/user/rss.js') }}"></script>
     {% endif %}

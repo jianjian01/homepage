@@ -1,36 +1,18 @@
-import re
 from datetime import datetime
 from urllib.parse import urlparse
 
 from flask import Blueprint, jsonify, redirect, request, url_for
 from pony.orm import commit, count, db_session, desc, select
 
-from db import Bookmark, BookmarkStatus, Tag
+from db import Bookmark, BookmarkAIStatus, BookmarkStatus, Tag
+from util.bookmark import get_or_create_tags, parse_tag_names
+from util.bookmark_job import enqueue_bookmark_ai
 from util.tool import check_user, login_require
 
 bookmark_bp = Blueprint('bookmark', __name__, template_folder='templates')
 bookmark_bp.before_request(check_user)
 
 PER_PAGE = 20
-
-
-def parse_tag_names(value):
-    names = []
-    seen = set()
-    for item in re.split(r'[,，]', value):
-        name = item.strip()
-        if not name:
-            continue
-        if len(name) > 30:
-            raise ValueError('Each tag must be at most 30 characters.')
-        name_key = name.casefold()
-        if name_key in seen:
-            continue
-        seen.add(name_key)
-        names.append((name, name_key))
-    if len(names) > 10:
-        raise ValueError('A bookmark can have at most 10 tags.')
-    return names
 
 
 def validate_bookmark_form():
@@ -50,16 +32,6 @@ def validate_bookmark_form():
     except ValueError as exc:
         return None, None, None, (jsonify({'status': -1, 'message': str(exc)}), 400)
     return title, url, tag_names, None
-
-
-def get_or_create_tags(tag_names):
-    name_keys = [name_key for _, name_key in tag_names]
-    existing = select(t for t in Tag if t.user == request.user and t.name_key in name_keys)[:] if name_keys else []
-    tags_by_key = {tag.name_key: tag for tag in existing}
-    for name, name_key in tag_names:
-        if name_key not in tags_by_key:
-            tags_by_key[name_key] = Tag(name=name, name_key=name_key, user=request.user)
-    return [tags_by_key[name_key] for _, name_key in tag_names]
 
 
 def bookmark_context():
@@ -95,6 +67,7 @@ def bookmark_context():
         'tags': tags,
         'selected_tag': selected_tag,
         'query_string': query_string,
+        'ai_status': BookmarkAIStatus,
     }
 
 
@@ -114,9 +87,10 @@ def create():
     if error:
         return error
     bookmark = Bookmark(title=title, url=url, user=request.user)
-    bookmark.tags = get_or_create_tags(tag_names)
+    bookmark.tags = get_or_create_tags(request.user, tag_names)
     commit()
-    return jsonify({'status': 1, 'id': bookmark.id}), 201
+    enqueue_bookmark_ai(bookmark)
+    return jsonify({'status': 1, 'id': bookmark.id, 'ai_status': bookmark.ai_status}), 201
 
 
 @bookmark_bp.route('/<int:bookmark_id>', methods=['PUT'])
@@ -130,12 +104,31 @@ def update(bookmark_id):
         lambda b: b.id == bookmark_id and b.user == request.user and b.status == BookmarkStatus.normal).first()
     if not bookmark:
         return jsonify({'status': -1, 'message': 'Bookmark not found.'}), 404
+    url_changed = bookmark.url != url
     bookmark.title = title
     bookmark.url = url
-    bookmark.tags = get_or_create_tags(tag_names)
+    bookmark.tags = get_or_create_tags(request.user, tag_names)
     bookmark.update_time = datetime.utcnow()
+    if url_changed:
+        bookmark.summary = ''
+        bookmark.ai_status = BookmarkAIStatus.idle
     commit()
-    return jsonify({'status': 1, 'id': bookmark.id})
+    if url_changed:
+        enqueue_bookmark_ai(bookmark)
+    return jsonify({'status': 1, 'id': bookmark.id, 'ai_status': bookmark.ai_status})
+
+
+@bookmark_bp.route('/<int:bookmark_id>/ai', methods=['POST'])
+@login_require
+@db_session
+def retry_ai(bookmark_id):
+    bookmark = Bookmark.select(
+        lambda b: b.id == bookmark_id and b.user == request.user and b.status == BookmarkStatus.normal).first()
+    if not bookmark:
+        return jsonify({'status': -1, 'message': 'Bookmark not found.'}), 404
+    if bookmark.ai_status not in (BookmarkAIStatus.pending, BookmarkAIStatus.processing):
+        enqueue_bookmark_ai(bookmark)
+    return jsonify({'status': 1, 'id': bookmark.id, 'ai_status': bookmark.ai_status})
 
 
 @bookmark_bp.route('/<int:bookmark_id>', methods=['DELETE'])

@@ -15,6 +15,8 @@ class Base:
     I18N_LANGUAGES = ['zh', 'ja', 'en']
     BABEL_TRANSLATION_DIRECTORIES = './translations'
     REDIS_DOWNLOAD_ICON_CHANNEL = 'myweb:download:icon'
+    REDIS_BOOKMARK_AI_QUEUE = 'myweb:bookmark:ai'
+    AI_CONFIG_ENCRYPTION_KEY = os.getenv('AI_CONFIG_ENCRYPTION_KEY', '')
 
 
 class Dev(Base):

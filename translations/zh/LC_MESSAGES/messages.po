@@ -370,6 +370,45 @@ msgstr ""
 msgid "Not a valid time value"
 msgstr ""
 
+msgid "ai settings"
+msgstr "AI 设置"
+
+msgid "ai settings description"
+msgstr "为收藏网页生成摘要和标签；没有明确正文的工具或导航页面会自动跳过。"
+
+msgid "ai provider"
+msgstr "AI 服务商"
+
+msgid "model name"
+msgstr "模型名称"
+
+msgid "api key configured"
+msgstr "已配置，留空则不修改"
+
+msgid "api key help"
+msgstr "Key 加密保存且不会回显；切换服务商时需要重新填写。"
+
+msgid "settings saved"
+msgstr "设置已保存"
+
+msgid "ai processing"
+msgstr "AI 整理中"
+
+msgid "ai failed"
+msgstr "AI 处理失败"
+
+msgid "configure ai"
+msgstr "配置 AI"
+
+msgid "retry ai"
+msgstr "重试 AI 整理"
+
+msgid "ai organize"
+msgstr "AI 整理"
+
+msgid "summary"
+msgstr "摘要"
+
 #~ msgid "login platform"
 #~ msgstr "登录平台"
 

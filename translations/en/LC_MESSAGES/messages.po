@@ -373,6 +373,45 @@ msgstr ""
 msgid "Not a valid time value"
 msgstr ""
 
+msgid "ai settings"
+msgstr "AI Settings"
+
+msgid "ai settings description"
+msgstr "Generate summaries and tags for saved pages. Tools and navigation pages without clear content are skipped."
+
+msgid "ai provider"
+msgstr "AI Provider"
+
+msgid "model name"
+msgstr "Model Name"
+
+msgid "api key configured"
+msgstr "Configured; leave blank to keep the current key"
+
+msgid "api key help"
+msgstr "The key is encrypted and never displayed. Enter a new key when changing providers."
+
+msgid "settings saved"
+msgstr "Settings saved"
+
+msgid "ai processing"
+msgstr "AI processing"
+
+msgid "ai failed"
+msgstr "AI failed"
+
+msgid "configure ai"
+msgstr "Configure AI"
+
+msgid "retry ai"
+msgstr "Retry AI"
+
+msgid "ai organize"
+msgstr "Organize with AI"
+
+msgid "summary"
+msgstr "Summary"
+
 #~ msgid "login platform"
 #~ msgstr ""
 

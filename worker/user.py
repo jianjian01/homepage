@@ -6,12 +6,15 @@ from urllib.parse import urlparse
 from flask import session, redirect, Blueprint, request, render_template, jsonify, current_app
 from pony.orm import commit, select, db_session
 
-from db import Category, UserSite, UserSiteStatus, RSS, UserRSS
+from db import Category, UserAIConfig, UserSite, UserSiteStatus, RSS, UserRSS
+from util.ai_config import encrypt_api_key
 from util.tool import check_user, login_require, select_website, query_icon, redirect_home, download_icon_job, randstr
 
 user_bp = Blueprint('user', __name__, template_folder='templates')
 
 user_bp.before_request(check_user)
+
+AI_PROVIDERS = ('kimi', 'deepseek')
 
 
 @user_bp.route('/<int:u_id>', methods=['GET'])
@@ -22,6 +25,50 @@ def user_setting(u_id: int):
         logging.info("invalid request")
         return redirect('/')
     return render_template('user.html', page='info')
+
+
+@user_bp.route('/<int:u_id>/ai', methods=['GET'])
+@login_require
+def user_ai(u_id: int):
+    if u_id != request.user.u_id:
+        return redirect('/user/{}/ai'.format(request.user.u_id))
+    config = UserAIConfig.get(user=request.user)
+    return render_template('user.html', page='ai', ai_config=config,
+                           has_api_key=bool(config and config.api_key))
+
+
+@user_bp.route('/<int:u_id>/ai', methods=['PUT'])
+@login_require
+@db_session
+def user_ai_put(u_id: int):
+    if u_id != request.user.u_id:
+        return jsonify({'status': -1, 'message': 'Permission denied.'}), 403
+    provider = request.form.get('provider', '').strip().lower()
+    model = request.form.get('model', '').strip()
+    api_key = request.form.get('api_key', '').strip()
+    if provider not in AI_PROVIDERS:
+        return jsonify({'status': -1, 'message': 'Unsupported AI provider.'}), 400
+    if not model or len(model) > 100 or len(api_key) > 512:
+        return jsonify({'status': -1, 'message': 'Invalid model or API key.'}), 400
+    config = UserAIConfig.get(user=request.user)
+    if not api_key and (not config or config.provider != provider):
+        return jsonify({'status': -1, 'message': 'API key is required when changing provider.'}), 400
+    if api_key:
+        try:
+            config_key = current_app.config['AI_CONFIG_ENCRYPTION_KEY']
+            encrypted_key = encrypt_api_key(api_key, config_key)
+        except (TypeError, ValueError):
+            return jsonify({'status': -1, 'message': 'AI configuration encryption is unavailable.'}), 503
+    if not config:
+        config = UserAIConfig(user=request.user, provider=provider, model=model, api_key=encrypted_key)
+    else:
+        config.provider = provider
+        config.model = model
+        if api_key:
+            config.api_key = encrypted_key
+    config.update_time = datetime.utcnow()
+    commit()
+    return jsonify({'status': 1})
 
 
 @user_bp.route('/<int:u_id>/category', methods=['GET'])

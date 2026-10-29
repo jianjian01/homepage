@@ -73,6 +73,24 @@ services:
       - mysql
     restart: always
 
+  bookmark_ai:
+    image: myweb:latest
+    container_name: bookmark_ai
+    command: python -u task/bookmark_ai_job.py
+    working_dir: /app
+    env_file:
+      - .env
+    volumes:
+      - ./logs:/logs
+      - ${APP_SOURCE_DIR:-.}/config.py:/app/config.py
+    networks:
+      - dooest
+    depends_on:
+      - web
+      - redis
+      - mysql
+    restart: always
+
   nginx:
     image: nginx:stable
     container_name: nginx
