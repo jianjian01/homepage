@@ -5,6 +5,7 @@ from pony.orm import select
 
 from db import Page, UserRSS, RSS
 from util.tool import check_user, select_website, redirect_home, guess_locale
+from worker.bookmark import bookmark_context
 
 page_bp = Blueprint('page', __name__, template_folder='templates')
 
@@ -18,12 +19,21 @@ def index():
     last_year = datetime.utcnow() - timedelta(days=90)
     if hasattr(request, 'user') and request.user:
         sites, categories = select_website()
-        pages = sorted(select(
-            (p.page_id, p.title, p.link, p.publish_date, p.rss, ur.name) for ur in UserRSS for p in Page
-            if ur.user == request.user and not ur.delete
-            and p.publish_date > last_year and ur.rss == p.rss
-        ), key=lambda x: x[3], reverse=True)
-        return render_template('index.html', sites=sites, categories=categories, pages=pages, locale=cl)
+        view = request.args.get('view', 'rss')
+        if view not in ('rss', 'bookmarks'):
+            view = 'rss'
+        context = {}
+        if view == 'bookmarks':
+            pages = []
+            context = bookmark_context()
+        else:
+            pages = sorted(select(
+                (p.page_id, p.title, p.link, p.publish_date, p.rss, ur.name) for ur in UserRSS for p in Page
+                if ur.user == request.user and not ur.delete
+                and p.publish_date > last_year and ur.rss == p.rss
+            ), key=lambda x: x[3], reverse=True)
+        return render_template('index.html', sites=sites, categories=categories, pages=pages,
+                               locale=cl, view=view, **context)
 
     pages = sorted(select(
         (p.page_id, p.title, p.link, p.publish_date, p.rss, r.name) for p in Page for r in RSS

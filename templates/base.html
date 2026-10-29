@@ -74,6 +74,9 @@
                     <a href="/user/{{ user.u_id }}">{{ _('setup') }}</a>
                 </div>
                 <div class="dropdown-item">
+                    <a href="{{ url_for('bookmark.index') }}">{{ _('bookmarks') }}</a>
+                </div>
+                <div class="dropdown-item">
                     <a href="/user/logout">{{ _('exit') }}</a>
                 </div>
             </div>

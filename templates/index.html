@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 
-
+{% block css %}
+    {% if request.user and view == 'bookmarks' %}
+        <link rel="stylesheet" href="{{ static_url('css/bookmark.css') }}?v=20261029">
+    {% endif %}
+{% endblock %}
 
 {% block content %}
     <div>
@@ -80,29 +84,50 @@
                 {% endfor %}
             </div>
         </main>
-        <div role="feed" class="rss">
+        <div class="rss" id="home-content">
             <div class="container">
-                <hr class="rss-hr">
+                {% if request.user %}
+                    <ul class="nav nav-tabs mt-4 mb-3">
+                        <li class="nav-item">
+                            <a class="nav-link {% if view == 'bookmarks' %}active{% endif %}"
+                               href="{{ url_for('page.index', view='bookmarks') }}#home-content">{{ _('bookmarks') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if view == 'rss' %}active{% endif %}"
+                               href="{{ url_for('page.index', view='rss') }}#home-content">{{ _('rss feed') }}</a>
+                        </li>
+                    </ul>
+                {% endif %}
 
-                <div class="row">
-
-                    {% for p in pages %}
-                        <div class=" col-sm-12 col-lg-12 rss-item" data-rss-id="{{ p[4] }}" data-page-id="{{ p[0] }}">
-                            <p>
-                                <a class="rss-site-name">[{{ p[-1] }}]</a>
-                                <a role="link" class="rss-page-link" target="_blank"
-                                   href="{{ p[2] |truncate(200) }}">{{ p[1] }} &nbsp;</a>
-
-                                <small class="text-muted">{{ p[3] |string| truncate(10, False, '', 0) }}</small>
-                            </p>
+                {% if request.user and view == 'bookmarks' %}
+                    {% include 'bookmarks.html' %}
+                {% else %}
+                    <div role="feed">
+                        <div class="row">
+                            {% for p in pages %}
+                                <div class="col-sm-12 col-lg-12 rss-item" data-rss-id="{{ p[4] }}" data-page-id="{{ p[0] }}">
+                                    <p>
+                                        <a class="rss-site-name">[{{ p[-1] }}]</a>
+                                        <a role="link" class="rss-page-link" target="_blank"
+                                           href="{{ p[2] |truncate(200) }}">{{ p[1] }} &nbsp;</a>
+                                        <small class="text-muted">{{ p[3] |string| truncate(10, False, '', 0) }}</small>
+                                    </p>
+                                </div>
+                            {% endfor %}
                         </div>
-                    {% endfor %}
-                </div>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>
     <div class="context-menu" hidden>
 
     </div>
+{% endblock %}
+
+{% block script %}
+    {% if request.user and view == 'bookmarks' %}
+        <script src="{{ static_url('js/bookmark.js') }}?v=20261029-2"></script>
+    {% endif %}
 {% endblock %}
 

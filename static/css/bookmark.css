@@ -1,0 +1,164 @@
+.bookmark-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.bookmark-toolbar h4 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 500;
+}
+
+.bookmark-count {
+    margin-left: .35rem;
+    color: #6c757d;
+    font-size: .9rem;
+    font-weight: 400;
+}
+
+.bookmark-search {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    margin-bottom: 1rem;
+}
+
+.bookmark-search .form-control {
+    width: 100%;
+    max-width: 360px;
+}
+
+.bookmark-tag-filters {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: .4rem;
+    margin-bottom: 1rem;
+}
+
+.bookmark-list {
+    border-top: 1px solid #eef0f2;
+}
+
+.bookmark-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: .75rem 0;
+    border-bottom: 1px solid #eef0f2;
+}
+
+.bookmark-name {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    color: #2f3337;
+    font-weight: 500;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.bookmark-name:hover {
+    color: #0077cc;
+    text-decoration: none;
+}
+
+.bookmark-meta,
+.bookmark-tags {
+    display: flex;
+    align-items: center;
+}
+
+.bookmark-meta {
+    flex-shrink: 0;
+    gap: .65rem;
+}
+
+.bookmark-tags {
+    gap: .35rem;
+}
+
+.bookmark-tag {
+    padding: .15rem .35rem;
+    border-radius: 3px;
+    background: #f4f5f6;
+    color: #6c757d;
+    font-size: .75rem;
+    white-space: nowrap;
+}
+
+.bookmark-tag:hover {
+    color: #0077cc;
+    text-decoration: none;
+}
+
+.bookmark-tag-more,
+.bookmark-date {
+    color: #92979d;
+    font-size: .8rem;
+    white-space: nowrap;
+}
+
+.bookmark-actions {
+    flex-shrink: 0;
+    opacity: 0;
+    transition: opacity .15s ease-in-out;
+}
+
+.bookmark-item:hover .bookmark-actions,
+.bookmark-item:focus-within .bookmark-actions {
+    opacity: 1;
+}
+
+.bookmark-more {
+    padding: 0 .35rem;
+    border: 0;
+    background: transparent;
+    color: #6c757d;
+    font-size: 1.25rem;
+    line-height: 1;
+}
+
+.bookmark-empty {
+    padding: 2rem 0;
+    color: #6c757d;
+    text-align: center;
+}
+
+.bookmark-pagination {
+    margin-top: 1rem;
+}
+
+@media (hover: none) {
+    .bookmark-actions {
+        opacity: 1;
+    }
+}
+
+@media (max-width: 767px) {
+    .bookmark-item {
+        flex-wrap: wrap;
+        gap: .4rem;
+    }
+
+    .bookmark-name {
+        flex-basis: 100%;
+    }
+
+    .bookmark-meta {
+        flex: 1;
+        min-width: 0;
+        overflow: hidden;
+    }
+
+    .bookmark-tags {
+        overflow: hidden;
+    }
+
+    .bookmark-actions {
+        opacity: 1;
+    }
+}

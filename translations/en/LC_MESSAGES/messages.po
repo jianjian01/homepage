@@ -103,9 +103,89 @@ msgstr ""
 msgid "update"
 msgstr ""
 
-#: templates/user.html:155 templates/user.html:216
+#: templates/user.html:155 templates/user.html:216 templates/bookmarks.html
 msgid "url"
 msgstr ""
+
+#: templates/base.html templates/bookmarks.html
+msgid "bookmarks"
+msgstr "Bookmarks"
+
+#: templates/bookmarks.html
+msgid "title"
+msgstr "Title"
+
+#: templates/bookmarks.html
+msgid "create time"
+msgstr "Created at"
+
+#: templates/bookmarks.html
+msgid "update time"
+msgstr "Updated at"
+
+#: templates/bookmarks.html
+msgid "no bookmarks"
+msgstr "No bookmarks yet."
+
+#: templates/bookmarks.html
+msgid "previous"
+msgstr "Previous"
+
+#: templates/bookmarks.html
+msgid "next"
+msgstr "Next"
+
+#: templates/bookmarks.html
+msgid "save"
+msgstr "Save"
+
+#: templates/bookmarks.html
+msgid "cancel"
+msgstr "Cancel"
+
+#: templates/bookmarks.html
+msgid "confirm delete bookmark"
+msgstr "Delete this bookmark?"
+
+#: templates/bookmarks.html
+msgid "request failed"
+msgstr "Request failed. Please try again."
+
+#: templates/bookmarks.html
+msgid "tags"
+msgstr "Tags"
+
+#: templates/bookmarks.html
+msgid "all"
+msgstr "All"
+
+#: templates/bookmarks.html
+msgid "search"
+msgstr "Search"
+
+#: templates/bookmarks.html
+msgid "search bookmarks"
+msgstr "Search title or URL"
+
+#: templates/bookmarks.html
+msgid "clear"
+msgstr "Clear"
+
+#: templates/bookmarks.html
+msgid "tags placeholder"
+msgstr "e.g. work, reading"
+
+#: templates/bookmarks.html
+msgid "add bookmark"
+msgstr "Add bookmark"
+
+#: templates/bookmarks.html
+msgid "edit bookmark"
+msgstr "Edit bookmark"
+
+#: templates/bookmarks.html
+msgid "more tags"
+msgstr "More tags"
 
 #: venv/lib/python3.8/site-packages/flask_wtf/file.py:50
 #: venv/lib/python3.8/site-packages/wtforms/validators.py:218

@@ -103,9 +103,89 @@ msgstr "删除"
 msgid "update"
 msgstr "更新"
 
-#: templates/user.html:155 templates/user.html:216
+#: templates/user.html:155 templates/user.html:216 templates/bookmarks.html
 msgid "url"
 msgstr "URL"
+
+#: templates/base.html templates/bookmarks.html
+msgid "bookmarks"
+msgstr "收藏夹"
+
+#: templates/bookmarks.html
+msgid "title"
+msgstr "标题"
+
+#: templates/bookmarks.html
+msgid "create time"
+msgstr "创建时间"
+
+#: templates/bookmarks.html
+msgid "update time"
+msgstr "更新时间"
+
+#: templates/bookmarks.html
+msgid "no bookmarks"
+msgstr "暂无收藏"
+
+#: templates/bookmarks.html
+msgid "previous"
+msgstr "上一页"
+
+#: templates/bookmarks.html
+msgid "next"
+msgstr "下一页"
+
+#: templates/bookmarks.html
+msgid "save"
+msgstr "保存"
+
+#: templates/bookmarks.html
+msgid "cancel"
+msgstr "取消"
+
+#: templates/bookmarks.html
+msgid "confirm delete bookmark"
+msgstr "确定删除这条收藏吗？"
+
+#: templates/bookmarks.html
+msgid "request failed"
+msgstr "请求失败，请稍后重试。"
+
+#: templates/bookmarks.html
+msgid "tags"
+msgstr "标签"
+
+#: templates/bookmarks.html
+msgid "all"
+msgstr "全部"
+
+#: templates/bookmarks.html
+msgid "search"
+msgstr "搜索"
+
+#: templates/bookmarks.html
+msgid "search bookmarks"
+msgstr "搜索标题或网址"
+
+#: templates/bookmarks.html
+msgid "clear"
+msgstr "清除筛选"
+
+#: templates/bookmarks.html
+msgid "tags placeholder"
+msgstr "例如：工作，学习"
+
+#: templates/bookmarks.html
+msgid "add bookmark"
+msgstr "新增收藏"
+
+#: templates/bookmarks.html
+msgid "edit bookmark"
+msgstr "编辑收藏"
+
+#: templates/bookmarks.html
+msgid "more tags"
+msgstr "更多标签"
 
 #: venv/lib/python3.8/site-packages/flask_wtf/file.py:50
 #: venv/lib/python3.8/site-packages/wtforms/validators.py:218

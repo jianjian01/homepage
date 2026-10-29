@@ -1,7 +1,7 @@
 import random
 from datetime import datetime
 
-from pony.orm import Database, Required, set_sql_debug, PrimaryKey, Optional, Set, select, LongStr
+from pony.orm import Database, Required, set_sql_debug, PrimaryKey, Optional, Set, select, LongStr, composite_key
 
 from config import Config
 
@@ -34,6 +34,8 @@ class User(db.Entity):
     sites = Set(lambda: UserSite)
     categories = Set(lambda: Category)
     user_rss = Set(lambda: UserRSS)
+    bookmarks = Set(lambda: Bookmark)
+    tags = Set(lambda: Tag)
 
     status = Required(int, default=UserStatus.normal)
     create_time = Required(datetime, default=datetime.utcnow)
@@ -120,6 +122,36 @@ class UserRSS(db.Entity):
     create_time = Required(datetime, default=datetime.utcnow)
     delete = Required(bool, default=False)
     delete_time = Optional(datetime)
+
+
+class BookmarkStatus:
+    normal = 1
+    delete = 0
+
+
+class Bookmark(db.Entity):
+    """用户收藏的网址"""
+    id = PrimaryKey(int, auto=True)
+    title = Required(str, 200)
+    url = Required(str, 2048)
+    user = Required(User, index=True)
+    create_time = Required(datetime, default=datetime.utcnow, index=True)
+    update_time = Required(datetime, default=datetime.utcnow)
+    status = Required(int, default=BookmarkStatus.normal)
+    delete_time = Optional(datetime)
+    tags = Set(lambda: Tag)
+
+
+class Tag(db.Entity):
+    """用户收藏标签"""
+    id = PrimaryKey(int, auto=True)
+    name = Required(str, 30)
+    name_key = Required(str, 30)
+    user = Required(User)
+    create_time = Required(datetime, default=datetime.utcnow)
+    bookmarks = Set(lambda: Bookmark)
+
+    composite_key(user, name_key)
 
 
 if __name__ == '__main__':
