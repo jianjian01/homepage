@@ -2,6 +2,7 @@ import asyncio
 import logging
 import time
 from datetime import datetime, timedelta
+from urllib.parse import urljoin
 
 import aiohttp
 import aiomysql
@@ -16,12 +17,14 @@ SQL = "INSERT INTO page (`rss`, `page_id`, `title`, `link`, `publish_date`) " \
       " ON DUPLICATE KEY UPDATE title=VALUES(title), link=VALUES(link)"
 
 
-def parser(rss_id, text):
+def parser(rss_id, text, base_url):
     """解析内容"""
     feed = feedparser.parse(text)
     data = []
     for item in feed.entries:
         item_link = item.get('link', '')
+        if item_link:
+            item_link = urljoin(base_url, item_link)
         item_title = item.get('title', '')
         # item_ID 是 主键，不能缺失，如果找不到，就用其他的代替
         for key in ['id', 'guid', 'link']:
@@ -63,7 +66,7 @@ async def fetch(rss, semaphore, pool):
             except Exception as e:
                 logging.warning('exception: {}'.format(e))
                 return rss_url, []
-            data = parser(rss_id, content)
+            data = parser(rss_id, content, str(response.url))
             async with pool.acquire() as conn:
                 async with conn.cursor() as cur:
                     # logging.info(data)

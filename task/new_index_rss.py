@@ -1,6 +1,7 @@
 import logging
 import time
 from datetime import datetime, timedelta
+from urllib.parse import urljoin
 
 import cchardet
 import feedparser
@@ -18,13 +19,15 @@ utc = pytz.UTC
 logging.getLogger().setLevel(logging.DEBUG)
 
 logging.info("start")
-def parser(rss_id, text):
+def parser(rss_id, text, base_url):
     """解析内容"""
     feed = feedparser.parse(text)
     data = []
     old_date = datetime.today() - timedelta(days=30)
     for item in feed.entries:
         item_link = item.get('link', '')
+        if item_link:
+            item_link = urljoin(base_url, item_link)
         item_title = item.get('title', '')
         # item_ID 是 主键，不能缺失，如果找不到，就用其他的代替
         for key in ['id', 'guid', 'link']:
@@ -81,14 +84,15 @@ def main():
         except Exception:
             continue
         coding = cchardet.detect(response.content)['encoding']
+        base_url = response.url or rss_url
         data = ''
         if coding:
             try:
-                data = parser(rss_id, response.content.decode(coding))
+                data = parser(rss_id, response.content.decode(coding), base_url)
             except Exception:
                 pass
         if not data:
-            data = parser(rss_id, response.text)
+            data = parser(rss_id, response.text, base_url)
         if data:
             results.extend(data)
     with conn.cursor() as cursor:
